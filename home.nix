@@ -15,5 +15,19 @@
       pull.rebase = true;
     };
   };
+  programs.nushell = {
+    enable = true;
+    extraConfig = ''
+      $env.config.show_banner = false
+    '';
+    extraEnv = ''
+
+    '';
+  };
+  programs.starship = {
+    enable = true;
+    enableNushellIntegration = true;
+    settings = { };
+  };
   home.stateVersion = "23.05";
 }

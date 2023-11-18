@@ -26,7 +26,10 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"
     ];
+    shell = pkgs.nushell;
   };
+  environment.shells = [ pkgs.nushell ];
+
   services.fstrim.enable = true;
 
   environment.systemPackages = with pkgs; [
