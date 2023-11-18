@@ -5,12 +5,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
   };
-  outputs = { self, nixpkgs, home-manager }: {
+  outputs = { self, nixpkgs, home-manager, flake-utils, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
-        ./configuration.nix 
+        ./configuration.nix
         home-manager.nixosModules.home-manager
         {
           networking.hostName = "data";
@@ -18,5 +21,6 @@
         }
       ];
     };
-  };
+  }
+  // (flake-utils.lib.eachDefaultSystem (system: { formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt; }));
 }
