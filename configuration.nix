@@ -37,6 +37,7 @@
     vim
     wget
     htop
+    usbutils # lsusb
   ];
   environment.variables.EDITOR = "vim";
   services.openssh = {
