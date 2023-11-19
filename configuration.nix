@@ -51,6 +51,8 @@
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
+  services.jellyfin.enable = true;
+  services.netdata.enable = true;
 
   system.stateVersion = "23.11";
 }

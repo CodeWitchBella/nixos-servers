@@ -38,6 +38,8 @@
     in {
       "ha.isbl.cz" = host "8123";
       "zigbee.isbl.cz" = host "8080";
+      "jellyfin.isbl.cz" = host "8096";
+      "netdata.isbl.cz" = host "19999";
     };
   };
 }
