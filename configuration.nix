@@ -7,6 +7,8 @@
 {
   imports =
     [
+      ./modules/home-assistant.nix
+      ./modules/nginx.nix
       ./hardware-configuration.nix
     ];
 
@@ -29,6 +31,8 @@
     shell = pkgs.nushell;
   };
   environment.shells = [ pkgs.nushell ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 443 ];
 
   services.fstrim.enable = true;
 
@@ -38,6 +42,7 @@
     wget
     htop
     usbutils # lsusb
+    lm_sensors # sensors
   ];
   environment.variables.EDITOR = "vim";
   services.openssh = {

@@ -26,6 +26,12 @@
       device = "/dev/disk/by-uuid/409C-E053";
       fsType = "vfat";
     };
+  fileSystems."/disks" =
+    {
+      device = "/dev/disk/by-label/first-btrfs";
+      fsType = "btrfs";
+      options = [ "noatime" "compress=zstd" "autodefrag" ];
+    };
 
   swapDevices = [ ];
 
