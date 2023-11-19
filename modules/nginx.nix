@@ -24,17 +24,20 @@
     recommendedTlsSettings = true;
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
-    virtualHosts = {
-      "data.isbl.cz" = {
+    virtualHosts = let
+      host = port: {
         forceSSL = true;
         useACMEHost = "isbl.cz";
         http3 = true;
         quic = true;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:8123";
+          proxyPass = "http://127.0.0.1:${port}";
           proxyWebsockets = true;
         };
       };
+    in {
+      "ha.isbl.cz" = host "8123";
+      "zigbee.isbl.cz" = host "8080";
     };
   };
 }

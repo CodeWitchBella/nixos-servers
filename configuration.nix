@@ -43,6 +43,7 @@
     htop
     usbutils # lsusb
     lm_sensors # sensors
+    bat
   ];
   environment.variables.EDITOR = "vim";
   services.openssh = {
