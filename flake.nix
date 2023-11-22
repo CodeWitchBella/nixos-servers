@@ -8,8 +8,13 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... }: {
+  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
@@ -22,5 +27,15 @@
       ];
     };
   }
-  // (flake-utils.lib.eachDefaultSystem (system: { formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt; }));
+  // (flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
+      devShells.default = pkgs.mkShell {
+        buildInputs = [ agenix.packages."${system}".default ];
+      };
+    }
+  ));
 }
