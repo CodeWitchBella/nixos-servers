@@ -21,6 +21,7 @@
       system = "aarch64-linux";
       modules = [
         ./configuration.nix
+        agenix.nixosModules.default
         home-manager.nixosModules.home-manager
         {
           networking.hostName = "data";

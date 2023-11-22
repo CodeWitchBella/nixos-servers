@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, inputs, ... }:
 {
+  age.secrets.dnskey = {
+    file = ../secrets/dnskey.conf.age;
+  };
   security.acme = {
     acceptTerms = true;
     defaults.email = "acme@skorepova.info";
@@ -7,7 +10,7 @@
     certs."isbl.cz" = {
       domain = "*.isbl.cz";
       dnsProvider = "cloudflare";
-      credentialsFile = "/var/lib/secrets/dnskey.conf";
+      credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
   };
