@@ -22,6 +22,7 @@
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "isabella" ];
 
   users.users.isabella = {
     isNormalUser = true;
