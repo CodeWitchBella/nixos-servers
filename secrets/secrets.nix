@@ -11,5 +11,5 @@ let
   systems = [ data ];  
 in
 {
-  #"secret1.age".publicKeys = [ user1 system1 ];
+  "dnskey.conf.age".publicKeys = users ++ [  data ];
 }
