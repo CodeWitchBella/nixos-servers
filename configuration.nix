@@ -32,6 +32,7 @@
     shell = pkgs.nushell;
   };
   environment.shells = [ pkgs.nushell ];
+  security.sudo.wheelNeedsPassword = false;
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
