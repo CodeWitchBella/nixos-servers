@@ -13,8 +13,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    devshell.url = "github:numtide/devshell";
   };
-  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, ... }: {
+  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, devshell, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
@@ -29,12 +31,25 @@
   }
   // (flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ devshell.overlays.default ];
+      };
     in
     {
       formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-      devShells.default = pkgs.mkShell {
-        buildInputs = [ agenix.packages."${system}".default ];
+      devShell = pkgs.devshell.mkShell {
+        packages = [ agenix.packages."${system}".default ];
+        commands = [
+          {
+            name = "deploy";
+            command = "nixos-rebuild switch --flake .#data --target-host isabella@data.isbl.cz --use-remote-sudo";
+          }
+          {
+            name = "deploy-remotebuild";
+            command = "deploy --build-host isabella@data.isbl.cz";
+          }
+        ];
       };
     }
   ));
