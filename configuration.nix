@@ -3,7 +3,9 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, inputs, pkgs, ... }:
-
+let
+  authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"];
+in
 {
   imports =
     [
@@ -27,11 +29,10 @@
   users.users.isabella = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"
-    ];
+    openssh.authorizedKeys.keys = authorizedKeys;
     shell = pkgs.nushell;
   };
+  users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
   environment.shells = [ pkgs.nushell ];
   security.sudo.wheelNeedsPassword = false;
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
