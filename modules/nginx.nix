@@ -46,6 +46,7 @@
         "jellyfin.isbl.cz" = host "8096";
         "netdata.isbl.cz" = host "19999";
         "outline.isbl.cz" = host "3801";
+        "dex.isbl.cz" = host "5556";
       };
   };
 }

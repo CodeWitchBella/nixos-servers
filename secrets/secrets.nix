@@ -11,5 +11,6 @@ let
   systems = [ data ];  
 in
 {
-  "dnskey.conf.age".publicKeys = users ++ [  data ];
+  "dnskey.conf.age".publicKeys = users ++ [ data ];
+  "outline.age".publicKeys = users ++ [ data ];
 }
