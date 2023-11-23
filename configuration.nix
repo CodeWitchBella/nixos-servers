@@ -7,7 +7,7 @@
 {
   imports =
     [
-      #inputs.agenix.nixosModule
+      ./modules/outline.nix
       ./modules/home-assistant.nix
       ./modules/nginx.nix
       ./hardware-configuration.nix
