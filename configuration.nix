@@ -12,6 +12,7 @@ in
       ./modules/outline.nix
       ./modules/home-assistant.nix
       ./modules/nginx.nix
+      ./modules/disk-config.nix
     ];
 
   boot.loader.efi.canTouchEfiVariables = false;

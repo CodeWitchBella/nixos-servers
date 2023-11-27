@@ -50,11 +50,11 @@
         commands = [
           {
             name = "deploy";
-            command = "nixos-rebuild switch --flake .#data --target-host isabella@data.isbl.cz --use-remote-sudo";
+            command = "nixos-rebuild switch --flake .#data --target-host root@data.isbl.cz";
           }
           {
             name = "deploy-remotebuild";
-            command = "deploy --build-host isabella@data.isbl.cz";
+            command = "deploy --build-host root@data.isbl.cz";
           }
         ];
       };
