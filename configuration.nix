@@ -16,6 +16,13 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.openssh.enable = true;
 
+  fileSystems."/disks" =
+    {
+      device = "/dev/disk/by-label/first-btrfs";
+      fsType = "btrfs";
+      options = [ "noatime" "compress=zstd" "autodefrag" ];
+    };
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
