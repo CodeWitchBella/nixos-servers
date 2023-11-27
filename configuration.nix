@@ -10,8 +10,8 @@ in
     enable = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    devices = [ "/dev/disk/by-path/platform-fe330000.mmc" ];
-    #device = "nodev";
+    #devices = [ "/dev/disk/by-path/platform-fe330000.mmc" ];
+    device = "nodev";
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.openssh.enable = true;
