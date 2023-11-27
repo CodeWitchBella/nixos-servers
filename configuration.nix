@@ -12,7 +12,6 @@ in
       ./modules/outline.nix
       ./modules/home-assistant.nix
       ./modules/nginx.nix
-      ./hardware-configuration.nix
     ];
 
   boot.loader.efi.canTouchEfiVariables = false;
@@ -25,6 +24,13 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "isabella" ];
+
+  fileSystems."/disks" =
+    {
+      device = "/dev/disk/by-label/first-btrfs";
+      fsType = "btrfs";
+      options = [ "noatime" "compress=zstd" "autodefrag" ];
+    };
 
   users.users.isabella = {
     isNormalUser = true;

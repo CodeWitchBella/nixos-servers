@@ -15,14 +15,20 @@
     };
 
     devshell.url = "github:numtide/devshell";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, devshell, ... }: {
+  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
         ./configuration.nix
         agenix.nixosModules.default
         home-manager.nixosModules.home-manager
+        disko.nixosModules.disko
         {
           networking.hostName = "data";
           home-manager.users.isabella = import ./home.nix;
