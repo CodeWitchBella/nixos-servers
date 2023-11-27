@@ -2,24 +2,8 @@
 { lib, ... }:
 {
   disko.devices = {
-    /*disk.emmc = {
+    disk.emmc = {
       device = "/dev/disk/by-path/platform-fe330000.mmc";
-      type = "disk";
-      content = {
-        type = "gpt";
-        
-        #partitions.root = {
-        #  size = "100%";
-        #  content = {
-        #    type = "filesystem";
-        #    format = "ext4";
-        #    mountpoint = "/";
-        #  };
-        #};
-      };
-    };*/
-    disk.ssd = {
-      device = "/dev/disk/by-id/ata-Apacer_AS350_1TB_11EE07381F5B00157340";
       type = "disk";
       content = {
         type = "gpt";
@@ -34,21 +18,6 @@
             mountpoint = "/boot";
           };
         };
-        partitions.root = {
-          size = "100%";
-          content = {
-            type = "filesystem";
-            format = "ext4";
-            mountpoint = "/";
-          };
-        };
-      };
-    };
-    /*disk.ssd = {
-      device = "/dev/disk/by-id/ata-Apacer_AS350_1TB_11EE07381F5B00157340";
-      type = "disk";
-      content = {
-        type = "gpt";
         partitions.root = {
           size = "100%";
           content = {
@@ -75,6 +44,21 @@
           };
         };
       };
-    };*/
+    };
+    disk.ssd = {
+      device = "/dev/disk/by-id/ata-Apacer_AS350_1TB_11EE07381F5B00157340";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions.ssd = {
+          size = "100%";
+          content = {
+            type = "btrfs";
+            extraArgs = [ "-f" ]; # Override existing partition
+            mountpoint = "/ssd";
+          };
+        };
+      };
+    };
   };
 }
