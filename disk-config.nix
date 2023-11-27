@@ -18,6 +18,21 @@
             mountpoint = "/boot";
           };
         };
+        #partitions.root = {
+        #  size = "100%";
+        #  content = {
+        #    type = "filesystem";
+        #    format = "ext4";
+        #    mountpoint = "/";
+        #  };
+        #};
+      };
+    };
+    disk.ssd = {
+      device = "/dev/disk/by-id/ata-Apacer_AS350_1TB_11EE07381F5B00157340";
+      type = "disk";
+      content = {
+        type = "gpt";
         partitions.root = {
           size = "100%";
           content = {
