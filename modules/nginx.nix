@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ pkgs, lib, config, inputs, ... }:
 {
   age.secrets.dnskey = {
     file = ../secrets/dnskey.conf.age;
@@ -40,7 +40,7 @@
 
     virtualHosts =
       let
-        host = port: {
+        hostPublic = port: {
           forceSSL = true;
           useACMEHost = "isbl.cz";
           http3 = true;
@@ -50,15 +50,22 @@
             proxyWebsockets = true;
           };
         };
+        host = port: lib.recursiveUpdate (hostPublic port) {
+          locations."/".extraConfig = ''
+            deny 172.18.80.1;
+            allow 172.18.80.26/22;
+            deny all;
+          '';
+        };
       in
       {
-        "ha.isbl.cz" = host 8123;
+        "ha.isbl.cz" = hostPublic 8123;
         "zigbee.isbl.cz" = host 8080;
         "jellyfin.isbl.cz" = host 8096;
         "netdata.isbl.cz" = host 19999;
-        "outline.isbl.cz" = host 3801;
+        "outline.isbl.cz" = hostPublic 3801;
         "dex.isbl.cz" = host 5556;
-        "authentik.isbl.cz" = host 9000;
+        "authentik.isbl.cz" = hostPublic 9000;
       };
   };
 }
