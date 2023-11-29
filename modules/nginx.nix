@@ -26,6 +26,17 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+    appendHttpConfig = ''
+      # Add HSTS header with preloading to HTTPS requests.
+      # Adding this header to HTTP requests is discouraged
+      map $scheme $hsts_header {
+          https   "max-age=31536000; includeSubdomains; preload";
+      }
+      add_header Strict-Transport-Security $hsts_header;
+
+      # Minimize information leaked to other domains
+      add_header 'Referrer-Policy' 'origin-when-cross-origin';
+    '';
 
     virtualHosts =
       let
@@ -35,19 +46,19 @@
           http3 = true;
           quic = true;
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${port}";
+            proxyPass = "http://127.0.0.1:${toString(port)}";
             proxyWebsockets = true;
           };
         };
       in
       {
-        "ha.isbl.cz" = host "8123";
-        "zigbee.isbl.cz" = host "8080";
-        "jellyfin.isbl.cz" = host "8096";
-        "netdata.isbl.cz" = host "19999";
-        "outline.isbl.cz" = host "3801";
-        "dex.isbl.cz" = host "5556";
-        "authentik.isbl.cz" = host "9000";
+        "ha.isbl.cz" = host 8123;
+        "zigbee.isbl.cz" = host 8080;
+        "jellyfin.isbl.cz" = host 8096;
+        "netdata.isbl.cz" = host 19999;
+        "outline.isbl.cz" = host 3801;
+        "dex.isbl.cz" = host 5556;
+        "authentik.isbl.cz" = host 9000;
       };
   };
 }
