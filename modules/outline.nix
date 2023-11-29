@@ -30,10 +30,7 @@
     enable = true;
     settings = {
       issuer = "https://dex.isbl.cz";
-      storage = {
-        type = "sqlite3";
-        config.file = "/var/lib/dex/db.sqlite3";
-      };
+      storage.type = "sqlite3";
       web.http = "127.0.0.1:5556";
       staticClients = [
         {
