@@ -47,6 +47,7 @@
         "netdata.isbl.cz" = host "19999";
         "outline.isbl.cz" = host "3801";
         "dex.isbl.cz" = host "5556";
+        "authentik.isbl.cz" = host "9000";
       };
   };
 }

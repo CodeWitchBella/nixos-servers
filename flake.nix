@@ -14,22 +14,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devshell.url = "github:numtide/devshell";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    authentik-nix = {
+      url = "github:mayflower/authentik-nix";
+    };
     vpsadminos.url = "github:vpsfreecz/vpsadminos";
   };
-  outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko,... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
         ./systems/data.nix
         agenix.nixosModules.default
         home-manager.nixosModules.home-manager
+        inputs.authentik-nix.nixosModules.default
         disko.nixosModules.disko
         { networking.hostName = "data"; }
       ];

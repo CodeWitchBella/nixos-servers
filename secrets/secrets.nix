@@ -13,4 +13,5 @@ in
 {
   "dnskey.conf.age".publicKeys = users ++ [ data ];
   "outline.age".publicKeys = users ++ [ data ];
+  "authentik-env.age".publicKeys = users ++ [ data ];
 }
