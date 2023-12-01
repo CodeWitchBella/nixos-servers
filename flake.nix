@@ -20,19 +20,28 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vpsadminos.url = "github:vpsfreecz/vpsadminos";
   };
-  outputs = { self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko,... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
-        ./configuration.nix
+        ./systems/data.nix
         agenix.nixosModules.default
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
-        {
-          networking.hostName = "data";
-          home-manager.users.isabella = import ./home.nix;
-        }
+        { networking.hostName = "data"; }
+      ];
+    };
+    nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./systems/vps.nix
+        agenix.nixosModules.default
+        home-manager.nixosModules.home-manager
+        inputs.vpsadminos.nixosConfigurations.container
+        { networking.hostName = "vps"; }
       ];
     };
   }
@@ -49,11 +58,15 @@
         packages = [ agenix.packages."${system}".default ];
         commands = [
           {
-            name = "deploy";
+            name = "deploy:data";
             command = "nixos-rebuild switch --flake .#data --target-host root@data.isbl.cz";
           }
           {
-            name = "deploy-remotebuild";
+            name = "deploy:vps";
+            command = "nixos-rebuild switch --flake .#vps --target-host root@vps.isbl.cz --use-substitutes";
+          }
+          {
+            name = "deploy-remotebuild:data";
             command = "deploy --build-host root@data.isbl.cz";
           }
         ];

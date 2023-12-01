@@ -181,7 +181,8 @@
         "disko": "disko",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "vpsadminos": "vpsadminos"
       }
     },
     "systems": {
@@ -211,6 +212,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vpsadminos": {
+      "locked": {
+        "lastModified": 1700929470,
+        "narHash": "sha256-17xvoLBtp5C6BxoPL4U8spk98/wOdLWpR7YlzJtXS54=",
+        "owner": "vpsfreecz",
+        "repo": "vpsadminos",
+        "rev": "e607adf796f3152e65e27e70ef885c63bb8cb84f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vpsfreecz",
+        "repo": "vpsadminos",
         "type": "github"
       }
     }

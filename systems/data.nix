@@ -3,16 +3,14 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, inputs, pkgs, ... }:
-let
-  authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"];
-in
 {
   imports =
     [
-      ./modules/outline.nix
-      ./modules/home-assistant.nix
-      ./modules/nginx.nix
-      ./modules/disk-config.nix
+      ../modules/outline.nix
+      ../modules/home-assistant.nix
+      ../modules/nginx.nix
+      ../modules/disk-config.nix
+      ../modules/users.nix
     ];
 
   boot.loader.efi.canTouchEfiVariables = false;
@@ -33,13 +31,6 @@ in
       options = [ "noatime" "compress=zstd" "autodefrag" ];
     };
 
-  users.users.isabella = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = authorizedKeys;
-    shell = pkgs.nushell;
-  };
-  users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
   environment.shells = [ pkgs.nushell ];
   security.sudo.wheelNeedsPassword = false;
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
