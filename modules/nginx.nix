@@ -13,6 +13,12 @@
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
+    certs."local.isbl.cz" = {
+      domain = "*.local.isbl.cz";
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.dnskey.path;
+      group = "nginx";
+    };
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx = {
@@ -57,15 +63,31 @@
             deny all;
           '';
         };
+        hostLocal = port: lib.recursiveUpdate (hostPublic port) {
+          useACMEHost = "local.isbl.cz";
+        };
       in
       {
         "ha.isbl.cz" = hostPublic 8123;
+        "ha.local.isbl.cz" = hostLocal 8123;
+        
         "zigbee.isbl.cz" = host 8080;
+        "zigbee.local.isbl.cz" = hostLocal 8080;
+        
         "jellyfin.isbl.cz" = host 8096;
+        "jellyfin.local.isbl.cz" = hostLocal 8096;
+        
         "netdata.isbl.cz" = host 19999;
+        "netdata.local.isbl.cz" = hostLocal 19999;
+        
         "outline.isbl.cz" = hostPublic 3801;
+        "outline.local.isbl.cz" = hostLocal 3801;
+        
         "dex.isbl.cz" = host 5556;
+        "dex.local.isbl.cz" = hostLocal 5556;
+
         "authentik.isbl.cz" = hostPublic 9000;
+        "authentik.local.isbl.cz" = hostLocal 9000;
       };
   };
 }
