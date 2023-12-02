@@ -11,7 +11,7 @@
       ../modules/nginx.nix
       ../modules/disk-config.nix
       ../modules/authentik.nix
-      ../modules/users.nix
+      ../modules/basics.nix
     ];
 
   boot.loader.efi.canTouchEfiVariables = false;
@@ -22,8 +22,6 @@
     device = "nodev";
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "isabella" ];
 
   fileSystems."/disks" =
     {
@@ -32,8 +30,6 @@
       options = [ "noatime" "compress=zstd" "autodefrag" ];
     };
 
-  environment.shells = [ pkgs.nushell ];
-  security.sudo.wheelNeedsPassword = false;
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
@@ -48,12 +44,6 @@
     lm_sensors # sensors
     bat
   ];
-  environment.variables.EDITOR = "vim";
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
-  };
   services.jellyfin.enable = true;
   services.netdata.enable = true;
 

@@ -2,7 +2,7 @@
 {
   imports =
     [
-      ../modules/users.nix
+      ../modules/basics.nix
     ];
 
   environment.systemPackages = with pkgs; [
@@ -10,9 +10,6 @@
     htop
     git
   ];
-
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "yes";
 
   systemd.extraConfig = ''
     DefaultTimeoutStartSec=900s
