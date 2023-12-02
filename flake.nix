@@ -74,11 +74,11 @@
           }
           {
             name = "deploy-remotebuild:vps";
-            command = "deploy:vps --build-host root@vps.isbl.cz --fast";
+            command = "nixos-rebuild switch --flake .#vps --target-host root@vps.isbl.cz --build-host root@vps.isbl.cz --fast";
           }
           {
             name = "deploy-remotebuild:data";
-            command = "deploy:data --build-host root@data.isbl.cz --fast";
+            command = "nixos-rebuild switch --flake .#data --target-host root@data.isbl.cz --build-host root@data.isbl.cz --fast";
           }
         ];
       };
