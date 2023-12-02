@@ -28,6 +28,7 @@
       url = "github:mayflower/authentik-nix";
     };
     vpsadminos.url = "github:vpsfreecz/vpsadminos";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
   };
   outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, devshell, disko, ... }: {
     nixosConfigurations.data = nixpkgs.lib.nixosSystem {
