@@ -2,7 +2,7 @@
 {
   nixpkgs.config.allowUnfree = true; # it's BuSL
   age.secrets.outline = {
-    file = ../secrets/outline.age;
+    file = ../../secrets/outline.age;
     owner = "outline";
   };
   services.outline = {

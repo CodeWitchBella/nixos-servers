@@ -1,7 +1,7 @@
 { pkgs, lib, config, inputs, ... }:
 {
   age.secrets.dnskey = {
-    file = ../secrets/dnskey.conf.age;
+    file = ../../secrets/dnskey.conf.age;
   };
   security.acme = {
     acceptTerms = true;

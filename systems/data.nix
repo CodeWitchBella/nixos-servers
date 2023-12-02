@@ -6,11 +6,7 @@
 {
   imports =
     [
-      ../modules/outline.nix
-      ../modules/home-assistant.nix
-      ../modules/nginx.nix
-      ../modules/disk-config.nix
-      ../modules/authentik.nix
+      ../modules/data/data.nix
       ../modules/basics.nix
     ];
 
