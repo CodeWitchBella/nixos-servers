@@ -73,8 +73,12 @@
             command = "nixos-rebuild switch --flake .#vps --target-host root@vps.isbl.cz --use-substitutes";
           }
           {
+            name = "deploy-remotebuild:vps";
+            command = "deploy:vps --build-host root@vps.isbl.cz --fast";
+          }
+          {
             name = "deploy-remotebuild:data";
-            command = "deploy --build-host root@data.isbl.cz";
+            command = "deploy:data --build-host root@data.isbl.cz --fast";
           }
         ];
       };
