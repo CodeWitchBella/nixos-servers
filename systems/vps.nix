@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
 {
-  imports =
-    [
-      ../modules/basics.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ../modules/basics.nix
+  ];
 
   environment.systemPackages = with pkgs; [
     vim

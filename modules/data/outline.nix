@@ -1,5 +1,9 @@
-{ pkgs, config, inputs, ... }:
 {
+  pkgs,
+  config,
+  inputs,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true; # it's BuSL
   age.secrets.outline = {
     file = ../../secrets/outline.age;
@@ -21,7 +25,7 @@
       userinfoUrl = "https://authentik.isbl.cz/application/o/userinfo/";
       clientId = "outline";
       clientSecretFile = config.age.secrets.outline.path;
-      scopes = [ "openid" "email" "profile" ];
+      scopes = ["openid" "email" "profile"];
       usernameClaim = "preferred_username";
       displayName = "Authentik";
     };

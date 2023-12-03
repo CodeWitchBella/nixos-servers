@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -27,7 +31,7 @@
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
-    settings = { };
+    settings = {};
   };
   home.stateVersion = "23.05";
 }
