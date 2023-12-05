@@ -61,12 +61,6 @@
 
       "outline.isbl.cz" = hostPublic 3801;
       "outline.local.isbl.cz" = hostLocal 3801;
-
-      "dex.isbl.cz" = host 5556;
-      "dex.local.isbl.cz" = hostLocal 5556;
-
-      "authentik.isbl.cz" = hostPublic 9000;
-      "authentik.local.isbl.cz" = hostLocal 9000;
     };
   };
 }
