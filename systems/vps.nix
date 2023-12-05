@@ -19,6 +19,8 @@
   '';
 
   time.timeZone = "UTC"; # authentik breaks in local timezone
+  networking.firewall.allowedTCPPorts = [22 80 443];
+  networking.firewall.allowedUDPPorts = [443];
 
   system.stateVersion = "23.11";
 }
