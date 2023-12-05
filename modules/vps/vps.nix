@@ -5,6 +5,7 @@
   ...
 }: {
   imports = [
+    ./nginx.nix
     ./authentik.nix
   ];
 }

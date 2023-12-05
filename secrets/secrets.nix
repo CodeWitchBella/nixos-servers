@@ -8,9 +8,11 @@ let
 
   # cat /etc/ssh/ssh_host_ed25519_key.pub on data.isbl.cz
   data = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJNGmuodH5B4vKsG4PE6gh1MbryU/s0WbvmaHhTdh2S";
-  systems = [data];
+  # on vps.isbl.cz
+  vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBGSjrR+WPr379Y2ZjyuSdwTIbiroatryKzPUcUX/RjL";
+  systems = [data vps];
 in {
-  "dnskey.conf.age".publicKeys = users ++ [data];
-  "outline.age".publicKeys = users ++ [data];
-  "authentik-env.age".publicKeys = users ++ [data];
+  "dnskey.conf.age".publicKeys = users ++ systems;
+  "outline.age".publicKeys = users ++ systems;
+  "authentik-env.age".publicKeys = users ++ [vps];
 }
