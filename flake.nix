@@ -79,19 +79,19 @@
           commands = [
             {
               name = "deploy:data";
-              command = "nixos-rebuild switch --flake .#data --target-host root@data.isbl.cz";
+              command = "nixos-rebuild switch --flake .#data --target-host data.isbl.cz --use-remote-sudo";
             }
             {
               name = "deploy:vps";
-              command = "nixos-rebuild switch --flake .#vps --target-host root@vps.isbl.cz --use-substitutes";
+              command = "nixos-rebuild switch --flake .#vps --target-host vps.isbl.cz --use-remote-sudo --use-substitutes";
             }
             {
               name = "deploy-remotebuild:vps";
-              command = "nixos-rebuild switch --flake .#vps --target-host root@vps.isbl.cz --build-host root@vps.isbl.cz --fast";
+              command = "nixos-rebuild switch --flake .#vps --target-host vps.isbl.cz --build-host vps.isbl.cz --use-remote-sudo --fast";
             }
             {
               name = "deploy-remotebuild:data";
-              command = "nixos-rebuild switch --flake .#data --target-host root@data.isbl.cz --build-host root@data.isbl.cz --fast";
+              command = "nixos-rebuild switch --flake .#data --target-host data.isbl.cz --build-host data.isbl.cz --use-remote-sudo --fast";
             }
           ];
         };
