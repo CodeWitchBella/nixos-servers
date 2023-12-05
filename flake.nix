@@ -50,7 +50,6 @@
           ./systems/data.nix
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
-          inputs.authentik-nix.nixosModules.default
           disko.nixosModules.disko
           {networking.hostName = "data";}
         ];
@@ -61,6 +60,7 @@
           ./systems/vps.nix
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
+          inputs.authentik-nix.nixosModules.default
           inputs.vpsadminos.nixosConfigurations.container
           {networking.hostName = "vps";}
         ];

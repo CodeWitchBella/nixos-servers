@@ -5,7 +5,6 @@
   ...
 }: {
   imports = [
-    ./authentik.nix
     ./disk-config.nix
     ./home-assistant.nix
     ./nginx.nix

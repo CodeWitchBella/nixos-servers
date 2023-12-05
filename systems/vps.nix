@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ../modules/vps/vps.nix
     ../modules/basics.nix
   ];
 
@@ -17,7 +18,7 @@
     DefaultTimeoutStartSec=900s
   '';
 
-  time.timeZone = "Europe/Prague";
+  time.timeZone = "UTC"; # authentik breaks in local timezone
 
   system.stateVersion = "23.11";
 }
