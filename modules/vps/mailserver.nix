@@ -31,4 +31,19 @@
     };
     certificateScheme = "acme";
   };
+  services.roundcube = {
+    enable = true;
+    hostName = "email.isbl.cz";
+    extraConfig = ''
+      # starttls needed for authentication, so the fqdn required to match
+      # the certificate
+      $config['smtp_server'] = "tls://${config.mailserver.fqdn}";
+      $config['smtp_user'] = "%u";
+      $config['smtp_pass'] = "%p";
+    '';
+  };
+  services.nginx.virtualHosts."email.isbl.cz" = {
+    enableACME = false;
+    useACMEHost = "isbl.cz";
+  };
 }
