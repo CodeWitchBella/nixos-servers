@@ -7,9 +7,6 @@
   age.secrets.authentik-env = {
     file = ../../secrets/authentik-env.age;
   };
-  age.secrets.authentik-ldap = {
-    file = ../../secrets/authentik-ldap.age;
-  };
   services.authentik = {
     enable = true;
     environmentFile = config.age.secrets.authentik-env.path;
@@ -23,9 +20,5 @@
       #  from = "authentik@example.com";
       #};
     };
-  };
-  services.authentik-ldap = {
-    enable = true;
-    environmentFile = config.age.secrets.authentik-ldap.path;
   };
 }
