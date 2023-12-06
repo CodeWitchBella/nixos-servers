@@ -20,8 +20,17 @@
     enable = true;
     dataDir = "/ssd/sonarr";
   };
-  services.prowlarr = {
+  services.prowlarr.enable = true;
+
+  services.transmission = { 
     enable = true;
-    dataDir = "/ssd/prowlarr";
+    openRPCPort = true;
+    settings = {
+      rpc-bind-address = "127.0.0.1";
+      rpc-host-whitelist-enabled = false;
+      incomplete-dir = "/ssd/incomplete";
+      incomplete-dir-enabled = true;
+      download-dir = "/ssd/download";
+    };
   };
 }

@@ -130,6 +130,9 @@
 
       "prowlarr.isbl.cz" = hostAuth 9696;
       "prowlarr.local.isbl.cz" = hostLocal 9696;
+
+      "transmission.isbl.cz" = hostAuth 9091;
+      "transmission.local.isbl.cz" = hostLocal 9091;
     };
   };
 }
