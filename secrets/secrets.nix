@@ -15,4 +15,7 @@ in {
   "dnskey.conf.age".publicKeys = users ++ systems;
   "outline.age".publicKeys = users ++ systems;
   "authentik-env.age".publicKeys = users ++ [vps];
+  "authentik-ldap.age".publicKeys = users ++ [vps];
+  "mailserver-ldap-password.age".publicKeys = users ++ [vps];
+  "email-password.age".publicKeys = users ++ [vps];
 }

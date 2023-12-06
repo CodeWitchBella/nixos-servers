@@ -7,5 +7,6 @@
   imports = [
     ./nginx.nix
     ./authentik.nix
+    ./mailserver.nix
   ];
 }

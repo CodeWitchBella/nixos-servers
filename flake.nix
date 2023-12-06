@@ -62,6 +62,7 @@
           home-manager.nixosModules.home-manager
           inputs.authentik-nix.nixosModules.default
           inputs.vpsadminos.nixosConfigurations.container
+          inputs.simple-nixos-mailserver.nixosModule
           {networking.hostName = "vps";}
         ];
       };
