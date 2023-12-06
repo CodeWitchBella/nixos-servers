@@ -27,7 +27,10 @@
         hashedPasswordFile = config.age.secrets.email-password.path;
         catchAll = ["isbl.cz"];
       };
-      "authentik@isbl.cz".hashedPassword = "$2b$05$Q5QhaF3Q1E3uMmn.hw5Vr.8Uk3zamX.K.jtLhcVGXOzid20qoL5f6";
+      "authentik@isbl.cz" = {
+        hashedPassword = "$2b$05$Q5QhaF3Q1E3uMmn.hw5Vr.8Uk3zamX.K.jtLhcVGXOzid20qoL5f6";
+        sendOnly = true;
+      };
     };
     certificateScheme = "acme";
   };
