@@ -5,7 +5,7 @@
   inputs,
   ...
 }: {
-  imports = [ ../nginx.nix ];
+  imports = [../nginx.nix];
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
     certs."isbl.cz" = {

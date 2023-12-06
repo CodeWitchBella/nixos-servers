@@ -20,12 +20,14 @@
     enable = true;
     fqdn = "email.isbl.cz"; # domain for SMTP/IMAP
     sendingFqdn = "email.isbl.cz"; # rDNS
-    domains = [ "isbl.cz" ];
+    domains = ["isbl.cz"];
 
     loginAccounts = {
       "me@isbl.cz" = {
         hashedPasswordFile = config.age.secrets.email-password.path;
+        catchAll = ["isbl.cz"];
       };
+      "authentik@isbl.cz".hashedPassword = "$2b$05$Q5QhaF3Q1E3uMmn.hw5Vr.8Uk3zamX.K.jtLhcVGXOzid20qoL5f6";
     };
     certificateScheme = "acme";
   };
