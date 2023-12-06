@@ -119,8 +119,17 @@
       "lidarr.isbl.cz" = hostAuth 8686;
       "lidarr.local.isbl.cz" = hostLocal 8686;
 
+      "radarr.isbl.cz" = hostAuth 7878;
+      "radarr.local.isbl.cz" = hostLocal 7878;
+
+      "readarr.isbl.cz" = hostAuth 8787;
+      "readarr.local.isbl.cz" = hostLocal 8787;
+
       "sonarr.isbl.cz" = hostAuth 8989;
       "sonarr.local.isbl.cz" = hostLocal 8989;
+
+      "prowlarr.isbl.cz" = hostAuth 9696;
+      "prowlarr.local.isbl.cz" = hostLocal 9696;
     };
   };
 }

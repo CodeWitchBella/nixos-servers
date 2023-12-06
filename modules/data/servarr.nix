@@ -4,12 +4,24 @@
   inputs,
   ...
 }: {
+  services.lidarr = {
+    enable = true;
+    dataDir = "/ssd/lidarr";
+  };
+  services.radarr = {
+    enable = true;
+    dataDir = "/ssd/radarr";
+  };
+  services.readarr = {
+    enable = true;
+    dataDir = "/ssd/readarr";
+  };
   services.sonarr = {
     enable = true;
     dataDir = "/ssd/sonarr";
   };
-  services.lidarr = {
+  services.prowlarr = {
     enable = true;
-    dataDir = "/ssd/lidarr";
+    dataDir = "/ssd/prowlarr";
   };
 }
