@@ -15,5 +15,6 @@ in {
   "dnskey.conf.age".publicKeys = users ++ systems;
   "outline.age".publicKeys = users ++ systems;
   "authentik-env.age".publicKeys = users ++ [vps];
+  "authentik-outpost-token.age".publicKeys = users ++ [data];
   "email-password.age".publicKeys = users ++ [vps];
 }
