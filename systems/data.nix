@@ -38,15 +38,9 @@
       "nls_iso8859_1"
       "snd_soc_simple_card"
       "crct10dif_ce"
-      "polyval_ce"
-      "sm4"
-      "nls_cp437"
       "rk3399_dmc"
-      "hci_uart"
       "rockchipdrm"
       "phy_rockchip_pcie"
-      "hantro_vpu"
-      "btsdio"
       "snd_soc_rockchip_i2s"
       "rockchip_vdec"
       "rockchip_rga"
@@ -57,11 +51,7 @@
       "rockchip_thermal"
       "rockchip_saradc"
       "pcie_rockchip_host"
-      "dmi_sysfs"
-      "ip_tables"
-      "dm_mod"
       "btrfs"
-      "blake2b_generic"
     ];
   };
 
