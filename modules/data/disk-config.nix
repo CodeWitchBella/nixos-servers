@@ -54,7 +54,18 @@
           content = {
             type = "btrfs";
             extraArgs = ["-f"]; # Override existing partition
-            mountpoint = "/ssd";
+            mountpoint = "/ssd_root";
+            subvolumes = {
+              "/ssd" = {
+                mountpoint = "/ssd";
+              };
+              "/var-lib" = {
+                mountpoint = "/var/lib";
+              };
+              "/var-log" = {
+                mountpoint = "/var/log";
+              };
+            };
           };
         };
       };
