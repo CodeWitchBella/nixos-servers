@@ -98,6 +98,16 @@
     fsType = "btrfs";
     options = ["noatime" "compress=zstd" "autodefrag" "subvol=/ssd"];
   };
+  fileSystems."/ssd_root" = {
+    device = "/dev/disk/by-label/ssd";
+    fsType = "btrfs";
+    options = ["noatime" "compress=zstd" "autodefrag"];
+  };
+  #fileSystems."/var/lib" = {
+  #  device = "/dev/disk/by-label/ssd";
+  #  fsType = "btrfs";
+  #  options = ["noatime" "compress=zstd" "autodefrag" "subvol=/var-lib"];
+  #};
 
   networking.firewall.allowedTCPPorts = [22 80 443];
   networking.firewall.allowedUDPPorts = [443];
