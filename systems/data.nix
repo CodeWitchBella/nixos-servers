@@ -28,13 +28,6 @@
     network.ssh.enable = true;
     #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
-      "cdc_acm"
-      "xt_addrtype"
-      "xt_nat"
-      "xt_mark"
-      "xt_comment"
-      "nft_chain_nat"
-      "xt_MASQUERADE"
       "veth"
       "wireguard"
       "overlay"
