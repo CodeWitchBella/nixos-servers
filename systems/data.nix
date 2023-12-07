@@ -21,6 +21,12 @@
     device = "nodev";
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.initrd = {
+    supportedFilesystems = ["btrfs"];
+    systemd.enable = true;
+    systemd.emergencyAccess = true;
+    network.ssh.enable = true;
+  };
 
   fileSystems."/disks" = {
     device = "/dev/disk/by-label/first-btrfs";
