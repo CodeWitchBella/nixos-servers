@@ -28,9 +28,6 @@
     network.ssh.enable = true;
     #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
-      "crct10dif_ce"
-      "rk3399_dmc"
-      "rockchipdrm"
       "phy_rockchip_pcie"
       "snd_soc_rockchip_i2s"
       "rockchip_vdec"
