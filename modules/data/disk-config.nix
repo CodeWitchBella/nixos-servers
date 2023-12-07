@@ -51,38 +51,5 @@
         };
       };
     };
-    disk.ssd = {
-      device = "/dev/disk/by-id/ata-Apacer_AS350_1TB_11EE07381F5B00157340";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions.ssd = {
-          size = "100%";
-          content = {
-            type = "btrfs";
-            extraArgs = [
-              # Override existing partition
-              "-f"
-              # duplicate metadata
-              "--metadata"
-              "dup"
-            ];
-            mountpoint = "/ssd_root";
-            subvolumes = {
-              "/ssd" = {
-                mountOptions = ["compress=zstd" "noatime"];
-                mountpoint = "/ssd";
-              };
-              #"/var-lib" = {
-              #  mountpoint = "/var/lib";
-              #};
-              #"/var-log" = {
-              #  mountpoint = "/var/log";
-              #};
-            };
-          };
-        };
-      };
-    };
   };
 }

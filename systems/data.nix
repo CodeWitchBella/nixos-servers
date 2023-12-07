@@ -33,6 +33,11 @@
     fsType = "btrfs";
     options = ["noatime" "compress=zstd" "autodefrag"];
   };
+  fileSystems."/ssd" = {
+    device = "/dev/disk/by-label/ssd";
+    fsType = "btrfs";
+    options = ["noatime" "compress=zstd" "autodefrag" "subvol=/ssd"];
+  };
 
   networking.firewall.allowedTCPPorts = [22 80 443];
   networking.firewall.allowedUDPPorts = [443];
