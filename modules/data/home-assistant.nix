@@ -34,6 +34,7 @@
       image = "ghcr.io/koenkk/zigbee2mqtt";
       extraOptions = [
         "--device=/dev/ttyACM0:/dev/ttyACM0"
+        "--network=host" # workaround borked dns
       ];
     };
   };
