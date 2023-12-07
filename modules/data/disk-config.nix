@@ -21,17 +21,24 @@
           size = "100%";
           content = {
             type = "btrfs";
-            extraArgs = ["-f"]; # Override existing partition
+            extraArgs = [
+              # Override existing partition
+              "-f"
+              # duplicate metadata
+              "--metadata"
+              "dup"
+            ];
             # Subvolumes must set a mountpoint in order to be mounted,
             # unless their parent is mounted
             subvolumes = {
               # Subvolume name is different from mountpoint
               "/rootfs" = {
+                mountOptions = ["compress=zstd" "relatime"];
                 mountpoint = "/";
               };
               # Subvolume name is the same as the mountpoint
               "/home" = {
-                mountOptions = ["compress=zstd"];
+                mountOptions = ["compress=zstd" "relatime"];
                 mountpoint = "/home";
               };
               # Parent is not mounted so the mountpoint must be set
@@ -53,10 +60,17 @@
           size = "100%";
           content = {
             type = "btrfs";
-            extraArgs = ["-f"]; # Override existing partition
+            extraArgs = [
+              # Override existing partition
+              "-f"
+              # duplicate metadata
+              "--metadata"
+              "dup"
+            ];
             mountpoint = "/ssd_root";
             subvolumes = {
               "/ssd" = {
+                mountOptions = ["compress=zstd" "noatime"];
                 mountpoint = "/ssd";
               };
               #"/var-lib" = {
