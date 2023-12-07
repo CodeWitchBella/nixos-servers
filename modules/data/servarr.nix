@@ -33,4 +33,12 @@
       download-dir = "/ssd/download";
     };
   };
+  services.navidrome = {
+    enable = true;
+    settings = {
+      ReverseProxyWhitelist = "127.0.0.1/32";
+      ReverseProxyUserHeader = "X-authentik-username";
+      MusicFolder = "/ssd/music";
+    };
+  };
 }
