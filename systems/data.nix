@@ -28,15 +28,6 @@
     network.ssh.enable = true;
     #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
-      "veth"
-      "wireguard"
-      "overlay"
-      "8021q"
-      "snd_soc_hdmi_codec"
-      "dw_hdmi_i2s_audio"
-      "dw_hdmi_cec"
-      "nls_iso8859_1"
-      "snd_soc_simple_card"
       "crct10dif_ce"
       "rk3399_dmc"
       "rockchipdrm"
@@ -44,7 +35,6 @@
       "snd_soc_rockchip_i2s"
       "rockchip_vdec"
       "rockchip_rga"
-      "brcmfmac"
       "rockchip_dfi"
       "rtc_rk808"
       "dwmac_rk"
