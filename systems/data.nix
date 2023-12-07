@@ -29,10 +29,7 @@
     #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
       "phy_rockchip_pcie"
-      "rockchip_thermal"
-      "rockchip_saradc"
       "pcie_rockchip_host"
-      "btrfs"
     ];
   };
 
