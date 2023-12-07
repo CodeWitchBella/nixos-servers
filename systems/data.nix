@@ -29,9 +29,6 @@
     #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
       "phy_rockchip_pcie"
-      "snd_soc_rockchip_i2s"
-      "rockchip_vdec"
-      "rockchip_rga"
       "rockchip_dfi"
       "rtc_rk808"
       "dwmac_rk"
