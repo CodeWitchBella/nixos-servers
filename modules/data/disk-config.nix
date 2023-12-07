@@ -59,12 +59,12 @@
               "/ssd" = {
                 mountpoint = "/ssd";
               };
-              "/var-lib" = {
-                mountpoint = "/var/lib";
-              };
-              "/var-log" = {
-                mountpoint = "/var/log";
-              };
+              #"/var-lib" = {
+              #  mountpoint = "/var/lib";
+              #};
+              #"/var-log" = {
+              #  mountpoint = "/var/log";
+              #};
             };
           };
         };
