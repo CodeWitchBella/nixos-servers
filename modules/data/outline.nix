@@ -9,7 +9,6 @@
     file = ../../secrets/outline.age;
     owner = "outline";
   };
-  services.postgresql.package = pkgs.postgresql_14;
   services.outline = {
     enable = true;
     publicUrl = "https://outline.isbl.cz";
