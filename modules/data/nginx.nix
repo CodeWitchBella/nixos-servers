@@ -135,6 +135,7 @@
       "transmission.local.isbl.cz" = hostLocal 9091;
 
       "navidrome.isbl.cz" = hostAuth 4533;
+      "navidrome-direct.isbl.cz" = hostPublic 4533;
       "navidrome.local.isbl.cz" = hostLocal 4533;
     };
   };
