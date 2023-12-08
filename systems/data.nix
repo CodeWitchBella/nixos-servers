@@ -26,7 +26,6 @@
     systemd.enable = true;
     systemd.emergencyAccess = true;
     network.ssh.enable = true;
-    #kernelModules = ["phy_rockchip_pcie"];
     availableKernelModules = [
       "phy_rockchip_pcie"
       "pcie_rockchip_host"

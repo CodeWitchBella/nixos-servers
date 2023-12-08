@@ -22,7 +22,7 @@
   };
   services.prowlarr.enable = true;
 
-  services.transmission = { 
+  services.transmission = {
     enable = true;
     openRPCPort = true;
     settings = {
