@@ -23,9 +23,10 @@
   services.prowlarr.enable = true;
 
   users.users = {
-    sonarr.extraGroups = ["jellyfin"];
+    lidarr.extraGroups = ["jellyfin"];
     radarr.extraGroups = ["jellyfin"];
     readarr.extraGroups = ["jellyfin"];
+    sonarr.extraGroups = ["jellyfin"];
   };
 
   services.transmission = {
