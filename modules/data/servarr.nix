@@ -22,6 +22,12 @@
   };
   services.prowlarr.enable = true;
 
+  users.users = {
+    sonarr.extraGroups = ["jellyfin"];
+    radarr.extraGroups = ["jellyfin"];
+    readarr.extraGroups = ["jellyfin"];
+  };
+
   services.transmission = {
     enable = true;
     openRPCPort = true;
