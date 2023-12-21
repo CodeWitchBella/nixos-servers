@@ -25,7 +25,7 @@
     };
 
     authentik-nix = {
-      url = "github:mayflower/authentik-nix";
+      url = "github:nix-community/authentik-nix";
     };
     vpsadminos.url = "github:vpsfreecz/vpsadminos";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
