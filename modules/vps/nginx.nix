@@ -28,8 +28,23 @@
           proxyWebsockets = true;
         };
       };
+
+      toData = {
+        forceSSL = true;
+        useACMEHost = "isbl.cz";
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "https://127.0.0.1:4444";
+          proxyWebsockets = true;
+        };
+      };
     in {
       "authentik.isbl.cz" = host 9000;
+      "ha.isbl.cz" = toData;
+      "navidrome.isbl.cz" = toData;
+      "jellyfin.isbl.cz" = toData;
+      "navidrome-direct.isbl.cz" = toData;
     };
   };
 }
