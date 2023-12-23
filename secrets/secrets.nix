@@ -17,4 +17,5 @@ in {
   "authentik-env.age".publicKeys = users ++ [vps];
   "authentik-outpost-token.age".publicKeys = users ++ [data];
   "email-password.age".publicKeys = users ++ [vps];
+  "psn.age".publicKeys = users ++ [data];
 }

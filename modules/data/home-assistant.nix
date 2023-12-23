@@ -4,6 +4,9 @@
   pkgs,
   ...
 }: {
+  age.secrets.psn = {
+    file = ../../secrets/psn.age;
+  };
   virtualisation.oci-containers = {
     backend = "podman";
     containers.homeassistant = {
@@ -36,6 +39,37 @@
         "--device=/dev/ttyACM0:/dev/ttyACM0"
         "--network=host" # workaround borked dns
       ];
+    };
+    containers.ps5mqtt = {
+      image = "ghcr.io/funkeyflo/ps5-mqtt/aarch64";
+      entrypoint = "/usr/bin/node";
+      cmd = ["app/server/dist/index.js"];
+      environmentFiles = [config.age.secrets.psn.path];
+      extraOptions = [
+        "--network=host" # workaround borked dns
+      ];
+      volumes = ["/ssd/persistent/ps5mqtt:/ssd/persistent/ps5mqtt"];
+      environment = {
+        MQTT_HOST = "127.0.0.1"; # host.containers.internal if not network=host
+        #MQTT_PORT = "1883";
+        #MQTT_USERNAME = "mqttuser";
+        #MQTT_PASSWORD = "mqttpassword";
+
+        DEVICE_CHECK_INTERVAL = "5000";
+        DEVICE_DISCOVERY_INTERVAL = "60000";
+        ACCOUNT_CHECK_INTERVAL = "5000";
+
+        #PSN_ACCOUNTS = ''[{"username": "MyPsnUser", "npsso":"npsso_value"}]'';
+
+        INCLUDE_PS4_DEVICES = "false";
+
+        FRONTEND_PORT = "8645";
+
+        CREDENTIAL_STORAGE_PATH = "/ssd/persistent/ps5mqtt/credentials.json";
+        CONFIG_PATH = "/data/options.json";
+        DEBUG = "@ha:ps5:*";
+        DEVICE_DISCOVERY_BROADCAST_ADDRESS = "172.18.80.14";
+      };
     };
   };
   virtualisation.podman.defaultNetwork.settings = {dns_enabled = true;};

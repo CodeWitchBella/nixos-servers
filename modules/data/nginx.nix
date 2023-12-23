@@ -107,6 +107,9 @@
       "zigbee.isbl.cz" = host 8080;
       "zigbee.local.isbl.cz" = hostLocal 8080;
 
+      "ps5.isbl.cz" = host 8645;
+      "ps5.local.isbl.cz" = hostLocal 8645;
+
       "jellyfin.isbl.cz" = host 8096;
       "jellyfin.local.isbl.cz" = hostLocal 8096;
 
