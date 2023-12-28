@@ -15,6 +15,8 @@
       ROCKET_ADDRESS = "127.0.0.1";
       WEBSOCKET_ENABLED = true;
       DOMAIN = "https://vault.isbl.cz";
+      SIGNUPS_ALLOWED = false;
+      SHOW_PASSWORD_HINT = false;
 
       SMTP_HOST="email.isbl.cz";
       SMTP_FROM="vault@isbl.cz";

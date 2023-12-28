@@ -34,6 +34,31 @@
 
       # Minimize information leaked to other domains
       add_header 'Referrer-Policy' 'origin-when-cross-origin';
+
+      server {
+        listen 0.0.0.0:80 default_server;
+        listen [::]:80 default_server;
+        location / {
+          return 301 https://$host$request_uri;
+        }
+      }
+      server {
+        listen 0.0.0.0:443 ssl default_server;
+        listen [::]:443 ssl default_server;
+        listen 0.0.0.0:443 quic default_server;
+        listen [::]:443 quic default_server;
+        http2 on;
+        http3 on;
+        http3_hq off;
+        ssl_certificate /var/lib/acme/isbl.cz/fullchain.pem;
+        ssl_certificate_key /var/lib/acme/isbl.cz/key.pem;
+        ssl_trusted_certificate /var/lib/acme/isbl.cz/chain.pem;
+        add_header Alt-Svc 'h3=":$server_port"; ma=86400';
+
+        location / {
+          return 404;
+        }
+      }
     '';
   };
 }
