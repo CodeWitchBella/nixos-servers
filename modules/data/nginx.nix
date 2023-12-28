@@ -42,10 +42,39 @@
             deny all;
           '';
         };
+      localExtraConfig = ''
+        deny 172.18.80.1;
+        allow 172.18.80.26/22;
+        deny all;
+      '';
       hostLocalPublic = port:
         lib.recursiveUpdate (hostPublic port) {
           useACMEHost = "local.isbl.cz";
+          locations."/".extraConfig = localExtraConfig;
         };
+
+      authExtraConfig = ''
+        ##############################
+        # authentik-specific config
+        ##############################
+        auth_request     /outpost.goauthentik.io/auth/nginx;
+        error_page       401 = @goauthentik_proxy_signin;
+        auth_request_set $auth_cookie $upstream_http_set_cookie;
+        add_header       Set-Cookie $auth_cookie;
+
+        # translate headers from the outposts back to the actual upstream
+        auth_request_set $authentik_username $upstream_http_x_authentik_username;
+        auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
+        auth_request_set $authentik_email $upstream_http_x_authentik_email;
+        auth_request_set $authentik_name $upstream_http_x_authentik_name;
+        auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
+
+        proxy_set_header X-authentik-username $authentik_username;
+        proxy_set_header X-authentik-groups $authentik_groups;
+        proxy_set_header X-authentik-email $authentik_email;
+        proxy_set_header X-authentik-name $authentik_name;
+        proxy_set_header X-authentik-uid $authentik_uid;
+      '';
 
       hostAuth = port: {
         forceSSL = true;
@@ -55,28 +84,7 @@
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString port}";
           proxyWebsockets = true;
-          extraConfig = ''
-            ##############################
-            # authentik-specific config
-            ##############################
-            auth_request     /outpost.goauthentik.io/auth/nginx;
-            error_page       401 = @goauthentik_proxy_signin;
-            auth_request_set $auth_cookie $upstream_http_set_cookie;
-            add_header       Set-Cookie $auth_cookie;
-
-            # translate headers from the outposts back to the actual upstream
-            auth_request_set $authentik_username $upstream_http_x_authentik_username;
-            auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
-            auth_request_set $authentik_email $upstream_http_x_authentik_email;
-            auth_request_set $authentik_name $upstream_http_x_authentik_name;
-            auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
-
-            proxy_set_header X-authentik-username $authentik_username;
-            proxy_set_header X-authentik-groups $authentik_groups;
-            proxy_set_header X-authentik-email $authentik_email;
-            proxy_set_header X-authentik-name $authentik_name;
-            proxy_set_header X-authentik-uid $authentik_uid;
-          '';
+          extraConfig = authExtraConfig;
         };
         # all requests to /outpost.goauthentik.io must be accessible without authentication
         locations."/outpost.goauthentik.io".extraConfig = ''
@@ -103,6 +111,10 @@
       hostLocalAuth = port:
         lib.recursiveUpdate (hostAuth port) {
           useACMEHost = "local.isbl.cz";
+          extraConfig = ''
+            ${authExtraConfig}
+            ${localExtraConfig}
+          '';
         };
     in {
       "ha.isbl.cz" = hostPublic 8123;
@@ -141,12 +153,9 @@
       "transmission.isbl.cz" = hostAuth 9091;
       "transmission.local.isbl.cz" = hostLocalPublic 9091;
 
-      "filebrowser.isbl.cz" = hostAuth 9091;
-      "filebrowser.local.isbl.cz" = hostLocalAuth 9091;
-
       "navidrome.isbl.cz" = hostAuth 4533;
       "navidrome-direct.isbl.cz" = hostPublic 4533;
-      "navidrome.local.isbl.cz" = hostLocalAuth 4533;
+      "navidrome.local.isbl.cz" = hostLocalPublic 4533;
       "navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
     };
   };
