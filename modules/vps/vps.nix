@@ -8,5 +8,6 @@
     ./nginx.nix
     ./authentik.nix
     ./mailserver.nix
+    ./vaultwarden.nix
   ];
 }

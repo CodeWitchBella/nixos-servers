@@ -18,4 +18,5 @@ in {
   "authentik-outpost-token.age".publicKeys = users ++ [data];
   "email-password.age".publicKeys = users ++ [vps];
   "psn.age".publicKeys = users ++ [data];
+  "vaultwarden.age".publicKeys = users ++ [vps];
 }

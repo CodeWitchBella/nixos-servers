@@ -22,6 +22,8 @@
     sendingFqdn = "email.isbl.cz"; # rDNS
     domains = ["isbl.cz"];
 
+    # Hashes generated with:
+    # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
     loginAccounts = {
       "me@isbl.cz" = {
         hashedPasswordFile = config.age.secrets.email-password.path;
@@ -29,6 +31,10 @@
       };
       "authentik@isbl.cz" = {
         hashedPassword = "$2b$05$Q5QhaF3Q1E3uMmn.hw5Vr.8Uk3zamX.K.jtLhcVGXOzid20qoL5f6";
+        sendOnly = true;
+      };
+      "vault@isbl.cz" = {
+        hashedPassword = "$2b$05$4NF7DTvf9U1WoM98rC2FxuXEStTalo6mAsLJaHHnrjUHCG/zIjvfq";
         sendOnly = true;
       };
     };

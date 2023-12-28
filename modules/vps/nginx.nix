@@ -41,6 +41,7 @@
       };
     in {
       "authentik.isbl.cz" = host 9000;
+      "vault.isbl.cz" = host 8000;
       "ha.isbl.cz" = toData;
       "navidrome.isbl.cz" = toData;
       "jellyfin.isbl.cz" = toData;
