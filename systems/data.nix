@@ -76,6 +76,7 @@
     usbutils # lsusb
     lm_sensors # sensors
     bat
+    zellij
   ];
   services.jellyfin.enable = true;
   services.netdata.enable = true;
