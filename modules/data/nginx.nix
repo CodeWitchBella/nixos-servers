@@ -100,6 +100,10 @@
           # return 302 https://authentik.isbl.cz/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
         '';
       };
+      hostLocalAuth = port:
+        lib.recursiveUpdate (hostAuth port) {
+          useACMEHost = "local.isbl.cz";
+        };
     in {
       "ha.isbl.cz" = hostPublic 8123;
       "ha.local.isbl.cz" = hostLocal 8123;
@@ -136,6 +140,9 @@
 
       "transmission.isbl.cz" = hostAuth 9091;
       "transmission.local.isbl.cz" = hostLocal 9091;
+
+      "filebrowser.isbl.cz" = hostAuth 9091;
+      "filebrowser.local.isbl.cz" = hostLocalAuth 9091;
 
       "navidrome.isbl.cz" = hostAuth 4533;
       "navidrome-direct.isbl.cz" = hostPublic 4533;
