@@ -42,7 +42,7 @@
             deny all;
           '';
         };
-      hostLocal = port:
+      hostLocalPublic = port:
         lib.recursiveUpdate (hostPublic port) {
           useACMEHost = "local.isbl.cz";
         };
@@ -106,47 +106,48 @@
         };
     in {
       "ha.isbl.cz" = hostPublic 8123;
-      "ha.local.isbl.cz" = hostLocal 8123;
+      "ha.local.isbl.cz" = hostLocalPublic 8123;
 
       "zigbee.isbl.cz" = host 8080;
-      "zigbee.local.isbl.cz" = hostLocal 8080;
+      "zigbee.local.isbl.cz" = hostLocalPublic 8080;
 
       "ps5.isbl.cz" = host 8645;
-      "ps5.local.isbl.cz" = hostLocal 8645;
+      "ps5.local.isbl.cz" = hostLocalPublic 8645;
 
       "jellyfin.isbl.cz" = host 8096;
-      "jellyfin.local.isbl.cz" = hostLocal 8096;
+      "jellyfin.local.isbl.cz" = hostLocalPublic 8096;
 
       "netdata.isbl.cz" = host 19999;
-      "netdata.local.isbl.cz" = hostLocal 19999;
+      "netdata.local.isbl.cz" = hostLocalPublic 19999;
 
       "outline.isbl.cz" = hostPublic 3801;
-      "outline.local.isbl.cz" = hostLocal 3801;
+      "outline.local.isbl.cz" = hostLocalPublic 3801;
 
       "lidarr.isbl.cz" = hostAuth 8686;
-      "lidarr.local.isbl.cz" = hostLocal 8686;
+      "lidarr.local.isbl.cz" = hostLocalPublic 8686;
 
       "radarr.isbl.cz" = hostAuth 7878;
-      "radarr.local.isbl.cz" = hostLocal 7878;
+      "radarr.local.isbl.cz" = hostLocalPublic 7878;
 
       "readarr.isbl.cz" = hostAuth 8787;
-      "readarr.local.isbl.cz" = hostLocal 8787;
+      "readarr.local.isbl.cz" = hostLocalPublic 8787;
 
       "sonarr.isbl.cz" = hostAuth 8989;
-      "sonarr.local.isbl.cz" = hostLocal 8989;
+      "sonarr.local.isbl.cz" = hostLocalPublic 8989;
 
       "prowlarr.isbl.cz" = hostAuth 9696;
-      "prowlarr.local.isbl.cz" = hostLocal 9696;
+      "prowlarr.local.isbl.cz" = hostLocalPublic 9696;
 
       "transmission.isbl.cz" = hostAuth 9091;
-      "transmission.local.isbl.cz" = hostLocal 9091;
+      "transmission.local.isbl.cz" = hostLocalPublic 9091;
 
       "filebrowser.isbl.cz" = hostAuth 9091;
       "filebrowser.local.isbl.cz" = hostLocalAuth 9091;
 
       "navidrome.isbl.cz" = hostAuth 4533;
       "navidrome-direct.isbl.cz" = hostPublic 4533;
-      "navidrome.local.isbl.cz" = hostLocal 4533;
+      "navidrome.local.isbl.cz" = hostLocalAuth 4533;
+      "navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
     };
   };
 }
