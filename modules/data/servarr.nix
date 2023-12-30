@@ -29,6 +29,7 @@
     sonarr.extraGroups = ["jellyfin"];
   };
 
+  users.users.isabella.extraGroups = ["transmission"];
   services.transmission = {
     enable = true;
     openRPCPort = true;
