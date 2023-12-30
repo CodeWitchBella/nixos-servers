@@ -77,6 +77,7 @@
     lm_sensors # sensors
     bat
     zellij
+    librespeed-cli
   ];
   services.jellyfin.enable = true;
   services.netdata.enable = true;
