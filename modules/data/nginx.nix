@@ -125,7 +125,7 @@
     virtualHosts."ps5.isbl.cz" = host 8645;
     virtualHosts."ps5.local.isbl.cz" = hostLocalPublic 8645;
 
-    virtualHosts."jellyfin.isbl.cz" = host 8096;
+    virtualHosts."jellyfin.isbl.cz" = hostAuth 8096;
     virtualHosts."jellyfin.local.isbl.cz" = hostLocalPublic 8096;
 
     virtualHosts."netdata.isbl.cz" = host 19999;
