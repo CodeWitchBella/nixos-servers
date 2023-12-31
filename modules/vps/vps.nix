@@ -5,8 +5,10 @@
   ...
 }: {
   imports = [
-    ./nginx.nix
     ./authentik.nix
+    ../frp.nix
+    ./frps.nix
+    ./nginx.nix
     ./mailserver.nix
     ./uptime.nix
     ./vaultwarden.nix

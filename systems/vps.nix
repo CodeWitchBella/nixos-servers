@@ -27,8 +27,12 @@
     465 # SMTP
     587 # SMTP StartTLS
     993 # imap TLS
+    #7000 # frps
   ];
-  networking.firewall.allowedUDPPorts = [443];
+  networking.firewall.allowedUDPPorts = [
+    443 # https
+    7000 # frps
+  ];
 
   system.stateVersion = "23.11";
 }
