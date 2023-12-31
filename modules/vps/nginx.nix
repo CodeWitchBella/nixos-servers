@@ -43,9 +43,16 @@
       "authentik.isbl.cz" = host 9000;
       "vault.isbl.cz" = host 8000;
       "uptime.isbl.cz" = host 4005;
+
       "ha.isbl.cz" = toData;
+      "outline.isbl.cz" = toData;
+      "lidarr.isbl.cz" = toData;
+      "radarr.isbl.cz" = toData;
+      "readarr.isbl.cz" = toData;
+      "sonarr.isbl.cz" = toData;
+      "prowlarr.isbl.cz" = toData;
+      "transmission.isbl.cz" = toData;
       "navidrome.isbl.cz" = toData;
-      "jellyfin.isbl.cz" = toData;
       "navidrome-direct.isbl.cz" = toData;
     };
   };
