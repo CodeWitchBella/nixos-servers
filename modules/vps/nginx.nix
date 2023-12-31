@@ -54,6 +54,7 @@
       "transmission.isbl.cz" = toData;
       "navidrome.isbl.cz" = toData;
       "navidrome-direct.isbl.cz" = toData;
+      "jellyfin.isbl.cz" = toData;
     };
   };
 }
