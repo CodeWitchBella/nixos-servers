@@ -79,8 +79,9 @@
     zellij
     librespeed-cli
   ];
-  services.jellyfin.enable = true;
-  services.netdata.enable = true;
+  # There is not enough RAM. Let's disable some things :-(
+  #services.jellyfin.enable = true;
+  #services.netdata.enable = true;
 
   system.stateVersion = "23.11";
 }
