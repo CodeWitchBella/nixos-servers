@@ -4,8 +4,8 @@
   ...
 }: {
   imports = [
-    ../modules/vps/vps.nix
-    ../modules/basics.nix
+    ../fake-modules/vps/vps.nix
+    ../fake-modules/basics.nix
   ];
 
   environment.systemPackages = with pkgs; [

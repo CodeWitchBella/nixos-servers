@@ -9,8 +9,8 @@
   ...
 }: {
   imports = [
-    ../modules/data/data.nix
-    ../modules/basics.nix
+    ../fake-modules/data/data.nix
+    ../fake-modules/basics.nix
   ];
 
   boot.loader.efi.canTouchEfiVariables = false;
