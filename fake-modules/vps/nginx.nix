@@ -9,7 +9,15 @@
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
     certs."isbl.cz" = {
-      domain = "*.isbl.cz";
+      domain = "isbl.cz";
+      extraDomainNames = ["*.isbl.cz"];
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.dnskey.path;
+      group = "nginx";
+    };
+    certs."brehoni.cz" = {
+      domain = "brehoni.cz";
+      extraDomainNames = ["*.brehoni.cz"];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
@@ -18,9 +26,9 @@
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx = {
     virtualHosts = let
-      host = port: {
+      host = acmehost: port: {
         forceSSL = true;
-        useACMEHost = "isbl.cz";
+        useACMEHost = acmehost;
         http3 = true;
         quic = true;
         locations."/" = {
@@ -40,9 +48,10 @@
         };
       };
     in {
-      "authentik.isbl.cz" = host 9000;
-      "vault.isbl.cz" = host 8000;
-      "uptime.isbl.cz" = host 4005;
+      "authentik.isbl.cz" = host "isbl.cz" 9000;
+      "vault.isbl.cz" = host "isbl.cz" 8000;
+      "uptime.isbl.cz" = host "isbl.cz" 4005;
+      "list.brehoni.cz" = host "brehoni.cz" 9432;
 
       "ha.isbl.cz" = toData;
       "outline.isbl.cz" = toData;

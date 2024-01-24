@@ -20,7 +20,8 @@
     enable = true;
     fqdn = "email.isbl.cz"; # domain for SMTP/IMAP
     sendingFqdn = "email.isbl.cz"; # rDNS
-    domains = ["isbl.cz"];
+    domains = ["isbl.cz" "brehoni.cz"];
+    dkimSelector = "isbl";
 
     # Hashes generated with:
     # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
@@ -28,6 +29,10 @@
       "me@isbl.cz" = {
         hashedPasswordFile = config.age.secrets.email-password.path;
         catchAll = ["isbl.cz"];
+      };
+      "oddil@brehoni.cz" = {
+        hashedPassword = "$2b$05$nJfL3luwkjMD4l7.9JxqEeUjzTr5Xkw0Bl80tnYS.bjsOK8PAkCuO";
+        sendOnly = true;
       };
       "authentik@isbl.cz" = {
         hashedPassword = "$2b$05$Q5QhaF3Q1E3uMmn.hw5Vr.8Uk3zamX.K.jtLhcVGXOzid20qoL5f6";
