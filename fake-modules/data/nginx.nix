@@ -51,6 +51,26 @@
         useACMEHost = "local.isbl.cz";
         locations."/".extraConfig = localExtraConfig;
       };
+    hostLocalForwardPublic = host: {
+      forceSSL = true;
+      useACMEHost = "local.isbl.cz";
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = host;
+        proxyWebsockets = true;
+      };
+    };
+    hostForwardPublic = host: {
+      forceSSL = true;
+      useACMEHost = "isbl.cz";
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = host;
+        proxyWebsockets = true;
+      };
+    };
 
     authExtraConfig = ''
       ##############################
@@ -156,5 +176,8 @@
     virtualHosts."navidrome-direct.isbl.cz" = hostPublic 4533;
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;
     virtualHosts."navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
+
+    virtualHosts."priscilla.isbl.cz" = hostForwardPublic "http://priscilla.isbl.cz";
+    virtualHosts."priscilla.local.isbl.cz" = hostLocalForwardPublic "http://priscilla.isbl.cz";
   };
 }
