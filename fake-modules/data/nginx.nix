@@ -23,13 +23,18 @@
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx = let
+    proxypass = port:
+      if (builtins.typeOf port) == "string"
+      then port
+      else "http://127.0.0.1:${toString port}";
+
     hostPublic = port: {
       forceSSL = true;
       useACMEHost = "isbl.cz";
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString port}";
+        proxyPass = proxypass port;
         proxyWebsockets = true;
       };
     };
@@ -51,26 +56,6 @@
         useACMEHost = "local.isbl.cz";
         locations."/".extraConfig = localExtraConfig;
       };
-    hostLocalForwardPublic = host: {
-      forceSSL = true;
-      useACMEHost = "local.isbl.cz";
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = host;
-        proxyWebsockets = true;
-      };
-    };
-    hostForwardPublic = host: {
-      forceSSL = true;
-      useACMEHost = "isbl.cz";
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = host;
-        proxyWebsockets = true;
-      };
-    };
 
     authExtraConfig = ''
       ##############################
@@ -101,7 +86,7 @@
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString port}";
+        proxyPass = proxypass port;
         proxyWebsockets = true;
         extraConfig = authExtraConfig;
       };
@@ -177,7 +162,7 @@
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;
     virtualHosts."navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
 
-    virtualHosts."priscilla.isbl.cz" = hostForwardPublic "http://priscilla.isbl.cz";
-    virtualHosts."priscilla.local.isbl.cz" = hostLocalForwardPublic "http://priscilla.isbl.cz";
+    virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz";
+    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
   };
 }

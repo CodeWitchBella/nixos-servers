@@ -64,6 +64,7 @@
       "navidrome.isbl.cz" = toData;
       "navidrome-direct.isbl.cz" = toData;
       "jellyfin.isbl.cz" = toData;
+      "priscilla.isbl.cz" = toData;
     };
   };
 }
