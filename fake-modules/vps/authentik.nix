@@ -7,6 +7,8 @@
   age.secrets.authentik-env = {
     file = ../../secrets/authentik-env.age;
   };
+  systemd.services.authentik.wants = ["network-online.target" "postgresql.service" "redis-authentik.service"];
+
   services.authentik = {
     enable = true;
     environmentFile = config.age.secrets.authentik-env.path;
