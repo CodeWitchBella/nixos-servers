@@ -18,10 +18,10 @@
       SIGNUPS_ALLOWED = false;
       SHOW_PASSWORD_HINT = false;
 
-      SMTP_HOST="email.isbl.cz";
-      SMTP_FROM="vault@isbl.cz";
-      SMTP_PORT=587;
-      SMTP_SECURITY="starttls";
+      SMTP_HOST = "email.isbl.cz";
+      SMTP_FROM = "vault@isbl.cz";
+      SMTP_PORT = 587;
+      SMTP_SECURITY = "starttls";
       # In secrets:
       #SMTP_USERNAME=<username>
       #SMTP_PASSWORD=<password>

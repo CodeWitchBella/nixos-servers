@@ -52,6 +52,7 @@
       "vault.isbl.cz" = host "isbl.cz" 8000;
       "uptime.isbl.cz" = host "isbl.cz" 4005;
       "list.brehoni.cz" = host "brehoni.cz" 9432;
+      "email.isbl.cz" = host "isbl.cz" 8183;
 
       "ha.isbl.cz" = toData;
       "outline.isbl.cz" = toData;
