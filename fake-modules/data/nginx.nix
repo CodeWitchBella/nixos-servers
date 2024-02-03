@@ -157,6 +157,9 @@
     virtualHosts."transmission.isbl.cz" = hostAuth 9091;
     virtualHosts."transmission.local.isbl.cz" = hostLocalPublic 9091;
 
+    virtualHosts."spoolman.isbl.cz" = hostAuth 7912;
+    virtualHosts."spoolman.local.isbl.cz" = hostLocalPublic 7912;
+
     virtualHosts."navidrome.isbl.cz" = hostAuth 4533;
     virtualHosts."navidrome-direct.isbl.cz" = hostPublic 4533;
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;

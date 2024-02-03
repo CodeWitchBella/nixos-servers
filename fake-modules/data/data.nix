@@ -14,5 +14,6 @@
     ./nginx.nix
     ./outline.nix
     ./servarr.nix
+    ./spoolman.nix
   ];
 }
