@@ -46,25 +46,29 @@
     {
       nixosConfigurations.data = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = [
-          ./systems/data.nix
-          agenix.nixosModules.default
-          home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
-          {networking.hostName = "data";}
-        ];
+        modules =
+          (import ./modules/module-list.nix)
+          ++ [
+            ./systems/data.nix
+            agenix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            disko.nixosModules.disko
+            {networking.hostName = "data";}
+          ];
       };
       nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [
-          ./systems/vps.nix
-          agenix.nixosModules.default
-          home-manager.nixosModules.home-manager
-          inputs.authentik-nix.nixosModules.default
-          inputs.vpsadminos.nixosConfigurations.container
-          inputs.simple-nixos-mailserver.nixosModule
-          {networking.hostName = "vps";}
-        ];
+        modules =
+          (import ./modules/module-list.nix)
+          ++ [
+            ./systems/vps.nix
+            agenix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            inputs.authentik-nix.nixosModules.default
+            inputs.vpsadminos.nixosConfigurations.container
+            inputs.simple-nixos-mailserver.nixosModule
+            {networking.hostName = "vps";}
+          ];
       };
     }
     // (flake-utils.lib.eachDefaultSystem (
