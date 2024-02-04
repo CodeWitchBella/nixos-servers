@@ -16,6 +16,7 @@ in {
   "outline.age".publicKeys = users ++ systems;
   "authentik-env.age".publicKeys = users ++ [vps];
   "authentik-outpost-token.age".publicKeys = users ++ [data];
+  "authentik-ldap-token.age".publicKeys = users ++ [data];
   "email-password.age".publicKeys = users ++ [vps];
   "psn.age".publicKeys = users ++ [data];
   "vaultwarden.age".publicKeys = users ++ [vps];
