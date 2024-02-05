@@ -22,11 +22,20 @@
   };
   services.prowlarr.enable = true;
 
+  users.groups.jellyfin = {
+    name = "jellyfin";
+    gid = 997;
+  };
+
   users.users = {
     lidarr.extraGroups = ["jellyfin"];
+    lidarr.uid = 306;
     radarr.extraGroups = ["jellyfin"];
+    radarr.uid = 275;
     readarr.extraGroups = ["jellyfin"];
+    readarr.uid = 993;
     sonarr.extraGroups = ["jellyfin"];
+    sonarr.uid = 274;
   };
 
   users.users.isabella.extraGroups = ["transmission" "jellyfin" "lidarr"];
