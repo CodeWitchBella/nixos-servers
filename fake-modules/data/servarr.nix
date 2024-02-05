@@ -36,6 +36,11 @@
     readarr.uid = 993;
     sonarr.extraGroups = ["jellyfin"];
     sonarr.uid = 274;
+
+    jellyfin.name = "jellyfin";
+    jellyfin.uid = 997;
+    jellyfin.isSystemUser = true;
+    jellyfin.group = "jellyfin";
   };
 
   users.users.isabella.extraGroups = ["transmission" "jellyfin" "lidarr"];
