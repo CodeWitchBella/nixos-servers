@@ -67,7 +67,7 @@
       "jellyfin.isbl.cz" = toData;
       "priscilla.isbl.cz" = toData;
       "ender.isbl.cz" = toData;
-      "sooolman.isbl.cz" = toData;
+      "spoolman.isbl.cz" = toData;
     };
   };
 }
