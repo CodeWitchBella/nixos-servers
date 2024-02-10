@@ -1,3 +1,4 @@
 [
   ./frp.nix
+  ./mainsail.nix
 ]
