@@ -11,6 +11,7 @@
     ./nginx.nix
     ./mailserver.nix
     #./mailserver-stalwart.nix
+    ./mainsail.nix
     ./uptime.nix
     ./vaultwarden.nix
   ];
