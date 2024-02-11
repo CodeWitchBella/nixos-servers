@@ -165,8 +165,8 @@
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;
     virtualHosts."navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
 
-    virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz";
-    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
+    virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz:7125";
+    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz:7125";
 
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
   };
