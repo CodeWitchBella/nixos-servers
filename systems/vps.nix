@@ -8,7 +8,6 @@
     ../fake-modules/basics.nix
   ];
 
-  virtualisation.podman.enable = true;
   environment.systemPackages = with pkgs; [
     vim
     htop
