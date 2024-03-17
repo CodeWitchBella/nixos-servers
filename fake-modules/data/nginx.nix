@@ -169,5 +169,8 @@
     virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
 
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
+
+    virtualHosts."tris.isbl.cz" = hostAuth "http://tris.local.isbl.cz";
+    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris.local.isbl.cz";
   };
 }
