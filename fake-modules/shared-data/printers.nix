@@ -6,5 +6,9 @@ suffix: {
       "hostname" = "priscilla.${suffix}";
       "port" = 443;
     }
+    {
+      "hostname" = "tris.${suffix}";
+      "port" = 443;
+    }
   ];
 }
