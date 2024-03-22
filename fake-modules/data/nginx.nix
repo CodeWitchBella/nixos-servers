@@ -170,7 +170,11 @@
 
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
 
-    virtualHosts."tris.isbl.cz" = hostAuth "http://tris-wifi.local.isbl.cz";
-    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris-wifi.local.isbl.cz";
+    upstreams.tris.servers = {
+      "tris-lan.local.isbl.cz:80" = {};
+      "tris-wifi.local.isbl.cz:80" = {backup = true;};
+    };
+    virtualHosts."tris.isbl.cz" = hostAuth "http://tris";
+    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris";
   };
 }
