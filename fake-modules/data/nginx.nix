@@ -23,23 +23,23 @@
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx = let
-    proxypass = port:
-      if (builtins.typeOf port) == "string"
-      then port
-      else "http://127.0.0.1:${toString port}";
+    proxypass = target:
+      if (builtins.typeOf target) == "string"
+      then target
+      else "http://127.0.0.1:${toString target}";
 
-    hostPublic = port: {
+    hostPublic = target: {
       forceSSL = true;
       useACMEHost = "isbl.cz";
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = proxypass port;
+        proxyPass = proxypass target;
         proxyWebsockets = true;
       };
     };
-    host = port:
-      lib.recursiveUpdate (hostPublic port) {
+    host = target:
+      lib.recursiveUpdate (hostPublic target) {
         locations."/".extraConfig = ''
           deny 172.18.80.1;
           allow 172.18.80.26/22;
@@ -51,8 +51,8 @@
       allow 172.18.80.26/22;
       deny all;
     '';
-    hostLocalPublic = port:
-      lib.recursiveUpdate (hostPublic port) {
+    hostLocalPublic = target:
+      lib.recursiveUpdate (hostPublic target) {
         useACMEHost = "local.isbl.cz";
         locations."/".extraConfig = localExtraConfig;
       };
@@ -80,13 +80,13 @@
       proxy_set_header X-authentik-uid $authentik_uid;
     '';
 
-    hostAuth = port: {
+    hostAuth = target: {
       forceSSL = true;
       useACMEHost = "isbl.cz";
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = proxypass port;
+        proxyPass = proxypass target;
         proxyWebsockets = true;
         extraConfig = authExtraConfig;
       };
@@ -112,8 +112,8 @@
         # return 302 https://authentik.isbl.cz/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
       '';
     };
-    hostLocalAuth = port:
-      lib.recursiveUpdate (hostAuth port) {
+    hostLocalAuth = target:
+      lib.recursiveUpdate (hostAuth target) {
         useACMEHost = "local.isbl.cz";
         extraConfig = ''
           ${authExtraConfig}
@@ -170,7 +170,7 @@
 
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
 
-    virtualHosts."tris.isbl.cz" = hostAuth "http://tris.local.isbl.cz";
-    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris.local.isbl.cz";
+    virtualHosts."tris.isbl.cz" = hostAuth "http://tris-wifi.local.isbl.cz";
+    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris-wifi.local.isbl.cz";
   };
 }
