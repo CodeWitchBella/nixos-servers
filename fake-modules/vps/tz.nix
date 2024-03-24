@@ -23,7 +23,7 @@
       do
           C=`echo $B | tr -cd '[:alnum:]._-'`
           echo "$B -> $C"
-          git checkout "origin/$C"
+          git checkout "origin/$B"
           zola build
           mv public "tmp/$C"
       done
