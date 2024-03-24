@@ -6,11 +6,31 @@
   ...
 }: {
   systemd.services.tz = {
-    path = with pkgs; [openssh];
+    path = with pkgs; [openssh git zola];
     script = ''
+      set -xe
+
       cd /var/www/tz
-      ${pkgs.git}/bin/git pull
-      ${pkgs.zola}/bin/zola build
+      git checkout main
+      zola build
+
+      mkdir -p tmp
+      rm -rf tmp
+      mv public tmp
+      echo '*' > tmp/.gitignore
+
+      for B in `git branch -r | grep -v -- '->' | grep -v -- 'origin/main' | sed 's|  origin/||'`;
+      do
+          C=`echo $B | tr -cd '[:alnum:]._-'`
+          echo "$B -> $C"
+          git checkout "origin/$C"
+          zola build
+          mv public "tmp/$C"
+      done
+
+      mkdir -p branches
+      rm -rf branches
+      mv tmp branches
     '';
     serviceConfig = {
       User = "isabella";
@@ -28,6 +48,6 @@
     useACMEHost = "isbl.cz";
     http3 = true;
     quic = true;
-    root = "/var/www/tz/public";
+    root = "/var/www/tz/branches";
   };
 }
