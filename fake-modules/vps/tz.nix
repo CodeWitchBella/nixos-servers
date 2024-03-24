@@ -10,6 +10,7 @@
     script = ''
       set -xe
 
+      cd /var/www/tz
       function build() {
           git checkout config.toml
           sed -i -e 's/base_url =.*//' config.toml
@@ -35,7 +36,7 @@
           C=`echo $B | tr -cd '[:alnum:]._-'`
           echo "$B -> $C"
           git checkout "origin/$B"
-          build "$C"
+          build "/$C"
           mv public "tmp/$C"
       done
 
