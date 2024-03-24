@@ -10,9 +10,20 @@
     script = ''
       set -xe
 
-      cd /var/www/tz
+      function build() {
+          git checkout config.toml
+          sed -i -e 's/base_url =.*//' config.toml
+          mv config.toml t
+          echo "base_url = '$1'" > t2
+          cat t2 t > config.toml
+          rm t t2
+          cat config.toml
+          zola build
+          git checkout config.toml
+      }
+
       git checkout main
-      zola build
+      build /
 
       mkdir -p tmp
       rm -rf tmp
@@ -24,7 +35,7 @@
           C=`echo $B | tr -cd '[:alnum:]._-'`
           echo "$B -> $C"
           git checkout "origin/$B"
-          zola build
+          build "$C"
           mv public "tmp/$C"
       done
 
