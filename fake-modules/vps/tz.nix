@@ -6,8 +6,9 @@
   ...
 }: {
   systemd.services.tz = {
+    path = with pkgs; [openssh];
     script = ''
-      cd /home/isabella/tz
+      cd /var/www/tz
       ${pkgs.git}/bin/git pull
       ${pkgs.zola}/bin/zola build
     '';
