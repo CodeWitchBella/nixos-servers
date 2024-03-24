@@ -9,6 +9,7 @@
     ./frps.nix
     ./listmonk.nix
     ./nginx.nix
+    ./tz.nix
     ./mailserver.nix
     #./mailserver-stalwart.nix
     ./mainsail.nix
