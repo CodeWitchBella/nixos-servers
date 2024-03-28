@@ -171,7 +171,9 @@
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
 
     upstreams.tris.servers = {
-      "tris-lan.local.isbl.cz:80" = {};
+      "tris-lan.local.isbl.cz:80" = {
+        fail_timeout = 60; # do not try to connect for a minute if connection fails
+      };
       "tris-wifi.local.isbl.cz:80" = {backup = true;};
     };
     virtualHosts."tris.isbl.cz" = hostAuth "http://tris";
