@@ -120,6 +120,19 @@
           ${localExtraConfig}
         '';
       };
+
+    clientMaxBodySize = size: config:
+      config
+      // {
+        locations."/" =
+          config.locations."/"
+          // {
+            extraConfig = ''
+              ${config.locations."/".extraConfig}
+              client_max_body_size ${size};
+            '';
+          };
+      };
   in {
     virtualHosts."ha.isbl.cz" = hostPublic 8123;
     virtualHosts."ha.local.isbl.cz" = hostLocalPublic 8123;
@@ -165,10 +178,10 @@
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;
     virtualHosts."navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
 
-    virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz";
-    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
+    virtualHosts."priscilla.isbl.cz" = clientMaxBodySize "100m" (hostAuth "http://priscilla.local.isbl.cz");
+    virtualHosts."priscilla.local.isbl.cz" = clientMaxBodySize "100m" (hostLocalPublic "http://priscilla.local.isbl.cz");
 
-    virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
+    virtualHosts."ender.isbl.cz" = clientMaxBodySize "100m" (hostAuth "http://ender.local.isbl.cz");
 
     upstreams.tris.servers = {
       "tris-lan.local.isbl.cz:80" = {
@@ -176,7 +189,8 @@
       };
       "tris-wifi.local.isbl.cz:80" = {backup = true;};
     };
-    virtualHosts."tris.isbl.cz" = hostAuth "http://tris";
-    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris";
+    virtualHosts."tris.isbl.cz" =
+      clientMaxBodySize "100m" (hostAuth "http://tris");
+    virtualHosts."tris.local.isbl.cz" = clientMaxBodySize "100m" (hostLocalPublic "http://tris");
   };
 }
