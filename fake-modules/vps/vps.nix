@@ -13,6 +13,7 @@
     ./mailserver.nix
     #./mailserver-stalwart.nix
     ./mainsail.nix
+    ./songbook.nix
     ./uptime.nix
     ./vaultwarden.nix
   ];

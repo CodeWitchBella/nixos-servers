@@ -1,0 +1,60 @@
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}: {
+  #services.postgresql.package = pkgs.postgresql_16;
+  services.postgresql.ensureDatabases = ["songbook"];
+  services.postgresql.enable = true;
+  services.postgresql.ensureUsers = [
+    {
+      name = "songbook";
+      ensureDBOwnership = true;
+    }
+  ];
+  services.postgresql.authentication = pkgs.lib.mkOverride 10 ''
+    #type database  DBuser  auth-method
+    local all       all     trust
+    host  all       songbook     127.0.0.1/32   trust
+    host  all       songbook     ::1/128        trust
+  '';
+
+  systemd.services = {
+    songbook = {
+      after = ["network.target"];
+      wantedBy = ["multi-user.target"];
+      description = "Songbook";
+      script = ''
+        cd /var/www/songbook
+        ${pkgs.bun}/bin/bun workers/src/index.ts
+      '';
+      serviceConfig = {
+        Type = "simple";
+        Restart = "on-failure";
+        RestartSec = 15;
+
+        User = "isabella";
+        Environment = "POSTGRESQL_URL=postgresql://songbook@localhost/songbook";
+      };
+    };
+  };
+
+  services.nginx.virtualHosts."zpevnik.isbl.cz" = {
+    forceSSL = true;
+    useACMEHost = "isbl.cz";
+    http3 = true;
+    quic = true;
+    root = "/var/www/songbook/frontend/dist";
+    locations."= /index.html".extraConfig = ''add_header Cache-Control "no-store,no-cache,must-revalidate";'';
+    locations."/" = {
+      tryFiles = "$uri $uri/ /index.html";
+    };
+    locations."/assets" = {};
+    locations."~* \"/assets/.*-[a-z0-9]{8}\\.[a-z0-9]+\"" = {};
+    locations."/api" = {
+      proxyPass = "http://127.0.0.1:5512";
+      proxyWebsockets = true;
+    };
+  };
+}
