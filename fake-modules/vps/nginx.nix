@@ -44,6 +44,13 @@ in {
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
+    certs."skorepova.info" = {
+      domain = "skorepova.info";
+      extraDomainNames = ["*.skorepova.info"];
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.dnskey.path;
+      group = "nginx";
+    };
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx.virtualHosts."authentik.isbl.cz" = host "isbl.cz" 9000;

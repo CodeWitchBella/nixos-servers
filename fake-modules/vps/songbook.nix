@@ -3,7 +3,25 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  nginx = {
+    forceSSL = true;
+    useACMEHost = "skorepova.info";
+    http3 = true;
+    quic = true;
+    root = "/var/www/songbook/frontend/dist";
+    locations."= /index.html".extraConfig = ''add_header Cache-Control "no-store,no-cache,must-revalidate";'';
+    locations."/" = {
+      tryFiles = "$uri $uri/ /index.html";
+    };
+    locations."/assets" = {};
+    locations."~* \"/assets/.*-[a-z0-9]{8}\\.[a-z0-9]+\"" = {};
+    locations."/api" = {
+      proxyPass = "http://127.0.0.1:5512";
+      proxyWebsockets = true;
+    };
+  };
+in {
   #services.postgresql.package = pkgs.postgresql_16;
   services.postgresql.ensureDatabases = ["songbook"];
   services.postgresql.enable = true;
@@ -40,21 +58,6 @@
     };
   };
 
-  services.nginx.virtualHosts."zpevnik.isbl.cz" = {
-    forceSSL = true;
-    useACMEHost = "isbl.cz";
-    http3 = true;
-    quic = true;
-    root = "/var/www/songbook/frontend/dist";
-    locations."= /index.html".extraConfig = ''add_header Cache-Control "no-store,no-cache,must-revalidate";'';
-    locations."/" = {
-      tryFiles = "$uri $uri/ /index.html";
-    };
-    locations."/assets" = {};
-    locations."~* \"/assets/.*-[a-z0-9]{8}\\.[a-z0-9]+\"" = {};
-    locations."/api" = {
-      proxyPass = "http://127.0.0.1:5512";
-      proxyWebsockets = true;
-    };
-  };
+  services.nginx.virtualHosts."zpevnik.skorepova.info" = nginx // {useACMEHost = "skorepova.info";};
+  services.nginx.virtualHosts."zpevnik.isbl.cz" = nginx // {useACMEHost = "isbl.cz";};
 }
