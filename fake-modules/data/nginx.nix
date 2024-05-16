@@ -14,6 +14,7 @@
       dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
+      extraLegoFlags = ["--dns-timeout" "600"];
     };
     certs."local.isbl.cz" = {
       domain = "*.local.isbl.cz";
@@ -21,6 +22,7 @@
       dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
+      extraLegoFlags = ["--dns-timeout" "600"];
     };
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
