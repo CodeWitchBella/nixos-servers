@@ -11,12 +11,14 @@
     certs."isbl.cz" = {
       domain = "*.isbl.cz";
       dnsProvider = "cloudflare";
+      dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
     certs."local.isbl.cz" = {
       domain = "*.local.isbl.cz";
       dnsProvider = "cloudflare";
+      dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
