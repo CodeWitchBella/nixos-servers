@@ -21,18 +21,18 @@
     extraOptions = ["--network=host"];
   };
 
-  virtualisation.oci-containers.containers.authentik-ldap = {
-    image = "ghcr.io/goauthentik/ldap";
+  # virtualisation.oci-containers.containers.authentik-ldap = {
+  #   image = "ghcr.io/goauthentik/ldap";
 
-    ports = [
-      "389:3389"
-      "636:6636"
-    ];
-    environmentFiles = [config.age.secrets.authentik-ldap-token.path];
-    environment = {
-      AUTHENTIK_HOST = "https://authentik.isbl.cz";
-      AUTHENTIK_INSECURE = "true";
-      #AUTHENTIK_TOKEN = In secret file;
-    };
-  };
+  #   ports = [
+  #     "389:3389"
+  #     "636:6636"
+  #   ];
+  #   environmentFiles = [config.age.secrets.authentik-ldap-token.path];
+  #   environment = {
+  #     AUTHENTIK_HOST = "https://authentik.isbl.cz";
+  #     AUTHENTIK_INSECURE = "true";
+  #     #AUTHENTIK_TOKEN = In secret file;
+  #   };
+  # };
 }
