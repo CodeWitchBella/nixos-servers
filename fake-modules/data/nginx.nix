@@ -45,19 +45,16 @@
         proxyWebsockets = true;
       };
     };
-    host = target:
-      lib.recursiveUpdate (hostPublic target) {
-        locations."/".extraConfig = ''
-          deny 172.18.80.1;
-          allow 172.18.80.0/22;
-          deny all;
-        '';
-      };
     localExtraConfig = ''
-      deny 172.18.80.1;
-      allow 172.18.80.0/22;
+      deny 192.168.68.1;
+      allow 192.168.68.0/22;
       deny all;
     '';
+    host = target:
+      lib.recursiveUpdate (hostPublic target) {
+        locations."/".extraConfig = localExtraConfig;
+      };
+
     hostLocalPublic = target:
       lib.recursiveUpdate (hostPublic target) {
         #useACMEHost = "local.isbl.cz";
