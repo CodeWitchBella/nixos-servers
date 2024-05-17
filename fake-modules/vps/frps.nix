@@ -9,7 +9,7 @@
     mode = "666";
     path = "/etc/frp/token.toml";
   };
-  isbl.frp = {
+  services.frp = {
     enable = true;
     role = "server";
     settings = {
