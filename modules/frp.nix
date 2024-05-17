@@ -7,9 +7,15 @@
 with lib; let
   cfg = config.isbl.frp;
   settingsFormat = pkgs.formats.toml {};
-  configFile = settingsFormat.generate "frp.toml" cfg.settings;
-  isClient = cfg.role == "client";
   isServer = cfg.role == "server";
+  configFile =
+    settingsFormat.generate (
+      if isServer
+      then "frps.toml"
+      else "frp.toml"
+    )
+    cfg.settings;
+  isClient = cfg.role == "client";
 in {
   options = {
     isbl.frp = {
