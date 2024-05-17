@@ -9,15 +9,16 @@
     mode = "666";
     path = "/etc/frp/token.toml";
   };
-  isbl.frp = {
+  services.frp = {
     enable = true;
     role = "client";
     settings = {
-      role = "client";
+      #role = "client";
       serverAddr = "vps.isbl.cz";
       serverPort = 7000;
       transport.protocol = "quic";
-      includes = [config.age.secrets.frp.path]; # includes auth.token
+      auth.token = "cahz5CXuXnL9AFRCVcEfeafu8AmN3ezU0DPALNk8";
+      #includes = [config.age.secrets.frp.path]; # includes auth.token
 
       proxies = [
         {

@@ -21,6 +21,7 @@
 
   services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
     forceSSL = true;
-    useACMEHost = "local.isbl.cz";
+    #useACMEHost = "local.isbl.cz";
+    useACMEHost = "isbl.cz";
   };
 }

@@ -15,7 +15,8 @@
     settings = {
       #bindPort = 7000;
       quicBindPort = 7000;
-      includes = [config.age.secrets.frp.path]; # includes auth.token
+      auth.token = "cahz5CXuXnL9AFRCVcEfeafu8AmN3ezU0DPALNk8";
+      #includes = [config.age.secrets.frp.path]; # includes auth.token
     };
   };
 }

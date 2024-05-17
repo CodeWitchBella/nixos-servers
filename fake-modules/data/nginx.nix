@@ -8,21 +8,24 @@
   imports = [../nginx.nix];
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
+    #certs."isbl.cz" = {
+    #  domain = "*.isbl.cz";
+    #  dnsProvider = "cloudflare";
+    #  #dnsResolver = "1.1.1.1:53";
+    #  credentialsFile = config.age.secrets.dnskey.path;
+    #  group = "nginx";
+    #  extraLegoFlags = ["--dns-timeout" "600"];
+    #  #dnsPropagationCheck = false;
+    #};
     certs."isbl.cz" = {
-      domain = "*.isbl.cz";
+      domain = "isbl.cz";
+      extraDomainNames = ["*.local.isbl.cz" "*.isbl.cz"];
       dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
+      #dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
       extraLegoFlags = ["--dns-timeout" "600"];
-    };
-    certs."local.isbl.cz" = {
-      domain = "*.local.isbl.cz";
-      dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
-      credentialsFile = config.age.secrets.dnskey.path;
-      group = "nginx";
-      extraLegoFlags = ["--dns-timeout" "600"];
+      #dnsPropagationCheck = false;
     };
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
@@ -57,7 +60,8 @@
     '';
     hostLocalPublic = target:
       lib.recursiveUpdate (hostPublic target) {
-        useACMEHost = "local.isbl.cz";
+        #useACMEHost = "local.isbl.cz";
+        useACMEHost = "isbl.cz";
         locations."/".extraConfig = localExtraConfig;
       };
 
@@ -118,7 +122,8 @@
     };
     hostLocalAuth = target:
       lib.recursiveUpdate (hostAuth target) {
-        useACMEHost = "local.isbl.cz";
+        #useACMEHost = "local.isbl.cz";
+        useACMEHost = "isbl.cz";
         extraConfig = ''
           ${authExtraConfig}
           ${localExtraConfig}
