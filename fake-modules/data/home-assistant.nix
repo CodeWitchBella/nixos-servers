@@ -40,6 +40,7 @@
         "--network=host" # workaround borked dns
       ];
     };
+    /*
     containers.ps5mqtt = {
       image = "ghcr.io/funkeyflo/ps5-mqtt/aarch64";
       entrypoint = "/usr/bin/node";
@@ -71,6 +72,7 @@
         DEVICE_DISCOVERY_BROADCAST_ADDRESS = "172.18.80.14";
       };
     };
+    */
   };
   virtualisation.podman.defaultNetwork.settings = {dns_enabled = true;};
 }
