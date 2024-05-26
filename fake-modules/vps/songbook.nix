@@ -59,5 +59,5 @@ in {
   };
 
   services.nginx.virtualHosts."zpevnik.skorepova.info" = nginx // {useACMEHost = "skorepova.info";};
-  services.nginx.virtualHosts."zpevnik.isbl.cz" = nginx // {useACMEHost = "isbl.cz";};
+  #services.nginx.virtualHosts."zpevnik.isbl.cz" = nginx // {useACMEHost = "isbl.cz";};
 }
