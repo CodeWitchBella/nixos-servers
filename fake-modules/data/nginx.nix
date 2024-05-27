@@ -57,7 +57,7 @@
 
     hostLocalPublic = target:
       lib.recursiveUpdate (hostPublic target) {
-        #useACMEHost = "local.isbl.cz";
+        # useACMEHost = "local.isbl.cz";
         useACMEHost = "isbl.cz";
         locations."/".extraConfig = localExtraConfig;
       };
