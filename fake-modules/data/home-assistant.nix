@@ -23,7 +23,7 @@
     containers.mqtt = {
       image = "eclipse-mosquitto:2.0";
       volumes = ["/disks/mosquitto-data:/mosquitto"];
-      ports = ["127.0.0.1:1883:1883" "127.0.0.1:9001:9001"];
+      ports = ["127.0.0.1:1883:1883" "127.0.0.1:1884:1884" "127.0.0.1:9001:9001"];
       cmd = ["mosquitto" "-c" "/mosquitto/config/mosquitto.conf"];
       extraOptions = ["--hostname" "mqtt"];
     };
