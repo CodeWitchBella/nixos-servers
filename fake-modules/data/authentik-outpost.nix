@@ -12,7 +12,7 @@
   };
   virtualisation.oci-containers.containers.authentik-outpost = {
     image = "ghcr.io/goauthentik/proxy";
-    ports = ["9000:9000" "9443:9443"];
+    ports = ["127.0.0.1:9000:9000" "127.0.0.1:9443:9443"];
     environmentFiles = [config.age.secrets.authentik-outpost-token.path];
     environment = {
       AUTHENTIK_HOST = "https://authentik.isbl.cz";
@@ -25,8 +25,8 @@
   #   image = "ghcr.io/goauthentik/ldap";
 
   #   ports = [
-  #     "389:3389"
-  #     "636:6636"
+  #     "127.0.0.1:389:3389"
+  #     "127.0.0.1:636:6636"
   #   ];
   #   environmentFiles = [config.age.secrets.authentik-ldap-token.path];
   #   environment = {
