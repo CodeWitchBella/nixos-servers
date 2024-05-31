@@ -25,7 +25,6 @@
       volumes = ["/disks/mosquitto-data:/mosquitto"];
       ports = [
         "127.0.0.1:1883:1883"
-        "192.168.68.56:1883:1883"
         "0.0.0.0:1884:1884" # note that this means open from lan
         "127.0.0.1:9001:9001"
       ];
