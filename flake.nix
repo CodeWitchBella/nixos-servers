@@ -5,9 +5,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
+    flake-utils.url = "github:numtide/flake-utils";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -24,14 +22,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    authentik-nix = {
-      url = "github:nix-community/authentik-nix";
-    };
+    authentik-nix.url = "github:nix-community/authentik-nix";
     vpsadminos.url = "github:vpsfreecz/vpsadminos";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
-    alejandra.url = "github:kamadorueda/alejandra/3.0.0";
-    alejandra.inputs.nixpkgs.follows = "nixpkgs";
+    alejandra = {
+      url = "github:kamadorueda/alejandra/3.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     lix = {
       url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
