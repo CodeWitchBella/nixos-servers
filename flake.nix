@@ -32,6 +32,16 @@
 
     alejandra.url = "github:kamadorueda/alejandra/3.0.0";
     alejandra.inputs.nixpkgs.follows = "nixpkgs";
+
+    lix = {
+      url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
+      flake = false;
+    };
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module";
+      inputs.lix.follows = "lix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs @ {
     self,
@@ -53,6 +63,7 @@
             agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             disko.nixosModules.disko
+            inputs.lix-module.nixosModules.default
             {networking.hostName = "data";}
           ];
       };
@@ -67,6 +78,7 @@
             inputs.authentik-nix.nixosModules.default
             inputs.vpsadminos.nixosConfigurations.container
             inputs.simple-nixos-mailserver.nixosModule
+            inputs.lix-module.nixosModules.default
             {networking.hostName = "vps";}
           ];
       };
