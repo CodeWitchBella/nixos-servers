@@ -40,6 +40,11 @@
       inputs.lix.follows = "lix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    songbook = {
+      url = "github:CodeWitchBella/songbook";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs @ {
     self,
@@ -67,6 +72,7 @@
       };
       nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
         modules =
           (import ./modules/module-list.nix)
           ++ [

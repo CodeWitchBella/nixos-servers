@@ -9,7 +9,7 @@
     useACMEHost = "skorepova.info";
     http3 = true;
     quic = true;
-    root = "/var/www/songbook/frontend/dist";
+    root = "${inputs.songbook.packages.x86_64-linux.frontend}";
     locations."= /index.html".extraConfig = ''add_header Cache-Control "no-store,no-cache,must-revalidate";'';
     locations."/" = {
       tryFiles = "$uri $uri/ /index.html";
@@ -43,10 +43,7 @@ in {
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
       description = "Songbook";
-      script = ''
-        cd /var/www/songbook
-        ${pkgs.bun}/bin/bun workers/src/index.ts
-      '';
+      script = "${inputs.songbook.packages.x86_64-linux.backend}/bin/songbook-backend";
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
