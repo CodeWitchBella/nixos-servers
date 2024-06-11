@@ -19,6 +19,7 @@
     settings = {
       ports.dns = "192.168.68.56:53,127.0.0.1:53";
       ports.http = 4003;
+      upstreams.init.strategy = "fast";
       upstreams.groups.default = [
         #"1.1.1.1"
         #"1.0.0.1"
@@ -38,5 +39,8 @@
       caching.cacheTimeNegative = -1;
       queryLog.type = "none";
     };
+  };
+  networking.hosts = {
+    "127.0.0.1" = ["darl.ns.cloudflare.com." "lorna.ns.cloudflare.com."];
   };
 }
