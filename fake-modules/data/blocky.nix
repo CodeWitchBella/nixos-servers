@@ -20,13 +20,13 @@
       ports.dns = "192.168.68.56:53,127.0.0.1:53";
       ports.http = 4003;
       upstreams.groups.default = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "8.8.8.8"
-        "8.8.4.4"
-        "9.9.9.9"
-        "149.112.112.112"
+        #"1.1.1.1"
+        #"1.0.0.1"
         "https://cloudflare-dns.com/dns-query"
+        #"8.8.8.8"
+        #"8.8.4.4"
+        "https://dns.google/dns-query"
+        "https://doh.opendns.com/dns-query"
       ];
       blocking.denylists.ads = [
         "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
