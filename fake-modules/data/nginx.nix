@@ -5,7 +5,7 @@
   inputs,
   ...
 }: {
-  imports = [../nginx.nix];
+  isbl.nginx.enable = true;
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
     #certs."isbl.cz" = {
@@ -18,8 +18,8 @@
     #  #dnsPropagationCheck = false;
     #};
     certs."isbl.cz" = {
-      domain = "isbl.cz";
-      extraDomainNames = ["*.local.isbl.cz" "*.isbl.cz"];
+      domain = "*.isbl.cz";
+      extraDomainNames = ["*.local.isbl.cz"];
       dnsProvider = "cloudflare";
       #dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;

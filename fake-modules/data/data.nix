@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./authentik-outpost.nix
+    ./blocky.nix
     ./disk-config.nix
     ./frpc.nix
     ./home-assistant.nix

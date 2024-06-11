@@ -27,7 +27,7 @@
     };
   };
 in {
-  imports = [../nginx.nix];
+  isbl.nginx.enable = true;
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
     certs."isbl.cz" = {

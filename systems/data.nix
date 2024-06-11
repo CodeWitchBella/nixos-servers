@@ -64,18 +64,12 @@
   };
 
   networking.firewall.allowedTCPPorts = [22 80 443 1884];
-  networking.firewall.allowedUDPPorts = [443];
+  networking.firewall.allowedUDPPorts = [53 443];
 
   services.fstrim.enable = true;
 
-  services.resolved = {
-    enable = true;
-    fallbackDns = ["8.8.8.8" "8.8.4.4"];
-  };
-
   networking.nameservers = [
-    "1.1.1.1"
-    "1.0.0.1"
+    "127.0.0.1"
   ];
 
   environment.systemPackages = with pkgs; [
