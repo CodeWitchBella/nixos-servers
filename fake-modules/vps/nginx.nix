@@ -74,4 +74,5 @@ in {
   services.nginx.virtualHosts."tris.isbl.cz" = toData;
   services.nginx.virtualHosts."ender.isbl.cz" = toData;
   services.nginx.virtualHosts."spoolman.isbl.cz" = toData;
+  services.nginx.virtualHosts."inventree.isbl.cz" = toData;
 }
