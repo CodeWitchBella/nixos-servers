@@ -38,6 +38,8 @@ in {
         type = types.str;
         description = "Hash of frontend assets zip";
       };
+      env = mkOption {};
+      environmentFiles = mkOption {};
     };
   };
 
@@ -71,56 +73,60 @@ in {
     '';
 
     virtualisation.oci-containers = let
-      env = {
-        # Specify the location of the external data volume
-        # By default, placed in local directory 'inventree-data'
-        INVENTREE_EXT_VOLUME = "./inventree-data";
+      env =
+        {
+          # Specify the location of the external data volume
+          # By default, placed in local directory 'inventree-data'
+          INVENTREE_EXT_VOLUME = "./inventree-data";
 
-        # Ensure debug is false for a production setup
-        INVENTREE_DEBUG = "False";
-        INVENTREE_LOG_LEVEL = "WARNING";
+          # Ensure debug is false for a production setup
+          INVENTREE_DEBUG = "False";
+          INVENTREE_LOG_LEVEL = "WARNING";
 
-        # InvenTree admin account details
-        # Un-comment (and complete) these lines to auto-create an admin acount
-        #INVENTREE_ADMIN_USER="";
-        #INVENTREE_ADMIN_PASSWORD="";
-        #INVENTREE_ADMIN_EMAIL="";
+          # InvenTree admin account details
+          # Un-comment (and complete) these lines to auto-create an admin acount
+          #INVENTREE_ADMIN_USER="";
+          #INVENTREE_ADMIN_PASSWORD="";
+          #INVENTREE_ADMIN_EMAIL="";
 
-        # Database configuration options
-        INVENTREE_DB_ENGINE = "postgresql";
-        INVENTREE_DB_NAME = "inventree";
-        INVENTREE_DB_HOST = "localhost";
-        INVENTREE_DB_PORT = "5432";
+          # Database configuration options
+          INVENTREE_DB_ENGINE = "postgresql";
+          INVENTREE_DB_NAME = "inventree";
+          INVENTREE_DB_HOST = "localhost";
+          INVENTREE_DB_PORT = "5432";
 
-        # Database credentials - These should be changed from the default values!
-        INVENTREE_DB_USER = "inventree";
-        INVENTREE_DB_PASSWORD = "";
+          # Database credentials - These should be changed from the default values!
+          INVENTREE_DB_USER = "inventree";
+          INVENTREE_DB_PASSWORD = "";
 
-        # Redis cache setup (disabled by default)
-        # Un-comment the following lines to enable Redis cache
-        # Note that you will also have to run docker-compose with the --profile redis command
-        # Refer to settings.py for other cache options
-        #INVENTREE_CACHE_ENABLED="True";
-        #INVENTREE_CACHE_HOST="inventree-cache";
-        #INVENTREE_CACHE_PORT="6379";
+          # Redis cache setup (disabled by default)
+          # Un-comment the following lines to enable Redis cache
+          # Note that you will also have to run docker-compose with the --profile redis command
+          # Refer to settings.py for other cache options
+          #INVENTREE_CACHE_ENABLED="True";
+          #INVENTREE_CACHE_HOST="inventree-cache";
+          #INVENTREE_CACHE_PORT="6379";
 
-        # Options for gunicorn server
-        INVENTREE_GUNICORN_TIMEOUT = "90";
+          # Options for gunicorn server
+          INVENTREE_GUNICORN_TIMEOUT = "90";
 
-        # Enable custom plugins?
-        INVENTREE_PLUGINS_ENABLED = "True";
+          # Enable custom plugins?
+          INVENTREE_PLUGINS_ENABLED = "True";
 
-        # Run migrations automatically?
-        INVENTREE_AUTO_UPDATE = "True";
+          # Run migrations automatically?
+          INVENTREE_AUTO_UPDATE = "True";
 
-        # Image tag that should be used
-        INVENTREE_TAG = "stable";
+          # Image tag that should be used
+          INVENTREE_TAG = "stable";
 
-        # Site URL - update this to match your host
-        INVENTREE_SITE_URL = "https://${cfg.hostname}";
+          # Site URL - update this to match your host
+          INVENTREE_SITE_URL = "https://${cfg.hostname}";
 
-        COMPOSE_PROJECT_NAME = "inventree";
-      };
+          COMPOSE_PROJECT_NAME = "inventree";
+
+          INVENTREE_SOCIAL_BACKENDS = "allauth.socialaccount.providers.openid_connect";
+        }
+        // cfg.env;
     in {
       containers.inventree = {
         volumes = ["${cfg.data}:/home/inventree/data"];
@@ -128,6 +134,7 @@ in {
         image = "inventree/inventree:${cfg.version}";
         #ports = ["127.0.0.1:7773:8000"];
         extraOptions = ["--network=host"];
+        environmentFiles = cfg.environmentFiles;
       };
       containers.inventree-worker = {
         volumes = ["${cfg.data}:/home/inventree/data"];
@@ -135,6 +142,7 @@ in {
         environment = env;
         image = "inventree/inventree:${cfg.version}";
         extraOptions = ["--network=host"];
+        environmentFiles = cfg.environmentFiles;
       };
     };
   };

@@ -23,4 +23,5 @@ in {
   "frp.age".publicKeys = users ++ [vps data];
   "listmonk.age".publicKeys = users ++ [vps];
   "planka.age".publicKeys = users ++ [vps];
+  "inventree.age".publicKeys = users ++ [data];
 }
