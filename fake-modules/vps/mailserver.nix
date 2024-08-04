@@ -44,10 +44,6 @@
         hashedPassword = "$2b$05$4NF7DTvf9U1WoM98rC2FxuXEStTalo6mAsLJaHHnrjUHCG/zIjvfq";
         sendOnly = true;
       };
-      "inventree@isbl.cz" = {
-        hashedPassword = "$2b$05$lkqKAdQo78XKmX1nNdtuV.tVzg76EkloSFpwSon4WEfejFMaHjy/y";
-        sendOnly = true;
-      };
     };
     certificateScheme = "acme";
   };
