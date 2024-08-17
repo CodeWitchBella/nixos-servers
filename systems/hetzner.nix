@@ -26,7 +26,6 @@
   boot.loader.grub = {
     enable = true;
     efiSupport = false;
-    devices = ["/dev/sda" "/dev/sdb"];
   };
 
   system.stateVersion = "24.05"; # Did you read the comment?

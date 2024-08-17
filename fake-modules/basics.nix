@@ -5,7 +5,12 @@
   lib,
   ...
 }: let
-  authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"];
+  keys = import ../secrets/keys.nix;
+  authorizedKeys = with keys; [
+    desktop
+    asahi
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"
+  ];
 in {
   users.users.isabella = {
     isNormalUser = true;
