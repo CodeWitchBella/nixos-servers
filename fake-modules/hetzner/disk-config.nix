@@ -53,12 +53,26 @@ in {
       type = "mdadm";
       level = 1;
       content = {
-        type = "filesystem";
-        format = "ext4";
-        mountpoint = "/";
-        mountOptions = ["defaults"];
+        type = "btrfs";
+        extraArgs = ["-f"]; # Override existing partition
+        # Subvolumes must set a mountpoint in order to be mounted,
+        # unless their parent is mounted
+        subvolumes = {
+          "/root" = {
+            mountpoint = "/";
+          };
+          "/persistent" = {
+            mountOptions = ["compress=zstd"];
+            mountpoint = "/persistent";
+          };
+          "/nix" = {
+            mountOptions = ["compress=zstd" "noatime"];
+            mountpoint = "/nix";
+          };
+        };
       };
     };
   };
+  fileSystems."/persistent".neededForBoot = true;
   # boot.loader.grub.devices = [one two];
 }
