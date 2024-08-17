@@ -92,7 +92,6 @@
         modules =
           (import ./modules/module-list.nix)
           ++ [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             ./systems/hetzner.nix
             disko.nixosModules.disko
             agenix.nixosModules.default
@@ -100,6 +99,14 @@
             inputs.lix-module.nixosModules.default
             {networking.hostName = "hetzner";}
           ];
+      };
+      nixosConfigurations.hetznerBootstrap = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+          disko.nixosModules.disko
+          {networking.hostName = "hetzner";}
+        ];
       };
     }
     // (flake-utils.lib.eachDefaultSystem (

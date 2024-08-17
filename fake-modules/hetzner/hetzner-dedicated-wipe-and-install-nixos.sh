@@ -8,7 +8,9 @@
 #   * Update the script to adjust SSH pubkeys, hostname, NixOS version etc.
 #
 # Usage:
-#     ssh root@YOUR_SERVERS_IP bash -s < hetzner-dedicated-wipe-and-install-nixos.sh
+#     ssh root@176.9.41.240 bash -s < hetzner-dedicated-wipe-and-install-nixos.sh
+# or, in nushell:
+#     open hetzner-dedicated-wipe-and-install-nixos.sh | ssh root@176.9.41.240 bash -s
 #
 # When the script is done, make sure to boot the server from HD, not rescue mode again.
 
@@ -41,6 +43,8 @@ lsblk
 # Undo existing setups to allow running the script multiple times to iterate on it.
 # We allow these operations to fail for the case the script runs the first time.
 set +e
+umount /mnt/boot
+umount /mnt/boot-fallback
 umount /mnt
 vgchange -an
 set -e
@@ -59,29 +63,21 @@ mdadm --stop --scan
 echo 'AUTO -all
 ARRAY <ignore> UUID=00000000:00000000:00000000:00000000' > /etc/mdadm/mdadm.conf
 
-# Create partition tables (--script to not ask)
-parted --script /dev/sda mklabel gpt
-parted --script /dev/sdb mklabel gpt
+echo -e "#! /usr/bin/env bash\nset -e\n" 'parted $@ 2> parted-stderr.txt || grep "unable to inform the kernel of the change" parted-stderr.txt && echo "This is expected, continuing" || echo >&2 "Parted failed; stderr: $(< parted-stderr.txt)"' > parted-ignoring-partprobe-error.sh && chmod +x parted-ignoring-partprobe-error.sh
 
-# Create partitions (--script to not ask)
-#
-# We create the 1MB BIOS boot partition at the front.
-#
-# Note we use "MB" instead of "MiB" because otherwise `--align optimal` has no effect;
-# as per documentation https://www.gnu.org/software/parted/manual/html_node/unit.html#unit:
-# > Note that as of parted-2.4, when you specify start and/or end values using IEC
-# > binary units like "MiB", "GiB", "TiB", etc., parted treats those values as exact
-#
-# Note: When using `mkpart` on GPT, as per
-#   https://www.gnu.org/software/parted/manual/html_node/mkpart.html#mkpart
-# the first argument to `mkpart` is not a `part-type`, but the GPT partition name:
-#   ... part-type is one of 'primary', 'extended' or 'logical', and may be specified only with 'msdos' or 'dvh' partition tables.
-#   A name must be specified for a 'gpt' partition table.
-# GPT partition names are limited to 36 UTF-16 chars, see https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_entries_(LBA_2-33).
-parted --script --align optimal /dev/sda -- mklabel gpt mkpart 'BIOS-boot-partition' 1MB 2MB set 1 bios_grub on mkpart 'data-partition' 2MB '100%'
-parted --script --align optimal /dev/sdb -- mklabel gpt mkpart 'BIOS-boot-partition' 1MB 2MB set 1 bios_grub on mkpart 'data-partition' 2MB '100%'
+# Partitioning
+for disk in /dev/sd*; do
+  # This is a BIOS system, so let's avoid GPT
+  # Also we only have 2 partitions, so ...
+  ./parted-ignoring-partprobe-error.sh --script --align=optimal "$disk" -- mklabel msdos
+  # The boot partition(s)
+  ./parted-ignoring-partprobe-error.sh --script --align=optimal "$disk" -- mkpart primary ext4 1M 1G
+  ./parted-ignoring-partprobe-error.sh --script --align=optimal "$disk" -- set 1 boot on
+  # The rest
+  ./parted-ignoring-partprobe-error.sh --script --align=optimal "$disk" -- mkpart primary ext4 1GB '100%'
+done
 
-# Relaod partitions
+# Reload partitions
 partprobe
 
 # Wait for all devices to exist
@@ -129,6 +125,8 @@ vgcreate vg0 /dev/md0
 lvcreate --yes --extents 95%FREE -n root0 vg0  # 5% slack space
 
 # Filesystems (-F to not ask on preexisting FS)
+mkfs.ext4 -F -L boot0 /dev/sda1
+mkfs.ext4 -F -L boot1 /dev/sdb1
 mkfs.ext4 -F -L root /dev/mapper/vg0-root0
 
 # Creating file systems changes their UUIDs.
@@ -144,10 +142,13 @@ udevadm settle --timeout=5 --exit-if-exists=/dev/disk/by-label/root
 
 # Mount target root partition
 mount /dev/disk/by-label/root /mnt
-
+mkdir /mnt/boot /mnt/boot-fallback
+mount /dev/disk/by-label/boot0 /mnt/boot
+mount /dev/disk/by-label/boot1 /mnt/boot-fallback
 # Installing nix
 
 # Installing nix requires `sudo`; the Hetzner rescue mode doesn't have it.
+apt-get update
 apt-get install -y sudo
 
 # Allow installing nix as root, see
@@ -155,18 +156,18 @@ apt-get install -y sudo
 mkdir -p /etc/nix
 echo "build-users-group =" > /etc/nix/nix.conf
 
-curl -L https://nixos.org/nix/install | sh
+curl -sSL https://nixos.org/nix/install | sh
 set +u +x # sourcing this may refer to unset variables that we have no control over
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u -x
 
 # Keep in sync with `system.stateVersion` set below!
 # nix-channel --add https://nixos.org/channels/nixos-20.03 nixpkgs
-nix-channel --add https://nixos.org/channels/nixos-20.03 nixpkgs
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
 nix-channel --update
 
 # Getting NixOS installation tools
-nix-env -iE "_: with import <nixpkgs/nixos> { configuration = {}; }; with config.system.build; [ nixos-generate-config nixos-install nixos-enter manual.manpages ]"
+nix-env -iE "_: with import <nixpkgs/nixos> { configuration = {}; }; with config.system.build; [ nixos-generate-config nixos-install nixos-enter ]"
 
 nixos-generate-config --root /mnt
 
@@ -216,9 +217,12 @@ cat > /mnt/etc/nixos/configuration.nix <<EOF
   boot.loader.grub = {
     enable = true;
     efiSupport = false;
-    devices = [ "/dev/sda" "/dev/sdb" ];
+    device = "/dev/sda";
+    mirroredBoots = [{
+      devices = [ "/dev/sdb" ];
+      path = "/boot-fallback";
+    }];
   };
-
 
   networking.hostName = "hetzner";
 
@@ -241,7 +245,7 @@ cat > /mnt/etc/nixos/configuration.nix <<EOF
   '';
   # The RAIDs are assembled in stage1, so we need to make the config
   # available there.
-  boot.initrd.mdadmConf = config.environment.etc."mdadm.conf".text;
+  boot.swraid.mdadmConf = config.environment.etc."mdadm.conf".text;
 
   # Network (Hetzner uses static IP assignments, and we don't use DHCP here)
   networking.useDHCP = false;
@@ -263,26 +267,26 @@ cat > /mnt/etc/nixos/configuration.nix <<EOF
 
   # Initial empty root password for easy login:
   users.users.root.initialHashedPassword = "";
-  services.openssh.permitRootLogin = "prohibit-password";
+  services.openssh.settings.PermitRootLogin = "prohibit-password";
 
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtwCIGPYJlD2eeUtxngmT+4yR7BMlK0F5kzj+84uHsxxsy+PXFrP/tScCpwmuoiEYNv/9WKnPJJfCA9XlIDr6cla1MLpaW6eg672TRYMmKzH6SLlkg+kyDmPxSIJw+KdKfnPYyva+Y/VocACYJo0voabUeLAVgtSKGz/AFzccjfOR0GmFO911zjAaR+jFb9M7t7dveNVKm9KbuBfu3giMgGg3/mKz1TKY8yk2ZOxpT5CllBb+B5BcEf+7IGNvNxr1Z0zz5cFXQ3LyBIZklnC/OaQCnD78BSiyPTkIXcmBFal2TaFwTDvki6PuCRpJy+dU1fDdgWLql97D0SVnjmmomw== nh2@deditus.de"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFrYVxQiKKIzGqLIO+6w6qA1d+E9vR2bFLW0EuT4e6zA isabella@IsblDesktop"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIZdRoS3HXiUh77MLq2OczaysE79CK0NZGfHyH+3tBlv isabella@IsblAsahi"
   ];
 
   services.openssh.enable = true;
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "20.03"; # Did you read the comment?
-
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
 EOF
 
-# Install NixOS
-PATH="$PATH" NIX_PATH="$NIX_PATH" `which nixos-install` --no-root-passwd --root /mnt --max-jobs 40
+exit 0
 
+# Install NixOS
+PATH="$PATH" `which nixos-install` --no-root-passwd --root /mnt --max-jobs 40
+
+umount /mnt/boot
+umount /mnt/boot-fallback
 umount /mnt
 
 reboot

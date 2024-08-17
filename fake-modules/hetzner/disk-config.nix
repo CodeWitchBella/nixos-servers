@@ -5,23 +5,23 @@
   content = {
     type = "gpt";
     partitions = {
-      GRUB_MBR = {
+      boot = {
+        name = "boot";
         size = "1M";
         type = "EF02";
       };
-      BOOT = {
+      raid1 = {
         size = "1G";
-        type = "EF00";
         content = {
-          type = "filesystem";
-          format = "vfat";
+          type = "mdraid";
+          name = "braid";
         };
       };
-      mdadm = {
+      raid2 = {
         size = "100%";
         content = {
           type = "mdraid";
-          name = "raid1";
+          name = "rraid";
         };
       };
     };
@@ -40,15 +40,25 @@ in {
     };
   };
   disko.devices.mdadm = {
-    raid1 = {
+    braid = {
       type = "mdadm";
       level = 1;
       content = {
         type = "filesystem";
-        format = "btrfs";
+        format = "ext4";
+        mountpoint = "/boot";
+      };
+    };
+    rraid = {
+      type = "mdadm";
+      level = 1;
+      content = {
+        type = "filesystem";
+        format = "ext4";
         mountpoint = "/";
+        mountOptions = ["defaults"];
       };
     };
   };
-  boot.loader.grub.devices = ["/dev/sda" "/dev/sda"];
+  # boot.loader.grub.devices = [one two];
 }
