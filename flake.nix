@@ -86,6 +86,21 @@
             {networking.hostName = "vps";}
           ];
       };
+      nixosConfigurations.hetzner = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules =
+          (import ./modules/module-list.nix)
+          ++ [
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ./systems/hetzner.nix
+            disko.nixosModules.disko
+            agenix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            inputs.lix-module.nixosModules.default
+            {networking.hostName = "hetzner";}
+          ];
+      };
     }
     // (flake-utils.lib.eachDefaultSystem (
       system: let
@@ -105,6 +120,10 @@
             {
               name = "deploy:vps";
               command = "nixos-rebuild switch --flake .#vps --target-host vps.isbl.cz --use-remote-sudo --use-substitutes";
+            }
+            {
+              name = "deploy:hetzner";
+              command = "nixos-rebuild switch --flake .#hetzner --target-host hetzner.isbl.cz --use-remote-sudo --use-substitutes";
             }
             {
               name = "deploy-remotebuild:vps";
