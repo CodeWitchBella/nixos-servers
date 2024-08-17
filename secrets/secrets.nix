@@ -14,4 +14,6 @@ in {
   "listmonk.age".publicKeys = users ++ [vps];
   "planka.age".publicKeys = users ++ [vps];
   "ssh_host_ed25519_rescue_key.age".publicKeys = users ++ [];
+  "restic-hetzner.age".publicKeys = users ++ [hetzner];
+  "restic-hetzner-password.age".publicKeys = users ++ [hetzner];
 }

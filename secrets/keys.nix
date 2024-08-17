@@ -9,4 +9,6 @@
   data = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJNGmuodH5B4vKsG4PE6gh1MbryU/s0WbvmaHhTdh2S";
   # on vps.isbl.cz
   vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBGSjrR+WPr379Y2ZjyuSdwTIbiroatryKzPUcUX/RjL";
+  # on hetzner.isbl.cz
+  hetzner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL3AJ8Z6EwBJg09FkL2ti2KnzLTl6FA/kIt8sw4LDolJ";
 }
