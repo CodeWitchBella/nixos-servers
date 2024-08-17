@@ -45,6 +45,8 @@
       url = "github:CodeWitchBella/songbook";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    impermanence.url = "github:nix-community/impermanence";
   };
   outputs = inputs @ {
     self,
@@ -54,6 +56,7 @@
     agenix,
     devshell,
     disko,
+    impermanence,
     ...
   }:
     {
@@ -93,6 +96,7 @@
           (import ./modules/module-list.nix)
           ++ [
             ./systems/hetzner.nix
+            impermanence.nixosModules.impermanence
             disko.nixosModules.disko
             agenix.nixosModules.default
             home-manager.nixosModules.home-manager
