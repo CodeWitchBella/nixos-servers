@@ -25,7 +25,27 @@
         OnCalendar = "00:05";
         RandomizedDelaySec = "5h";
       };
+      backupPrepareCommand = ''
+        set -Eeuxo pipefail
+        # clean old snapshot
+        if btrfs subvolume delete /persistent/@backup-snapshot; then
+            echo "WARNING: previous run did not cleanly finish, removing old snapshot"
+        fi
+
+        btrfs subvolume snapshot -r /persistent /persistent/@backup-snapshot
+
+        umount /persistent
+        mount -t btrfs -o subvol=/persistent/@backup-snapshot /dev/md/rraid /persistent
+      '';
+      backupCleanupCommand = ''
+        btrfs subvolume delete /persistent/@backup-snapshot
+      '';
     };
+  };
+
+  systemd.services.restic-backups-remotebackup = {
+    path = with pkgs; [btrfs-progs umount mount];
+    serviceConfig.PrivateMounts = true;
   };
 
   programs.ssh.knownHosts = {
