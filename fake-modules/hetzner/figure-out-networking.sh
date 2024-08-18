@@ -17,7 +17,7 @@
 # * inspired by https://nixos.wiki/wiki/Install_NixOS_on_Hetzner_Online
 #
 # But we remove everything related to installation, just leave the networking part
-
+# and use -j+jq for ip commands for more portability (hetzner rescue has jq as well)
 
 set -eu
 set -o pipefail
@@ -26,7 +26,7 @@ set -x
 
 # Find the name of the network interface that connects us to the Internet.
 # Inspired by https://unix.stackexchange.com/questions/14961/how-to-find-out-which-interface-am-i-using-for-connecting-to-the-internet/302613#302613
-RESCUE_INTERFACE=$(ip route get 8.8.8.8 | grep -Po '(?<=dev )(\S+)')
+RESCUE_INTERFACE=$(ip -j route get 8.8.8.8 | jq -r '.[].dev')
 
 # Find what its name will be under NixOS, which uses stable interface names.
 # See https://major.io/2015/08/21/understanding-systemds-predictable-network-device-names/#comment-545626
@@ -37,15 +37,12 @@ UDEVADM_PROPERTIES_FOR_INTERFACE=$(udevadm info --query=property "--path=$INTERF
 NIXOS_INTERFACE=$(echo "$UDEVADM_PROPERTIES_FOR_INTERFACE" | grep -o -E 'ID_NET_NAME_PATH=\w+' | cut -d= -f2)
 echo "Determined NIXOS_INTERFACE as '$NIXOS_INTERFACE'"
 
-IP_V4=$(ip route get 8.8.8.8 | grep -Po '(?<=src )(\S+)')
+IP_V4=$(ip -j route get 8.8.8.8 | jq -r '.[].prefsrc')
 echo "Determined IP_V4 as $IP_V4"
 
 # Determine Internet IPv6 by checking route, and using ::1
 # (because Hetzner rescue mode uses ::2 by default).
-# The `ip -6 route get` output on Hetzner looks like:
-#   # ip -6 route get 2001:4860:4860:0:0:0:0:8888
-#   2001:4860:4860::8888 via fe80::1 dev eth0 src 2a01:4f8:151:62aa::2 metric 1024  pref medium
-IP_V6="$(ip route get 2001:4860:4860:0:0:0:0:8888 | head -1 | cut -d' ' -f7 | cut -d: -f1-4)::1"
+IP_V6="$(ip -j route get 2001:4860:4860:0:0:0:0:8888 | jq -r '.[].prefsrc' | cut -d: -f1-4)::1"
 echo "Determined IP_V6 as $IP_V6"
 
 
@@ -55,7 +52,7 @@ echo "Determined DEFAULT_GATEWAY as $DEFAULT_GATEWAY"
 
 
 # Generate networking.nix
-cat > /mnt/etc/nixos/networking.nix <<EOF
+cat <<EOF
 {
   pkgs,
   config,
