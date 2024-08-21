@@ -26,6 +26,38 @@
       };
     };
   };
+  btrfs = {
+    type = "btrfs";
+    extraArgs = ["-f"]; # Override existing partition
+    # Subvolumes must set a mountpoint in order to be mounted,
+    # unless their parent is mounted
+    subvolumes = {
+      "/root" = {
+        mountpoint = "/";
+      };
+      "/persistent" = {
+        mountOptions = ["compress=zstd"];
+        mountpoint = "/persistent";
+      };
+      "/nix" = {
+        mountOptions = ["compress=zstd" "noatime"];
+        mountpoint = "/nix";
+      };
+    };
+  };
+  luks = {
+    size = "100%";
+    content = {
+      type = "luks";
+      name = "crypted";
+      settings = {
+        allowDiscards = true;
+        keyFile = "/tmp/secret.key";
+      };
+      # additionalKeyFiles = ["/tmp/additionalSecret.key"];
+      content = btrfs;
+    };
+  };
 in {
   disko.devices.disk = {
     one = {
@@ -52,25 +84,7 @@ in {
     rraid = {
       type = "mdadm";
       level = 1;
-      content = {
-        type = "btrfs";
-        extraArgs = ["-f"]; # Override existing partition
-        # Subvolumes must set a mountpoint in order to be mounted,
-        # unless their parent is mounted
-        subvolumes = {
-          "/root" = {
-            mountpoint = "/";
-          };
-          "/persistent" = {
-            mountOptions = ["compress=zstd"];
-            mountpoint = "/persistent";
-          };
-          "/nix" = {
-            mountOptions = ["compress=zstd" "noatime"];
-            mountpoint = "/nix";
-          };
-        };
-      };
+      content = btrfs;
     };
   };
   fileSystems."/persistent".neededForBoot = true;
