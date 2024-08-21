@@ -144,6 +144,10 @@
               name = "deploy-remotebuild:data";
               command = "nixos-rebuild switch --flake .#data --target-host data.isbl.cz --build-host data.isbl.cz --use-remote-sudo --fast";
             }
+            {
+              name = "deploy-remotebuild:hetzner";
+              command = "nixos-rebuild switch --flake .#hetzner --target-host hetzner.isbl.cz --build-host hetzner.isbl.cz --use-remote-sudo --fast";
+            }
           ];
         };
       }
