@@ -11,7 +11,7 @@
     remotebackup = {
       initialize = true;
       exclude = [
-        "/persistent/etc/ssh"
+        "/persistent/@backup-snapshot"
       ];
       passwordFile = config.age.secrets.restic-hetzner-password.path;
       repository = "sftp://u419690-sub1@u419690.your-storagebox.de/";
