@@ -16,7 +16,7 @@ in {
     isNormalUser = true;
     extraGroups = ["wheel"];
     openssh.authorizedKeys.keys = authorizedKeys;
-    shell = pkgs.nushell;
+    #shell = pkgs.nushell;
   };
   environment.variables.EDITOR = "vim";
   environment.shells = [pkgs.nushell];
@@ -31,7 +31,7 @@ in {
     enable = true;
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
-    settings.PermitRootLogin = lib.mkForce "no"; # force needed for making live images
+    settings.PermitRootLogin = lib.mkForce "prohibit-password"; # force needed for making live images
   };
 
   nix.settings.extra-substituters = [

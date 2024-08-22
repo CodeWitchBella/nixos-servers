@@ -2,29 +2,9 @@
 {lib, ...}: let
   one = "/dev/disk/by-path/pci-0000:00:17.0-ata-2.0";
   two = "/dev/disk/by-path/pci-0000:00:17.0-ata-3.0";
-  content = {
-    type = "gpt";
-    partitions = {
-      boot = {
-        name = "boot";
-        size = "1M";
-        type = "EF02";
-      };
-      raid1 = {
-        size = "1G";
-        content = {
-          type = "mdraid";
-          name = "braid";
-        };
-      };
-      raid2 = {
-        size = "100%";
-        content = {
-          type = "mdraid";
-          name = "rraid";
-        };
-      };
-    };
+  fullDisk = content: {
+    inherit content;
+    size = "100%";
   };
   btrfs = {
     type = "btrfs";
@@ -45,28 +25,41 @@
       };
     };
   };
-  luks = {
-    size = "100%";
-    content = {
-      type = "luks";
-      name = "crypted";
-      settings = {
-        allowDiscards = true;
-        keyFile = "/tmp/secret.key";
+  content = disk: {
+    type = "gpt";
+    partitions = {
+      boot = {
+        name = "boot";
+        size = "1M";
+        type = "EF02";
       };
-      # additionalKeyFiles = ["/tmp/additionalSecret.key"];
-      content = btrfs;
+      raid1 = {
+        size = "1G";
+        content = {
+          type = "mdraid";
+          name = "braid";
+        };
+      };
+      raid2 =
+        if disk == 1
+        then fullDisk btrfs
+        else
+          fullDisk {
+            type = "btrfs";
+            extraArgs = ["-f"];
+            subvolumes = {}; # placeholder for manual edit
+          };
     };
   };
 in {
   disko.devices.disk = {
     one = {
-      inherit content;
+      content = content 1;
       type = "disk";
       device = one;
     };
     two = {
-      inherit content;
+      content = content 2;
       type = "disk";
       device = two;
     };
@@ -80,11 +73,6 @@ in {
         format = "ext4";
         mountpoint = "/boot";
       };
-    };
-    rraid = {
-      type = "mdadm";
-      level = 1;
-      content = btrfs;
     };
   };
   fileSystems."/persistent".neededForBoot = true;
