@@ -35,7 +35,7 @@
         btrfs subvolume snapshot -r /persistent /persistent/@backup-snapshot
 
         umount /persistent
-        mount -t btrfs -o subvol=/persistent/@backup-snapshot /dev/md/rraid /persistent
+        mount -t btrfs -o subvol=/persistent/@backup-snapshot /dev/disk/by-partlabel/disk-one-raid2 /persistent
       '';
       backupCleanupCommand = ''
         btrfs subvolume delete /persistent/@backup-snapshot
