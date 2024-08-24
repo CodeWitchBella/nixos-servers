@@ -24,7 +24,7 @@ in {
       enable = true;
       location = "/persistent/backup/postgresql";
       startAt = "*-*-* 01:35:00"; # restic runs at 2:05, 30 minutes should be enough
-      backupAll = true;
+      databases = cfg.databases;
     };
     services.postgresql = {
       enable = true;
