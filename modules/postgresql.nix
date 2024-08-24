@@ -22,7 +22,7 @@ in {
   config = mkIf cfg.enable {
     services.postgresqlBackup = {
       enable = true;
-      location = "/persistent/backup/postgresql";
+      location = "/persistent/postgresql/dumps";
       startAt = "*-*-* 01:35:00"; # restic runs at 2:05, 30 minutes should be enough
       databases = cfg.databases;
     };
@@ -49,7 +49,20 @@ in {
       extraPlugins = ps: with ps; [pg_safeupdate];
       enableTCPIP = false; # default, but let's be sure
 
-      dataDir = "/persistent/var/lib/postgresql/${cfg.package.psqlSchema}";
+      dataDir = "/persistent/postgresql/data-${cfg.package.psqlSchema}";
+    };
+
+    systemd.tmpfiles.settings."10-isbl-postgresql" = let
+      dir = {
+        d = {
+          user = "postgres";
+          group = "postgres";
+          mode = "0750";
+        };
+      };
+    in {
+      "/persistent/postgresql/data-${cfg.package.psqlSchema}" = dir;
+      "/persistent/postgresql/dumps" = dir;
     };
   };
 }
