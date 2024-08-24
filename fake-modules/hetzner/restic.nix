@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  inputs,
   ...
 }: {
   age.secrets.restic-hetzner.file = ../../secrets/restic-hetzner.age;

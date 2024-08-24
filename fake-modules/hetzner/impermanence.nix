@@ -1,10 +1,4 @@
-{
-  pkgs,
-  config,
-  inputs,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   age.identityPaths = ["/persistent/etc/ssh/ssh_host_ed25519_key"];
   environment.persistence."/persistent" = {
     enable = true; # NB: Defaults to true, not needed
