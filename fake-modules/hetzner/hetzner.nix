@@ -7,6 +7,7 @@
   imports = [
     ./disk-config.nix
     ./impermanence.nix
+    ./minecraft.nix
     ./networking.nix
     ./restic.nix
   ];
@@ -22,4 +23,11 @@
     enable = true;
     databases = ["test"];
   };
+
+  networking.firewall.allowedTCPPorts = [
+    22 # ssh
+    80 # http
+    25565 # minecraft
+    #7000 # frps
+  ];
 }
