@@ -17,4 +17,9 @@
     git
     tree
   ];
+
+  isbl.postgresql = {
+    enable = true;
+    databases = ["test"];
+  };
 }

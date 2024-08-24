@@ -1,0 +1,55 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.isbl.postgresql;
+in {
+  options.isbl.postgresql = {
+    package = mkPackageOption pkgs "postgresql_16" {
+      example = "postgresql_16";
+    };
+    enable = mkEnableOption (lib.mdDoc "default isbl options for postgresql");
+    databases = mkOption {
+      type = types.listOf types.str;
+      default = cfg.databases;
+      description = lib.mdDoc "List of databases (and corresponding users) to create.";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    services.postgresqlBackup = {
+      enable = true;
+      location = "/persistent/backup/postgresql";
+      startAt = "*-*-* 01:35:00"; # restic runs at 2:05, 30 minutes should be enough
+      backupAll = true;
+    };
+    services.postgresql = {
+      enable = true;
+      package = cfg.package;
+      ensureDatabases = cfg.databases;
+      ensureUsers =
+        map (name: {
+          inherit name;
+          ensureDBOwnership = true;
+        })
+        cfg.databases;
+
+      authentication =
+        strings.concatMapStringsSep "\n" (name: ''
+          #type database  DBuser  auth-method
+          host  ${name}       ${name}     127.0.0.1/32   trust
+          host  ${name}       ${name}     ::1/128        trust
+        '')
+        cfg.databases;
+      initdbArgs = ["--data-checksums"]; # we'll see if it causes problems...
+      settings.shared_preload_libraries = ["safeupdate"];
+      extraPlugins = ps: with ps; [pg_safeupdate];
+      enableTCPIP = false; # default, but let's be sure
+
+      dataDir = "/persistent/var/lib/postgresql/${cfg.package.psqlSchema}";
+    };
+  };
+}

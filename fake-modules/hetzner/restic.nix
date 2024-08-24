@@ -21,8 +21,7 @@
         "sftp.command='${pkgs.sshpass}/bin/sshpass -f ${config.age.secrets.restic-hetzner.path} -- ssh -4 u419690.your-storagebox.de -l u419690-sub1 -s sftp'"
       ];
       timerConfig = {
-        OnCalendar = "00:05";
-        RandomizedDelaySec = "5h";
+        OnCalendar = "02:05";
       };
       backupPrepareCommand = ''
         set -Eeuxo pipefail
