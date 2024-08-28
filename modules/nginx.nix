@@ -17,6 +17,7 @@ in {
     };
 
     proxyPass = mkOption {
+      default = {};
       type = types.attrsOf (types.submodule {
         options = {
           acmehost = mkOption {type = types.str;};
