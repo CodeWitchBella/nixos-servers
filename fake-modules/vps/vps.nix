@@ -16,6 +16,5 @@
     ./mainsail.nix
     ./songbook.nix
     ./uptime.nix
-    ./vaultwarden.nix
   ];
 }

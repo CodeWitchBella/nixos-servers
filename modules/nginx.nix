@@ -15,6 +15,15 @@ in {
       default = "";
       description = lib.mdDoc "Config to append to default server block";
     };
+
+    proxyPass = mkOption {
+      type = types.attrsOf (types.submodule {
+        options = {
+          acmehost = mkOption {type = types.str;};
+          port = mkOption {type = types.ints.unsigned;};
+        };
+      });
+    };
   };
 
   config = mkIf cfg.enable {
@@ -75,6 +84,19 @@ in {
           ${cfg.appendDefaultServerConfig}
         }
       '';
+
+      virtualHosts =
+        builtins.mapAttrs (name: value: {
+          forceSSL = true;
+          useACMEHost = value.acmehost;
+          http3 = true;
+          quic = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString value.port}";
+            proxyWebsockets = true;
+          };
+        })
+        cfg.proxyPass;
     };
   };
 }
