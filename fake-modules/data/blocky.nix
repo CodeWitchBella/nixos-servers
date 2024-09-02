@@ -40,6 +40,12 @@
       queryLog.type = "none";
     };
   };
+  systemd.services.blocky = {
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+    before = ["nginx.service"]; # my nginx setup requires working dns
+    unitConfig.TimeoutStartSec = 60;
+  };
   networking.hosts = {
     "127.0.0.1" = ["darl.ns.cloudflare.com." "lorna.ns.cloudflare.com."];
   };
