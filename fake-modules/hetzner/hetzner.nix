@@ -5,13 +5,13 @@
   ...
 }: {
   imports = [
-    ./disk-config.nix
-    ./fail2ban.nix
-    ./impermanence.nix
+    ./infra/disk-config.nix
+    ./infra/fail2ban.nix
+    ./infra/impermanence.nix
+    ./infra/networking.nix
+    ./infra/nginx.nix
+    ./infra/restic.nix
     ./minecraft.nix
-    ./networking.nix
-    ./nginx.nix
-    ./restic.nix
     ./vaultwarden.nix
   ];
 
