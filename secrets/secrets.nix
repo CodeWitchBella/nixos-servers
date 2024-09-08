@@ -11,6 +11,7 @@ in {
   "psn.age".publicKeys = users ++ [data];
   "vaultwarden.age".publicKeys = users ++ [hetzner];
   "frp.age".publicKeys = users ++ [vps data];
+  "isponsorblocktv.json.age".publicKeys = users ++ [data];
   "listmonk.age".publicKeys = users ++ [vps];
   "planka.age".publicKeys = users ++ [vps];
   "ssh_host_ed25519_rescue_key.age".publicKeys = users ++ [];

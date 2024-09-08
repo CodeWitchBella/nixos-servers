@@ -10,6 +10,7 @@
     ./disk-config.nix
     ./frpc.nix
     ./home-assistant.nix
+    ./isponsorblocktv.nix
     ./mainsail.nix
     #./nextcloud.nix
     ./nginx.nix
