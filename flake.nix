@@ -47,6 +47,7 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
   outputs = inputs @ {
     self,
@@ -57,8 +58,29 @@
     devshell,
     disko,
     impermanence,
+    deploy-rs,
     ...
-  }:
+  }: let
+    mkDeployPkgs = system: let
+      pkgs = import nixpkgs {inherit system;};
+      # nixpkgs with deploy-rs overlay but force the nixpkgs package
+      deployPkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          deploy-rs.overlay # or deploy-rs.overlays.default
+          (self: super: {
+            deploy-rs = {
+              inherit (pkgs) deploy-rs;
+              lib = super.deploy-rs.lib;
+            };
+          })
+        ];
+      };
+    in
+      deployPkgs;
+    deployPkgsAarch = mkDeployPkgs "aarch64-linux";
+    deployPkgsX86 = mkDeployPkgs "x86_64-linux";
+  in
     {
       nixosConfigurations.data = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
@@ -104,13 +126,23 @@
             {networking.hostName = "hetzner";}
           ];
       };
-      nixosConfigurations.hetznerBootstrap = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules = [
-          disko.nixosModules.disko
-          {networking.hostName = "hetzner";}
-        ];
+
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+      deploy.nodes.data = {
+        hostname = "data.isbl.cz";
+        profiles.system = {
+          user = "root";
+          path = deployPkgsAarch.deploy-rs.lib.activate.nixos self.nixosConfigurations.data;
+        };
+      };
+
+      deploy.nodes.hetzner = {
+        hostname = "hetzner.isbl.cz";
+        profiles.system = {
+          user = "root";
+          path = deployPkgsX86.deploy-rs.lib.activate.nixos self.nixosConfigurations.hetzner;
+        };
       };
     }
     // (flake-utils.lib.eachDefaultSystem (
@@ -122,11 +154,14 @@
       in {
         formatter = inputs.alejandra.defaultPackage.${system};
         devShell = pkgs.devshell.mkShell {
-          packages = [agenix.packages."${system}".default];
+          packages = [
+            agenix.packages."${system}".default
+            pkgs.deploy-rs
+          ];
           commands = [
             {
               name = "deploy:data";
-              command = "nixos-rebuild switch --flake .#data --target-host data.isbl.cz --use-remote-sudo";
+              command = "deploy '.#data'";
             }
             {
               name = "deploy:vps";
@@ -142,7 +177,7 @@
             }
             {
               name = "deploy-remotebuild:data";
-              command = "nixos-rebuild switch --flake .#data --target-host data.isbl.cz --build-host data.isbl.cz --use-remote-sudo --fast";
+              command = "deploy '.#data' --remote-build";
             }
             {
               name = "deploy-remotebuild:hetzner";

@@ -3,8 +3,8 @@
   config,
   ...
 }: {
-  age.secrets.restic-hetzner.file = ../../secrets/restic-hetzner.age;
-  age.secrets.restic-hetzner-password.file = ../../secrets/restic-hetzner-password.age;
+  age.secrets.restic-hetzner.file = ../../../secrets/restic-hetzner.age;
+  age.secrets.restic-hetzner-password.file = ../../../secrets/restic-hetzner-password.age;
 
   services.restic.backups = {
     remotebackup = {
