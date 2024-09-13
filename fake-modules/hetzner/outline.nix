@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  lib,
   ...
 }: {
   nixpkgs.config.allowUnfree = true; # it's BuSL
@@ -45,6 +46,7 @@
       displayName = "Authentik";
     };
   };
+  systemd.services.outline.environment.DEFAULT_LANGUAGE = lib.mkForce "cs_CZ"; # the nix definion disallows czech
   isbl.nginx.proxyPass."outline.isbl.cz" = {
     acmehost = "isbl.cz";
     port = 3801;
