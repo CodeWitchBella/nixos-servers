@@ -5,6 +5,7 @@ in {
   "dnskey.conf.age".publicKeys = users ++ systems;
   "outline.age".publicKeys = users ++ [hetzner];
   "outline-s3-key.age".publicKeys = users ++ [hetzner];
+  "outline-secret.age".publicKeys = users ++ [hetzner];
   "authentik-env.age".publicKeys = users ++ [vps];
   "authentik-outpost-token.age".publicKeys = users ++ [data];
   "authentik-ldap-token.age".publicKeys = users ++ [data];

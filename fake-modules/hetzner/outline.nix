@@ -13,12 +13,17 @@
     file = ../../secrets/outline-s3-key.age;
     owner = "outline";
   };
+  age.secrets.outline-secret = {
+    file = ../../secrets/outline-secret.age;
+    owner = "outline";
+  };
   services.outline = {
     enable = true;
     publicUrl = "https://outline.isbl.cz";
     port = 3801;
     forceHttps = false;
     databaseUrl = config.isbl.postgresql.databaseUrl.outline;
+    utilsSecretFile = config.age.secrets.outline-secret.path;
     storage = {
       accessKey = "2d6cf57aaff503c156c8588fa46ce0ca";
       secretKeyFile = config.age.secrets.outline-s3-key.path;
