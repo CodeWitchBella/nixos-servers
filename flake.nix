@@ -151,6 +151,7 @@
           inherit system;
           overlays = [devshell.overlays.default];
         };
+        deploy = "${pkgs.deploy-rs}/bin/deploy";
       in {
         formatter = inputs.alejandra.defaultPackage.${system};
         devShell = pkgs.devshell.mkShell {
@@ -161,7 +162,7 @@
           commands = [
             {
               name = "deploy:data";
-              command = "deploy '.#data'";
+              command = "${deploy} '.#data'";
             }
             {
               name = "deploy:vps";
@@ -169,7 +170,7 @@
             }
             {
               name = "deploy:hetzner";
-              command = "nixos-rebuild switch --flake .#hetzner --target-host hetzner.isbl.cz --use-remote-sudo --use-substitutes";
+              command = "${deploy} '.#hetzner'";
             }
             {
               name = "deploy-remotebuild:vps";
@@ -177,11 +178,11 @@
             }
             {
               name = "deploy-remotebuild:data";
-              command = "deploy '.#data' --remote-build";
+              command = "${deploy} '.#data' --remote-build";
             }
             {
               name = "deploy-remotebuild:hetzner";
-              command = "nixos-rebuild switch --flake .#hetzner --target-host hetzner.isbl.cz --build-host hetzner.isbl.cz --use-remote-sudo --fast";
+              command = "${deploy} '.#hetzner' --remote-build";
             }
           ];
         };
