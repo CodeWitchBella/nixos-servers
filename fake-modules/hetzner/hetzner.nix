@@ -12,6 +12,7 @@
     ./infra/nginx.nix
     ./infra/restic.nix
     ./minecraft.nix
+    ./outline.nix
     ./vaultwarden.nix
   ];
 

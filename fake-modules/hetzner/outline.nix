@@ -9,13 +9,23 @@
     file = ../../secrets/outline.age;
     owner = "outline";
   };
+  age.secrets.outline-s3-key = {
+    file = ../../secrets/outline-s3-key.age;
+    owner = "outline";
+  };
   services.outline = {
     enable = true;
     publicUrl = "https://outline.isbl.cz";
     port = 3801;
     forceHttps = false;
-    databaseUrl = "local";
-    storage.storageType = "local";
+    databaseUrl = config.isbl.postgresql.databaseUrl.outline;
+    storage = {
+      accessKey = "2d6cf57aaff503c156c8588fa46ce0ca";
+      secretKeyFile = config.age.secrets.outline-s3-key.path;
+      uploadBucketUrl = "https://cce7f3b93d1cc5016fffc6068a30a3bb.eu.r2.cloudflarestorage.com";
+      uploadBucketName = "outline";
+      region = "auto";
+    };
     enableUpdateCheck = false;
     oidcAuthentication = {
       # Parts taken from
@@ -29,5 +39,13 @@
       usernameClaim = "preferred_username";
       displayName = "Authentik";
     };
+  };
+  isbl.nginx.proxyPass."outline.isbl.cz" = {
+    acmehost = "isbl.cz";
+    port = 3801;
+  };
+  isbl.postgresql = {
+    enable = true;
+    databases = ["outline"];
   };
 }

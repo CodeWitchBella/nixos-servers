@@ -17,9 +17,15 @@ in {
       default = cfg.databases;
       description = lib.mdDoc "List of databases (and corresponding users) to create.";
     };
+    databaseUrl = mkOption {};
   };
 
   config = mkIf cfg.enable {
+    isbl.postgresql.databaseUrl = builtins.listToAttrs (builtins.map (db: {
+        name = db;
+        value = "postgresql://${db}@127.0.0.1/${db}?sslmode=disable";
+      })
+      cfg.databases);
     services.postgresqlBackup = {
       enable = true;
       location = "/persistent/postgresql/dumps";

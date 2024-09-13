@@ -143,9 +143,6 @@
     virtualHosts."netdata.isbl.cz" = host 19999;
     virtualHosts."netdata.local.isbl.cz" = hostLocalPublic 19999;
 
-    virtualHosts."outline.isbl.cz" = hostPublic 3801;
-    virtualHosts."outline.local.isbl.cz" = hostLocalPublic 3801;
-
     virtualHosts."lidarr.isbl.cz" = hostAuth 8686;
     virtualHosts."lidarr.local.isbl.cz" = hostLocalPublic 8686;
 

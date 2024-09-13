@@ -1,0 +1,9 @@
+name = "outline-proxy"
+main = "index.js"
+compatibility_date = "2023-03-28"
+route = "outline.isbl.cz/*"
+
+[[r2_buckets]]
+binding = 'OUTLINE_BUCKET'
+bucket_name = 'outline'
+jurisdiction = 'eu'

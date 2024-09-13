@@ -60,7 +60,6 @@ in {
   #services.nginx.virtualHosts."email.isbl.cz" = host "isbl.cz" 8183;
 
   services.nginx.virtualHosts."ha.isbl.cz" = toData;
-  services.nginx.virtualHosts."outline.isbl.cz" = toData;
   services.nginx.virtualHosts."lidarr.isbl.cz" = toData;
   services.nginx.virtualHosts."radarr.isbl.cz" = toData;
   services.nginx.virtualHosts."readarr.isbl.cz" = toData;
