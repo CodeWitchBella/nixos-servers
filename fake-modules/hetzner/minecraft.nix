@@ -13,6 +13,7 @@
   };
 in {
   systemd.services.minecraft = {
+    enable = false;
     after = ["network-online.target"];
     wants = ["network-online.target"];
     wantedBy = ["multi-user.target"];
