@@ -40,7 +40,7 @@
       ports = ["127.0.0.1:8080:8080"];
       image = "ghcr.io/koenkk/zigbee2mqtt";
       extraOptions = [
-        "--device=/dev/ttyACM0:/dev/ttyACM0"
+        "--device=/dev/serial/by-id/usb-Silicon_Labs_slae.sh_cc2652rb_stick_-_slaesh_s_iot_stuff_00_12_4B_00_25_9A_B0_E2-if00-port0:/dev/ttyUSB0"
         "--network=host" # workaround borked dns
       ];
     };
