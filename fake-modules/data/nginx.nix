@@ -172,6 +172,9 @@
     virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz";
     virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
 
+    virtualHosts."blik.isbl.cz" = hostAuth "http://blik-wifi.local.isbl.cz";
+    virtualHosts."blik.local.isbl.cz" = hostLocalPublic "http://blik-wifi.local.isbl.cz";
+
     virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
 
     upstreams.tris.servers = {
