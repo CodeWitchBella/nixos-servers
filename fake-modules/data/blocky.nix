@@ -13,7 +13,7 @@
       proxy_pass http://127.0.0.1:4003;
     }
   '';
-  systemd.units.blocky.wantedBy = ["nginx.service"];
+  systemd.units.blocky.wantedBy = ["nginx.service" "frp.service"];
   services.blocky = {
     enable = true;
     settings = {
@@ -43,7 +43,7 @@
   systemd.services.blocky = {
     after = ["network-online.target"];
     wants = ["network-online.target"];
-    before = ["nginx.service"]; # my nginx setup requires working dns
+    before = ["nginx.service" "frp.service"]; # my nginx setup requires working dns
     unitConfig.TimeoutStartSec = 60;
   };
   networking.hosts = {
