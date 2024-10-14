@@ -8,7 +8,6 @@
     ./authentik-outpost.nix
     ./blocky.nix
     ./disk-config.nix
-    ./frpc.nix
     ./home-assistant.nix
     ./isponsorblocktv.nix
     ./mainsail.nix
@@ -17,4 +16,9 @@
     ./servarr.nix
     ./spoolman.nix
   ];
+
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
 }

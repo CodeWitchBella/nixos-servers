@@ -12,5 +12,5 @@
       maxtime = "48h";
     };
   };
-  services.openssh.logLevel = "VERBOSE";
+  services.openssh.settings.LogLevel = "VERBOSE";
 }
