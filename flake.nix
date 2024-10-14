@@ -31,16 +31,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lix = {
-      url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
-      flake = false;
-    };
-    lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module";
-      inputs.lix.follows = "lix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     songbook = {
       url = "github:CodeWitchBella/songbook";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -91,7 +81,6 @@
             agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             disko.nixosModules.disko
-            inputs.lix-module.nixosModules.default
             {networking.hostName = "data";}
           ];
       };
@@ -107,7 +96,6 @@
             inputs.authentik-nix.nixosModules.default
             inputs.vpsadminos.nixosConfigurations.container
             inputs.simple-nixos-mailserver.nixosModule
-            inputs.lix-module.nixosModules.default
             {networking.hostName = "vps";}
           ];
       };
@@ -122,7 +110,6 @@
             disko.nixosModules.disko
             agenix.nixosModules.default
             home-manager.nixosModules.home-manager
-            inputs.lix-module.nixosModules.default
             {networking.hostName = "hetzner";}
           ];
       };

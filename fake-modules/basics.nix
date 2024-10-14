@@ -12,6 +12,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"
   ];
 in {
+  nix.package = pkgs.lix;
   users.users.isabella = {
     isNormalUser = true;
     extraGroups = ["wheel"];
