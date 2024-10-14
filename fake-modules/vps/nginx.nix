@@ -22,7 +22,7 @@
     http3 = true;
     quic = true;
     locations."/" = {
-      proxyPass = "https://127.0.0.1:4444";
+      proxyPass = "https://100.64.0.3";
       proxyWebsockets = true;
     };
   };

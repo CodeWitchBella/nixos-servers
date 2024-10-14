@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./authentik.nix
-    ./frps.nix
     ./listmonk.nix
     ./nginx.nix
     ./planka.nix
@@ -17,4 +16,6 @@
     ./songbook.nix
     ./uptime.nix
   ];
+
+  services.tailscale.enable = true;
 }
