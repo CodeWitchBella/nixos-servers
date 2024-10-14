@@ -144,6 +144,13 @@
           path = deployPkgsX86.deploy-rs.lib.activate.nixos self.nixosConfigurations.hetzner;
         };
       };
+      deploy.nodes.vps = {
+        hostname = "vps.isbl.cz";
+        profiles.system = {
+          user = "root";
+          path = deployPkgsX86.deploy-rs.lib.activate.nixos self.nixosConfigurations.vps;
+        };
+      };
     }
     // (flake-utils.lib.eachDefaultSystem (
       system: let
@@ -166,7 +173,7 @@
             }
             {
               name = "deploy:vps";
-              command = "nixos-rebuild switch --flake .#vps --target-host vps.isbl.cz --use-remote-sudo --use-substitutes";
+              command = "${deploy} '.#vps'";
             }
             {
               name = "deploy:hetzner";
@@ -174,7 +181,7 @@
             }
             {
               name = "deploy-remotebuild:vps";
-              command = "nixos-rebuild switch --flake .#vps --target-host vps.isbl.cz --build-host vps.isbl.cz --use-remote-sudo --fast";
+              command = "${deploy} '.#vps' --remote-build";
             }
             {
               name = "deploy-remotebuild:data";
