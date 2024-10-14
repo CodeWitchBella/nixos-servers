@@ -719,11 +719,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1722021166,
-        "narHash": "sha256-pNX006s9xKBEmAN8AuyfVBeQb/FY4Oi6neTLyxGb9EE=",
+        "lastModified": 1719524419,
+        "narHash": "sha256-vN8uwyyAeLJSkSwlZNDHG/hfg4W1z3/Mwfr+PuisNdM=",
         "owner": "CodeWitchBella",
         "repo": "songbook",
-        "rev": "83ae3a4e30c284b25016fefa99d41188f5dfbb99",
+        "rev": "bf4a63022d19e9b4401b7f118d08890b071a1994",
         "type": "github"
       },
       "original": {
