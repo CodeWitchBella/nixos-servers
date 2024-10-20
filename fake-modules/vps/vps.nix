@@ -21,4 +21,5 @@
     enable = true;
     useRoutingFeatures = "server";
   };
+  networking.nftables.enable = true;
 }
