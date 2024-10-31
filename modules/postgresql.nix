@@ -51,8 +51,8 @@ in {
         '')
         cfg.databases;
       initdbArgs = ["--data-checksums"]; # we'll see if it causes problems...
-      settings.shared_preload_libraries = ["safeupdate"];
-      extraPlugins = ps: with ps; [pg_safeupdate];
+      # settings.shared_preload_libraries = ["safeupdate"]; # This makes outline fail...
+      # extraPlugins = ps: with ps; [pg_safeupdate];
       enableTCPIP = false; # default, but let's be sure
 
       dataDir = "/persistent/postgresql/data-${cfg.package.psqlSchema}";
