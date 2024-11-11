@@ -17,8 +17,6 @@
     ./spoolman.nix
   ];
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-  };
+  services.tailscale.enable = true;
+  isbl.tailscale.exitNode = true;
 }

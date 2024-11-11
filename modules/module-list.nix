@@ -3,4 +3,5 @@
   ./networking.nix
   ./nginx.nix
   ./postgresql.nix
+  ./tailscale.nix
 ]

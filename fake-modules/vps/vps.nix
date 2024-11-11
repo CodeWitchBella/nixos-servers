@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  lib,
   ...
 }: {
   imports = [
@@ -17,9 +18,6 @@
     ./uptime.nix
   ];
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-  };
-  networking.nftables.enable = true;
+  services.tailscale.enable = true;
+  # isbl.tailscale.exitNode = true;
 }
