@@ -38,6 +38,25 @@
       ];
       caching.cacheTimeNegative = -1;
       queryLog.type = "none";
+      customDNS = {
+        mapping = {
+          "data.isbl.cz" = "192.168.68.56";
+        };
+        rewrite = {
+          "ha.local.isbl.cz" = "data.isbl.cz";
+          "ha.isbl.cz" = "data.isbl.cz";
+        };
+        zone = ''
+          $ORIGIN local.isbl.cz.
+          $TTL    3600
+          @ CNAME data.isbl.cz.
+          priscilla A 192.168.68.78
+          tris-lan  A 192.168.68.72
+          tris-wifi A 192.168.68.85
+          blik-wifi A 192.168.68.79
+          * CNAME data.isbl.cz.
+        '';
+      };
     };
   };
   systemd.services.blocky = {
