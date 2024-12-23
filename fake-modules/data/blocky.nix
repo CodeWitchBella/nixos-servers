@@ -38,13 +38,14 @@
       ];
       caching.cacheTimeNegative = -1;
       queryLog.type = "none";
-      customDNS = {
+      customDNS = let
+        data = "192.168.68.56";
+      in {
+        filterUnmappedTypes = false;
         mapping = {
-          "data.isbl.cz" = "192.168.68.56";
-        };
-        rewrite = {
-          "ha.local.isbl.cz" = "data.isbl.cz";
-          "ha.isbl.cz" = "data.isbl.cz";
+          "data.isbl.cz" = data;
+          "zigbee.isbl.cz" = data;
+          "ha.isbl.cz" = data;
         };
         zone = ''
           $ORIGIN local.isbl.cz.
@@ -54,6 +55,7 @@
           tris-lan  A 192.168.68.72
           tris-wifi A 192.168.68.85
           blik-wifi A 192.168.68.79
+          voice     A 192.168.68.67
           * CNAME data.isbl.cz.
         '';
       };
