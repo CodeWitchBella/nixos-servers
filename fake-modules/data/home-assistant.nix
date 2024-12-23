@@ -13,7 +13,7 @@
       volumes = ["/disks/homeassistant:/config"];
       environment.TZ = "Europe/Prague";
       image = "ghcr.io/home-assistant/home-assistant:stable"; # Warning: if the tag does not change, the image will not be updated
-      ports = ["127.0.0.1:8123:8123"];
+      ports = ["8123:8123"]; # ["127.0.0.1:8123:8123"];
       extraOptions = [
         #"--network=host"
         "--cap-add=CAP_NET_RAW,CAP_NET_BIND_SERVICE"
@@ -77,6 +77,16 @@
       };
     };
     */
+    # containers.piper = {
+    #   volumes = ["/ssd/piper:/data"];
+    #   image = "docker.io/rhasspy/wyoming-piper";
+    #   cmd = ["--voice" "en_US-lessac-medium"];
+    # };
+    # containers.whisper = {
+    #   volumes = ["/ssd/whisper:/data"];
+    #   image = "docker.io/rhasspy/wyoming-whisper";
+    #   cmd = ["--model" "tiny-int8" "--language" "en"];
+    # };
   };
   virtualisation.podman.defaultNetwork.settings = {dns_enabled = true;};
 }

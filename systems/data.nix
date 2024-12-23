@@ -63,7 +63,7 @@
     options = ["noatime" "compress=zstd" "autodefrag" "subvol=/nix"];
   };
 
-  networking.firewall.allowedTCPPorts = [22 80 443 1884];
+  networking.firewall.allowedTCPPorts = [22 80 443 1884 8123];
   networking.firewall.allowedUDPPorts = [53 443];
 
   services.fstrim.enable = true;

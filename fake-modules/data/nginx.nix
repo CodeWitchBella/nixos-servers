@@ -128,6 +128,14 @@
       };
   in {
     clientMaxBodySize = "100m";
+
+    # virtualHosts."192.168.68.56" = {
+    #   locations."/" = {
+    #     proxyPass = proxypass 8123;
+    #     extraConfig = localExtraConfig;
+    #   };
+    # };
+
     virtualHosts."ha.isbl.cz" = hostPublic 8123;
     virtualHosts."ha.local.isbl.cz" = hostLocalPublic 8123;
 
