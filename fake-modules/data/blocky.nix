@@ -56,6 +56,7 @@
           tris-wifi A ${ip.tris-wifi}
           blik-wifi A ${ip.blik-wifi}
           voice     A ${ip.voice}
+          homeassistant A ${ip.homeassistant}
           * CNAME data.isbl.cz.
         '';
       };
