@@ -20,7 +20,7 @@
     efiInstallAsRemovable = true;
     device = "nodev";
   };
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11; # this does not boot :(
   boot.initrd = {
     supportedFilesystems = ["btrfs"];
     systemd.enable = true;
