@@ -62,4 +62,11 @@
     enableACME = false;
     useACMEHost = "isbl.cz";
   };
+  services.rspamd.extraConfig = ''
+    actions {
+      reject = null; # Disable rejects, default is 15
+      add_header = 6; # Add header when reaching this score
+      greylist = null; # Apply greylisting when reaching this score
+    }
+  '';
 }
