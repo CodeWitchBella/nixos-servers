@@ -137,8 +137,8 @@
     #   };
     # };
 
-    virtualHosts."ha.isbl.cz" = hostPublic 8123;
-    virtualHosts."ha.local.isbl.cz" = hostLocalPublic 8123;
+    virtualHosts."ha.isbl.cz" = hostPublic "http://${ip.homeassistant}:8123";
+    virtualHosts."ha.local.isbl.cz" = hostLocalPublic "http://${ip.homeassistant}:8123";
 
     virtualHosts."zigbee.isbl.cz" = host 8080;
     virtualHosts."zigbee.local.isbl.cz" = hostLocalPublic 8080;
