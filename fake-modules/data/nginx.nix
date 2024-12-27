@@ -30,6 +30,7 @@
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
   services.nginx = let
+    ip = import ../ip.nix;
     proxypass = target:
       if (builtins.typeOf target) == "string"
       then target
@@ -46,8 +47,8 @@
       };
     };
     localExtraConfig = ''
-      deny 192.168.68.1;
-      allow 192.168.68.0/22;
+      deny ${ip.gateway};
+      allow ${ip.lan};
       deny all;
     '';
     host = target:
@@ -177,21 +178,21 @@
     virtualHosts."navidrome.local.isbl.cz" = hostLocalPublic 4533;
     virtualHosts."navidrome-direct.local.isbl.cz" = hostLocalPublic 4533;
 
-    virtualHosts."priscilla.isbl.cz" = hostAuth "http://priscilla.local.isbl.cz";
-    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://priscilla.local.isbl.cz";
+    virtualHosts."priscilla.isbl.cz" = hostAuth "http://${ip.priscilla}";
+    virtualHosts."priscilla.local.isbl.cz" = hostLocalPublic "http://${ip.priscilla}";
 
-    virtualHosts."blik.isbl.cz" = hostAuth "http://blik-wifi.local.isbl.cz";
-    virtualHosts."blik.local.isbl.cz" = hostLocalPublic "http://blik-wifi.local.isbl.cz";
-
-    virtualHosts."ender.isbl.cz" = hostAuth "http://ender.local.isbl.cz";
+    virtualHosts."blik.isbl.cz" = hostAuth "http://${ip.blik-wifi}";
+    virtualHosts."blik.local.isbl.cz" = hostLocalPublic "http://${ip.blik-wifi}";
 
     upstreams.tris.servers = {
-      "tris-lan.local.isbl.cz:80" = {
+      "${ip.tris-lan}:80" = {
         fail_timeout = 60; # do not try to connect for a minute if connection fails
       };
-      "tris-wifi.local.isbl.cz:80" = {backup = true;};
+      "${ip.tris-wifi}:80" = {
+        backup = true;
+      };
     };
-    virtualHosts."tris.isbl.cz" = hostAuth "http://tris";
-    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://tris";
+    virtualHosts."tris.isbl.cz" = hostAuth "http://${ip.tris-lan}";
+    virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://${ip.tris-lan}";
   };
 }

@@ -21,9 +21,9 @@ in {
         client_id = "W6AE5HPtjz4hrMjIeKEB5nAvDwbcXq0E5SEJQOvZ";
         client_secret_path = config.age.secrets.headscale.path;
       };
-      db_path = "${dir}/db.sqlite";
-      dns_config.base_domain = "net.isbl.cz";
-      # dns_config.magic_dns = false;
+      database.sqlite.path = "${dir}/db.sqlite";
+      dns.base_domain = "net.isbl.cz";
+      dns.magic_dns = true;
     };
   };
   environment.persistence."/persistent".directories = [dir];

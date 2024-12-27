@@ -16,8 +16,10 @@
   systemd.units.blocky.wantedBy = ["nginx.service" "frp.service"];
   services.blocky = {
     enable = true;
-    settings = {
-      ports.dns = "192.168.68.56:53,127.0.0.1:53";
+    settings = let
+      ip = import ../ip.nix;
+    in {
+      ports.dns = "${ip.data}:53,127.0.0.1:53";
       ports.http = 4003;
       upstreams.init.strategy = "fast";
       upstreams.groups.default = [
@@ -38,24 +40,22 @@
       ];
       caching.cacheTimeNegative = -1;
       queryLog.type = "none";
-      customDNS = let
-        data = "192.168.68.56";
-      in {
+      customDNS = {
         filterUnmappedTypes = false;
         mapping = {
-          "data.isbl.cz" = data;
-          "zigbee.isbl.cz" = data;
-          "ha.isbl.cz" = data;
+          "data.isbl.cz" = ip.data;
+          "zigbee.isbl.cz" = ip.data;
+          "ha.isbl.cz" = ip.data;
         };
         zone = ''
           $ORIGIN local.isbl.cz.
           $TTL    3600
           @ CNAME data.isbl.cz.
-          priscilla A 192.168.68.78
-          tris-lan  A 192.168.68.72
-          tris-wifi A 192.168.68.85
-          blik-wifi A 192.168.68.79
-          voice     A 192.168.68.67
+          priscilla A ${ip.priscilla}
+          tris-lan  A ${ip.tris-lan}
+          tris-wifi A ${ip.tris-wifi}
+          blik-wifi A ${ip.blik-wifi}
+          voice     A ${ip.voice}
           * CNAME data.isbl.cz.
         '';
       };
@@ -66,6 +66,9 @@
     wants = ["network-online.target"];
     before = ["nginx.service" "frp.service"]; # my nginx setup requires working dns
     unitConfig.TimeoutStartSec = 60;
+  };
+  systemd.services.nginx = {
+    after = ["blocky.service"];
   };
   networking.hosts = {
     "127.0.0.1" = ["darl.ns.cloudflare.com." "lorna.ns.cloudflare.com."];
