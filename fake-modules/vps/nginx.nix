@@ -26,8 +26,9 @@
       proxyWebsockets = true;
     };
   };
+  ip = import ../ip.nix;
 
-  toData = to "https://100.64.0.3";
+  toData = to "https://${ip.tailscale.data}";
 in {
   isbl.nginx.enable = true;
   security.acme = {
@@ -61,7 +62,7 @@ in {
   services.nginx.virtualHosts."list.brehoni.cz" = host "brehoni.cz" 9432;
   #services.nginx.virtualHosts."email.isbl.cz" = host "isbl.cz" 8183;
 
-  services.nginx.virtualHosts."ha.isbl.cz" = to "https://100.64.0.9:8123";
+  services.nginx.virtualHosts."ha.isbl.cz" = to "http://${ip.tailscale.homeassistant}:8123";
   services.nginx.virtualHosts."lidarr.isbl.cz" = toData;
   services.nginx.virtualHosts."radarr.isbl.cz" = toData;
   services.nginx.virtualHosts."readarr.isbl.cz" = toData;
