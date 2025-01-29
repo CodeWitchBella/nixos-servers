@@ -4,29 +4,34 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   keys = import ../secrets/keys.nix;
   authorizedKeys = with keys; [
     desktop
     asahi
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMr5ynyyHtVRtoXOCDmyJv4l6JwBWGgt2b4lo1dWLHoW isabella@isbl.cz"
   ];
-in {
+in
+{
   nix.package = pkgs.lix;
   users.users.isabella = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = authorizedKeys;
     #shell = pkgs.nushell;
   };
   environment.variables.EDITOR = "vim";
-  environment.shells = [pkgs.nushell];
+  environment.shells = [ pkgs.nushell ];
   users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
   home-manager.users.isabella = import ../home.nix;
 
   security.sudo.wheelNeedsPassword = false;
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = ["isabella"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [ "isabella" ];
 
   services.openssh = {
     enable = true;

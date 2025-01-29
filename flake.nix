@@ -26,11 +26,6 @@
     vpsadminos.url = "github:vpsfreecz/vpsadminos";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.0.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     songbook = {
       url = "github:CodeWitchBella/songbook";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,79 +34,77 @@
     impermanence.url = "github:nix-community/impermanence";
     deploy-rs.url = "github:serokell/deploy-rs";
   };
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    home-manager,
-    flake-utils,
-    agenix,
-    devshell,
-    disko,
-    impermanence,
-    deploy-rs,
-    ...
-  }: let
-    mkDeployPkgs = system: let
-      pkgs = import nixpkgs {inherit system;};
-      # nixpkgs with deploy-rs overlay but force the nixpkgs package
-      deployPkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          deploy-rs.overlay # or deploy-rs.overlays.default
-          (self: super: {
-            deploy-rs = {
-              inherit (pkgs) deploy-rs;
-              lib = super.deploy-rs.lib;
-            };
-          })
-        ];
-      };
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      flake-utils,
+      agenix,
+      devshell,
+      disko,
+      impermanence,
+      deploy-rs,
+      ...
+    }:
+    let
+      mkDeployPkgs =
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+          # nixpkgs with deploy-rs overlay but force the nixpkgs package
+          deployPkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              deploy-rs.overlay # or deploy-rs.overlays.default
+              (self: super: {
+                deploy-rs = {
+                  inherit (pkgs) deploy-rs;
+                  lib = super.deploy-rs.lib;
+                };
+              })
+            ];
+          };
+        in
+        deployPkgs;
+      deployPkgsAarch = mkDeployPkgs "aarch64-linux";
+      deployPkgsX86 = mkDeployPkgs "x86_64-linux";
     in
-      deployPkgs;
-    deployPkgsAarch = mkDeployPkgs "aarch64-linux";
-    deployPkgsX86 = mkDeployPkgs "x86_64-linux";
-  in
     {
       nixosConfigurations.data = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules =
-          (import ./modules/module-list.nix)
-          ++ [
-            ./systems/data.nix
-            agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
-            disko.nixosModules.disko
-            {networking.hostName = "data";}
-          ];
+        modules = (import ./modules/module-list.nix) ++ [
+          ./systems/data.nix
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          { networking.hostName = "data"; }
+        ];
       };
       nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules =
-          (import ./modules/module-list.nix)
-          ++ [
-            ./systems/vps.nix
-            agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
-            inputs.authentik-nix.nixosModules.default
-            inputs.vpsadminos.nixosConfigurations.container
-            inputs.simple-nixos-mailserver.nixosModule
-            {networking.hostName = "vps";}
-          ];
+        specialArgs = { inherit inputs; };
+        modules = (import ./modules/module-list.nix) ++ [
+          ./systems/vps.nix
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          inputs.authentik-nix.nixosModules.default
+          inputs.vpsadminos.nixosConfigurations.container
+          inputs.simple-nixos-mailserver.nixosModule
+          { networking.hostName = "vps"; }
+        ];
       };
       nixosConfigurations.hetzner = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules =
-          (import ./modules/module-list.nix)
-          ++ [
-            ./systems/hetzner.nix
-            impermanence.nixosModules.impermanence
-            disko.nixosModules.disko
-            agenix.nixosModules.default
-            home-manager.nixosModules.home-manager
-            {networking.hostName = "hetzner";}
-          ];
+        specialArgs = { inherit inputs; };
+        modules = (import ./modules/module-list.nix) ++ [
+          ./systems/hetzner.nix
+          impermanence.nixosModules.impermanence
+          disko.nixosModules.disko
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          { networking.hostName = "hetzner"; }
+        ];
       };
 
       # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
@@ -140,14 +133,16 @@
       };
     }
     // (flake-utils.lib.eachDefaultSystem (
-      system: let
+      system:
+      let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [devshell.overlays.default];
+          overlays = [ devshell.overlays.default ];
         };
         deploy = "${pkgs.deploy-rs}/bin/deploy";
-      in {
-        formatter = inputs.alejandra.defaultPackage.${system};
+      in
+      {
+        formatter = pkgs.nixfmt-rfc-style;
         devShell = pkgs.devshell.mkShell {
           packages = [
             agenix.packages."${system}".default

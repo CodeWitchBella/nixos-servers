@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   name = "create-live-5";
   user = "minecraft";
   modpack = pkgs.fetchzip {
@@ -11,13 +12,19 @@
     sha256 = "sha256-UxAtUnMriRgEBB5GndUJ91v5S9448ageCjPGh6fg3x0=";
     stripRoot = false;
   };
-in {
+in
+{
   systemd.services.minecraft = {
     enable = false;
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
-    path = with pkgs; [temurin-jre-bin-20 umount mount bash];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    path = with pkgs; [
+      temurin-jre-bin-20
+      umount
+      mount
+      bash
+    ];
 
     script = "
       cd /persistent/minecraft/${name}
@@ -53,16 +60,18 @@ in {
     isSystemUser = true;
     group = user;
   };
-  users.groups.${user} = {};
-  systemd.tmpfiles.settings."10-isbl-minecraft" = let
-    dir = {
-      d = {
-        user = user;
-        group = user;
-        mode = "0755";
+  users.groups.${user} = { };
+  systemd.tmpfiles.settings."10-isbl-minecraft" =
+    let
+      dir = {
+        d = {
+          user = user;
+          group = user;
+          mode = "0755";
+        };
       };
+    in
+    {
+      "/persistent/minecraft/${name}" = dir;
     };
-  in {
-    "/persistent/minecraft/${name}" = dir;
-  };
 }

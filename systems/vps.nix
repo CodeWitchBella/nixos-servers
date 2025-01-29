@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../fake-modules/vps/vps.nix
     ../fake-modules/basics.nix

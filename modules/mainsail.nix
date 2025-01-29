@@ -4,13 +4,15 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.isbl.mainsail;
-in {
+in
+{
   options.isbl.mainsail = {
     enable = mkEnableOption (lib.mdDoc "a modern and responsive user interface for Klipper");
 
-    package = mkPackageOption pkgs "mainsail" {};
+    package = mkPackageOption pkgs "mainsail" { };
 
     hostName = mkOption {
       type = types.str;
@@ -18,10 +20,10 @@ in {
       description = lib.mdDoc "Hostname to serve mainsail on";
     };
 
-    config = mkOption {};
+    config = mkOption { };
 
     nginx = mkOption {
-      default = {};
+      default = { };
       example = literalExpression ''
         {
           serverAliases = [ "mainsail.''${config.networking.domain}" ];

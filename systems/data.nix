@@ -7,7 +7,8 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../fake-modules/data/data.nix
     ../fake-modules/basics.nix
@@ -22,7 +23,7 @@
   };
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11; # this does not boot :(
   boot.initrd = {
-    supportedFilesystems = ["btrfs"];
+    supportedFilesystems = [ "btrfs" ];
     systemd.enable = true;
     systemd.emergencyAccess = true;
     network.ssh.enable = true;
@@ -35,36 +36,73 @@
   fileSystems."/disks" = {
     device = "/dev/disk/by-label/first-btrfs";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+    ];
   };
   fileSystems."/ssd" = {
     device = "/dev/disk/by-label/ssd";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag" "subvol=/ssd"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+      "subvol=/ssd"
+    ];
   };
   fileSystems."/ssd_root" = {
     device = "/dev/disk/by-label/ssd";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+    ];
   };
   fileSystems."/var/lib" = {
     device = "/dev/disk/by-label/ssd";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag" "subvol=/var-lib"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+      "subvol=/var-lib"
+    ];
   };
   fileSystems."/var/log" = {
     device = "/dev/disk/by-label/ssd";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag" "subvol=/var-log"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+      "subvol=/var-log"
+    ];
   };
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/ssd";
     fsType = "btrfs";
-    options = ["noatime" "compress=zstd" "autodefrag" "subvol=/nix"];
+    options = [
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+      "subvol=/nix"
+    ];
   };
 
-  networking.firewall.allowedTCPPorts = [22 80 443 1884 8123];
-  networking.firewall.allowedUDPPorts = [53 443];
+  networking.firewall.allowedTCPPorts = [
+    22
+    80
+    443
+    1884
+    8123
+  ];
+  networking.firewall.allowedUDPPorts = [
+    53
+    443
+  ];
 
   services.fstrim.enable = true;
 

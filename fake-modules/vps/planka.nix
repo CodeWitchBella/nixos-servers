@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   nginx = {
     forceSSL = true;
     http3 = true;
@@ -13,13 +14,14 @@
       proxyWebsockets = true;
     };
   };
-in {
+in
+{
   age.secrets.planka = {
     file = ../../secrets/planka.age;
     mode = "666";
   };
 
-  services.postgresql.ensureDatabases = ["planka"];
+  services.postgresql.ensureDatabases = [ "planka" ];
   services.postgresql.enable = true;
   services.postgresql.ensureUsers = [
     {
@@ -41,7 +43,7 @@ in {
         "/var/lib/planka/project-background-images:/app/public/project-background-images"
         "/var/lib/planka/attachments:/app/private/attachments"
       ];
-      environmentFiles = [config.age.secrets.planka.path];
+      environmentFiles = [ config.age.secrets.planka.path ];
       environment = {
         POSTGRESQL_URL = "postgres://planka@localhost/planka";
         BASE_URL = "https://planka.isbl.cz";
@@ -63,8 +65,10 @@ in {
       };
       image = "ghcr.io/plankanban/planka:latest";
       #ports = ["127.0.0.1:4448:1337"];
-      extraOptions = ["--network=host"];
+      extraOptions = [ "--network=host" ];
     };
   };
-  services.nginx.virtualHosts."planka.isbl.cz" = nginx // {useACMEHost = "isbl.cz";};
+  services.nginx.virtualHosts."planka.isbl.cz" = nginx // {
+    useACMEHost = "isbl.cz";
+  };
 }

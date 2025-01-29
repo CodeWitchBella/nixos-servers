@@ -4,7 +4,8 @@
   inputs,
   lib,
   ...
-}: rec {
+}:
+rec {
   services.lidarr = {
     enable = false;
     dataDir = "/ssd/lidarr";
@@ -30,19 +31,19 @@
 
   users.users = {
     lidarr = lib.mkIf services.lidarr.enable {
-      extraGroups = ["jellyfin"];
+      extraGroups = [ "jellyfin" ];
       lidarr.uid = 306;
     };
     radarr = lib.mkIf services.radarr.enable {
-      extraGroups = ["jellyfin"];
+      extraGroups = [ "jellyfin" ];
       uid = 275;
     };
     readarr = lib.mkIf services.readarr.enable {
-      extraGroups = ["jellyfin"];
+      extraGroups = [ "jellyfin" ];
       uid = 993;
     };
     sonarr = lib.mkIf services.sonarr.enable {
-      extraGroups = ["jellyfin"];
+      extraGroups = [ "jellyfin" ];
       uid = 274;
     };
 
@@ -52,7 +53,11 @@
     jellyfin.group = "jellyfin";
   };
 
-  users.users.isabella.extraGroups = ["transmission" "jellyfin" "lidarr"];
+  users.users.isabella.extraGroups = [
+    "transmission"
+    "jellyfin"
+    "lidarr"
+  ];
   services.transmission = {
     enable = true;
     openRPCPort = true;

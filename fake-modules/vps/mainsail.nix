@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   isbl.mainsail = {
     enable = true;
     hostName = "mainsail.isbl.cz";

@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.isbl.tailscale;
-in {
+in
+{
   options.isbl.tailscale = {
     exitNode = mkOption {
       type = types.bool;
@@ -20,7 +22,7 @@ in {
     services.networkd-dispatcher = {
       enable = true;
       rules."50-tailscale" = {
-        onState = ["routable"];
+        onState = [ "routable" ];
         script = ''
           ${lib.getExe pkgs.ethtool} -K venet0 rx-udp-gro-forwarding on rx-gro-list off
         '';

@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.isbl.nginx;
-in {
+in
+{
   options.isbl.nginx = {
     enable = mkEnableOption (lib.mdDoc "default isbl options for nginx");
 
@@ -17,13 +19,16 @@ in {
     };
 
     proxyPass = mkOption {
-      default = {};
-      type = types.attrsOf (types.submodule {
-        options = {
-          acmehost = mkOption {type = types.str;};
-          port = mkOption {type = types.ints.unsigned;};
-        };
-      });
+      default = { };
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            acmehost = mkOption { type = types.str; };
+            target = mkOption { type = types.str; };
+            port = mkOption { type = types.ints.unsigned; };
+          };
+        }
+      );
     };
   };
 
@@ -86,18 +91,16 @@ in {
         }
       '';
 
-      virtualHosts =
-        builtins.mapAttrs (name: value: {
-          forceSSL = true;
-          useACMEHost = value.acmehost;
-          http3 = true;
-          quic = true;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString value.port}";
-            proxyWebsockets = true;
-          };
-        })
-        cfg.proxyPass;
+      virtualHosts = builtins.mapAttrs (name: value: {
+        forceSSL = true;
+        useACMEHost = value.acmehost;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = if value.target then value.target else "http://127.0.0.1:${toString value.port}";
+          proxyWebsockets = true;
+        };
+      }) cfg.proxyPass;
     };
   };
 }

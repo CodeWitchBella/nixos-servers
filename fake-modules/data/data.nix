@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./authentik-outpost.nix
     ./blocky.nix

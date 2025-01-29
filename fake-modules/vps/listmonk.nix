@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   age.secrets.listmonk = {
     file = ../../secrets/listmonk.age;
   };

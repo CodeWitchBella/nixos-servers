@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   host = acmehost: port: {
     forceSSL = true;
     useACMEHost = acmehost;
@@ -29,27 +30,31 @@
   ip = import ../ip.nix;
 
   toData = to "https://${ip.tailscale.data}";
-in {
+in
+{
   isbl.nginx.enable = true;
   security.acme = {
     # https://nixos.org/manual/nixos/stable/index.html#module-security-acme-config-dns
     certs."isbl.cz" = {
       domain = "isbl.cz";
-      extraDomainNames = ["*.local.isbl.cz" "*.isbl.cz"];
+      extraDomainNames = [
+        "*.local.isbl.cz"
+        "*.isbl.cz"
+      ];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
     certs."brehoni.cz" = {
       domain = "brehoni.cz";
-      extraDomainNames = ["*.brehoni.cz"];
+      extraDomainNames = [ "*.brehoni.cz" ];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
     certs."skorepova.info" = {
       domain = "skorepova.info";
-      extraDomainNames = ["*.skorepova.info"];
+      extraDomainNames = [ "*.skorepova.info" ];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";

@@ -3,9 +3,11 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   dir = "/var/lib/headscale";
-in {
+in
+{
   age.secrets.headscale = {
     file = ../../secrets/headscale.age;
     owner = "headscale";
@@ -16,7 +18,12 @@ in {
     settings = {
       server_url = "https://headscale.isbl.cz";
       oidc = {
-        scope = ["openid" "profile" "email" "offline_access"];
+        scope = [
+          "openid"
+          "profile"
+          "email"
+          "offline_access"
+        ];
         issuer = "https://authentik.isbl.cz/application/o/headscale/";
         client_id = "W6AE5HPtjz4hrMjIeKEB5nAvDwbcXq0E5SEJQOvZ";
         client_secret_path = config.age.secrets.headscale.path;
@@ -26,7 +33,7 @@ in {
       dns.magic_dns = true;
     };
   };
-  environment.persistence."/persistent".directories = [dir];
+  environment.persistence."/persistent".directories = [ dir ];
   isbl.nginx.proxyPass."headscale.isbl.cz" = {
     acmehost = "isbl.cz";
     port = 8989;

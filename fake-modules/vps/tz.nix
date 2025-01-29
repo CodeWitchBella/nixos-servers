@@ -4,9 +4,14 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   systemd.services.tz = {
-    path = with pkgs; [openssh git zola];
+    path = with pkgs; [
+      openssh
+      git
+      zola
+    ];
     script = ''
       set -xe
 

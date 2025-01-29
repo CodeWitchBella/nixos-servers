@@ -1,5 +1,6 @@
 # Example to create a bios compatible gpt partition
-{lib, ...}: let
+{ lib, ... }:
+let
   one = "/dev/disk/by-path/pci-0000:00:17.0-ata-2.0";
   two = "/dev/disk/by-path/pci-0000:00:17.0-ata-3.0";
   fullDisk = content: {
@@ -8,7 +9,7 @@
   };
   btrfs = {
     type = "btrfs";
-    extraArgs = ["-f"]; # Override existing partition
+    extraArgs = [ "-f" ]; # Override existing partition
     # Subvolumes must set a mountpoint in order to be mounted,
     # unless their parent is mounted
     subvolumes = {
@@ -16,11 +17,14 @@
         mountpoint = "/";
       };
       "/persistent" = {
-        mountOptions = ["compress=zstd"];
+        mountOptions = [ "compress=zstd" ];
         mountpoint = "/persistent";
       };
       "/nix" = {
-        mountOptions = ["compress=zstd" "noatime"];
+        mountOptions = [
+          "compress=zstd"
+          "noatime"
+        ];
         mountpoint = "/nix";
       };
     };
@@ -41,17 +45,18 @@
         };
       };
       raid2 =
-        if disk == 1
-        then fullDisk btrfs
+        if disk == 1 then
+          fullDisk btrfs
         else
           fullDisk {
             type = "btrfs";
-            extraArgs = ["-f"];
-            subvolumes = {}; # placeholder for manual edit
+            extraArgs = [ "-f" ];
+            subvolumes = { }; # placeholder for manual edit
           };
     };
   };
-in {
+in
+{
   disko.devices.disk = {
     one = {
       content = content 1;

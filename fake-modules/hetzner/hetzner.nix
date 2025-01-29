@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./infra/disk-config.nix
     ./infra/fail2ban.nix
@@ -26,7 +27,7 @@
 
   isbl.postgresql = {
     enable = true;
-    databases = ["test"];
+    databases = [ "test" ];
   };
 
   networking.firewall.allowedTCPPorts = [

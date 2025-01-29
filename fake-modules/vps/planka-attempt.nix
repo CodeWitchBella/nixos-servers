@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   nodejs = pkgs.nodePackages.nodejs;
   source = pkgs.fetchzip {
     url = "https://github.com/plankanban/planka/releases/download/v1.17.4/planka-prebuild-v1.17.4.zip";
@@ -61,7 +62,8 @@
       proxyWebsockets = true;
     };
   };
-in {
+in
+{
   age.secrets.planka = {
     file = ../../secrets/planka.age;
     mode = "666";
@@ -72,10 +74,10 @@ in {
     group = "planka";
     isSystemUser = true;
   };
-  users.groups.planka = {};
+  users.groups.planka = { };
 
   #services.postgresql.package = pkgs.postgresql_16;
-  services.postgresql.ensureDatabases = ["planka"];
+  services.postgresql.ensureDatabases = [ "planka" ];
   services.postgresql.enable = true;
   services.postgresql.ensureUsers = [
     {
@@ -92,8 +94,8 @@ in {
 
   systemd.services = {
     planka = {
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
       description = "Planka - trello alternative";
       environment = {
         POSTGRESQL_URL = "postgresql://planka@localhost/planka";
@@ -119,5 +121,7 @@ in {
     };
   };
 
-  services.nginx.virtualHosts."planka.isbl.cz" = nginx // {useACMEHost = "isbl.cz";};
+  services.nginx.virtualHosts."planka.isbl.cz" = nginx // {
+    useACMEHost = "isbl.cz";
+  };
 }

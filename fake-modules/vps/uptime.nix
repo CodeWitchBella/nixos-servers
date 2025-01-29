@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   services.uptime-kuma = {
     enable = true;
     settings = {

@@ -1,5 +1,6 @@
 # Example to create a bios compatible gpt partition
-{lib, ...}: {
+{ lib, ... }:
+{
   disko.devices = {
     disk.emmc = {
       device = "/dev/disk/by-path/platform-fe330000.mmc";
@@ -33,12 +34,18 @@
             subvolumes = {
               # Subvolume name is different from mountpoint
               "/rootfs" = {
-                mountOptions = ["compress=zstd" "relatime"];
+                mountOptions = [
+                  "compress=zstd"
+                  "relatime"
+                ];
                 mountpoint = "/";
               };
               # Subvolume name is the same as the mountpoint
               "/home" = {
-                mountOptions = ["compress=zstd" "relatime"];
+                mountOptions = [
+                  "compress=zstd"
+                  "relatime"
+                ];
                 mountpoint = "/home";
               };
             };

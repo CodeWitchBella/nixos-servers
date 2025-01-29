@@ -4,10 +4,12 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   stateDirectory = "vaultwarden";
   dir = "/var/lib/${stateDirectory}";
-in {
+in
+{
   age.secrets.vaultwarden = {
     file = ../../secrets/vaultwarden.age;
   };
@@ -31,7 +33,7 @@ in {
       #SMTP_PASSWORD=<password>
     };
   };
-  environment.persistence."/persistent".directories = [dir];
+  environment.persistence."/persistent".directories = [ dir ];
   systemd.services.vaultwarden.serviceConfig.StateDirectory = lib.mkForce stateDirectory;
   isbl.nginx.proxyPass."vault.isbl.cz" = {
     acmehost = "isbl.cz";

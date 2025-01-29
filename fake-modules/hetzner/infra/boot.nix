@@ -4,18 +4,20 @@
   pkgs,
   modulesPath,
   ...
-}: let
+}:
+let
   net = config.isbl.networking;
-  ip = config.networking.interfaces.${net}.ipv4.addresses [0].address;
-in {
+  ip = config.networking.interfaces.${net}.ipv4.addresses [ 0 ].address;
+in
+{
   boot.initrd.availableKernelModules = [
     "ahci"
     "sd_mod"
     "e1000e" # lspci -v | grep -iA8 'network\|ethernet'
   ];
-  boot.initrd.kernelModules = ["dm-snapshot"];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   # Use GRUB2 as the boot loader.
   # We don't use systemd-boot because Hetzner uses BIOS legacy boot.
@@ -32,7 +34,7 @@ in {
     ssh = {
       enable = true;
       port = 1234;
-      hostKeys = ["/nix/secret/initrd/ssh_host_ed25519_key"];
+      hostKeys = [ "/nix/secret/initrd/ssh_host_ed25519_key" ];
     };
   };
 
@@ -45,7 +47,7 @@ in {
   # Now this is hairy! The format is more or less:
   # IP:<ignore>:GATEWAY:NETMASK:HOSTNAME:NIC:AUTCONF?
   # See: https://www.kernel.org/doc/Documentation/filesystems/nfs/nfsroot.txt
-  boot.kernelParams = ["ip=176.9.41.240::176.9.41.225:255.255.255.0:hetzner::off"];
+  boot.kernelParams = [ "ip=176.9.41.240::176.9.41.225:255.255.255.0:hetzner::off" ];
 
   boot.initrd.systemd.network.wait-online.enable = true;
 

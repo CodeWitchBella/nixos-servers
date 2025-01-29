@@ -4,13 +4,14 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     ../fake-modules/hetzner/hetzner.nix
     ../fake-modules/basics.nix
   ];
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

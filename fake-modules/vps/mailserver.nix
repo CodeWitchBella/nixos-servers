@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   age.secrets.email-password = {
     file = ../../secrets/email-password.age;
   };
@@ -17,12 +18,15 @@
     };
   };
   # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275
-  services.dovecot2.sieve.extensions = ["fileinto"];
+  services.dovecot2.sieve.extensions = [ "fileinto" ];
   mailserver = {
     enable = true;
     fqdn = "email.isbl.cz"; # domain for SMTP/IMAP
     sendingFqdn = "email.isbl.cz"; # rDNS
-    domains = ["isbl.cz" "brehoni.cz"];
+    domains = [
+      "isbl.cz"
+      "brehoni.cz"
+    ];
     dkimSelector = "isbl";
 
     # Hashes generated with:
@@ -30,7 +34,7 @@
     loginAccounts = {
       "me@isbl.cz" = {
         hashedPasswordFile = config.age.secrets.email-password.path;
-        catchAll = ["isbl.cz"];
+        catchAll = [ "isbl.cz" ];
       };
       "oddil@brehoni.cz" = {
         hashedPassword = "$2b$05$nJfL3luwkjMD4l7.9JxqEeUjzTr5Xkw0Bl80tnYS.bjsOK8PAkCuO";

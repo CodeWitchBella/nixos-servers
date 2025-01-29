@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   isbl.networking = {
     interface = "enp0s31f6";
     netmask = "255.255.255.0";
@@ -28,5 +29,5 @@
     address = "fe80::1";
     interface = config.isbl.networking.interface;
   };
-  networking.nameservers = ["8.8.8.8"];
+  networking.nameservers = [ "8.8.8.8" ];
 }

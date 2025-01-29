@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.isbl.networking;
-in {
+in
+{
   options = {
     isbl.networking = {
       interface = mkOption {
@@ -18,5 +20,5 @@ in {
     };
   };
 
-  config = {};
+  config = { };
 }
