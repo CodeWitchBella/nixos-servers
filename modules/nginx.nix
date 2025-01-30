@@ -24,7 +24,7 @@ in
         types.submodule {
           options = {
             acmehost = mkOption { type = types.str; };
-            target = mkOption { type = types.str; };
+            target = mkOption { type = types.nullOr types.str; default = null; };
             port = mkOption { type = types.ints.unsigned; };
           };
         }
@@ -97,7 +97,7 @@ in
         http3 = true;
         quic = true;
         locations."/" = {
-          proxyPass = if value.target then value.target else "http://127.0.0.1:${toString value.port}";
+          proxyPass = if value.target != null then value.target else "http://127.0.0.1:${toString value.port}";
           proxyWebsockets = true;
         };
       }) cfg.proxyPass;

@@ -1,7 +1,9 @@
 [
   ./mainsail.nix
+  ./mariadb.nix
   ./networking.nix
   ./nginx.nix
   ./postgresql.nix
+  ./seafile.nix
   ./tailscale.nix
 ]
