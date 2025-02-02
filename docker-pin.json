@@ -1,0 +1,27 @@
+{
+  "docker.io/seafileltd/seafile-mc:12.0-latest": {
+    "schemaVersion": 2,
+    "mediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+    "manifests": [
+      {
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "size": 3683,
+        "digest": "sha256:161ab00cb9d1d4fa2eb7d87bba7c769bfdf7631703e5833a2c502f2b5f4570c3",
+        "platform": {
+          "architecture": "arm64",
+          "os": "linux",
+          "variant": "v8"
+        }
+      },
+      {
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "size": 3684,
+        "digest": "sha256:5cf5049e4786daa49b51bb5aac782027af00616988214220908bc68bd42f48c1",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      }
+    ]
+  }
+}

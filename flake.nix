@@ -147,6 +147,7 @@
           packages = [
             agenix.packages."${system}".default
             pkgs.deploy-rs
+            pkgs.jq
           ];
           commands = [
             {
