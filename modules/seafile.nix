@@ -94,7 +94,7 @@ in
                 INIT_SEAFILE_ADMIN_EMAIL = "me@isbl.cz";
                 INIT_SEAFILE_ADMIN_PASSWORD = "changemePlease";
                 SEAFILE_SERVER_HOSTNAME = "seafile.isbl.cz";
-                SEAFILE_SERVER_PROTOCOL = "http";
+                SEAFILE_SERVER_PROTOCOL = "https";
                 SITE_ROOT = "/";
                 NON_ROOT = "false";
                 # JWT_PRIVATE_KEY="${JWT_PRIVATE_KEY:?Variable is not set or empty}";
