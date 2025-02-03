@@ -23,5 +23,144 @@
         }
       }
     ]
+  },
+  "docker.io/library/mariadb:10.11": {
+    "schemaVersion": 2,
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "manifests": [
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 2481,
+        "digest": "sha256:db739b1d86fd8606a383386d2077aa6441d1bdd1c817673be62c9b74bdd6e7f3",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "amd64",
+          "org.opencontainers.image.base.digest": "sha256:3d1556a8a18cf5307b121e0a98e93f1ddf1f3f8e092f1fddfd941254785b95d7",
+          "org.opencontainers.image.base.name": "ubuntu:jammy",
+          "org.opencontainers.image.created": "2024-11-15T01:01:50Z",
+          "org.opencontainers.image.revision": "64252135052f269ed2bb57134ad73537e93b7ab6",
+          "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker.git#64252135052f269ed2bb57134ad73537e93b7ab6:10.11",
+          "org.opencontainers.image.url": "https://hub.docker.com/_/mariadb",
+          "org.opencontainers.image.version": "10.11.10-jammy"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 841,
+        "digest": "sha256:31c9713e674eea44fddfadd3071f4e2b30085d9e3e2fd608ac781076fd463e75",
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "amd64",
+          "vnd.docker.reference.digest": "sha256:db739b1d86fd8606a383386d2077aa6441d1bdd1c817673be62c9b74bdd6e7f3",
+          "vnd.docker.reference.type": "attestation-manifest"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 2483,
+        "digest": "sha256:15b12341aef2d4748a1e850e90991ff8f15b597b33b2f7676d802ecaf844cae6",
+        "platform": {
+          "architecture": "arm64",
+          "os": "linux",
+          "variant": "v8"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "arm64v8",
+          "org.opencontainers.image.base.digest": "sha256:7c75ab2b0567edbb9d4834a2c51e462ebd709740d1f2c40bcd23c56e974fe2a8",
+          "org.opencontainers.image.base.name": "ubuntu:jammy",
+          "org.opencontainers.image.created": "2024-11-15T01:11:05Z",
+          "org.opencontainers.image.revision": "64252135052f269ed2bb57134ad73537e93b7ab6",
+          "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker.git#64252135052f269ed2bb57134ad73537e93b7ab6:10.11",
+          "org.opencontainers.image.url": "https://hub.docker.com/_/mariadb",
+          "org.opencontainers.image.version": "10.11.10-jammy"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 841,
+        "digest": "sha256:3b6c9e8a47c272140838a02ae78ecd54cf0cbf570d45715e0d0041d837293a5c",
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "arm64v8",
+          "vnd.docker.reference.digest": "sha256:15b12341aef2d4748a1e850e90991ff8f15b597b33b2f7676d802ecaf844cae6",
+          "vnd.docker.reference.type": "attestation-manifest"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 2483,
+        "digest": "sha256:b6f261135a8edba472d4717eb80340458deea9f3c84ec6a5668e386c71d17168",
+        "platform": {
+          "architecture": "ppc64le",
+          "os": "linux"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "ppc64le",
+          "org.opencontainers.image.base.digest": "sha256:15abdf6cd20e250f2cd5796047ca8370c45c70a2a1279fe0c37c061116d9a525",
+          "org.opencontainers.image.base.name": "ubuntu:jammy",
+          "org.opencontainers.image.created": "2024-11-15T01:16:58Z",
+          "org.opencontainers.image.revision": "64252135052f269ed2bb57134ad73537e93b7ab6",
+          "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker.git#64252135052f269ed2bb57134ad73537e93b7ab6:10.11",
+          "org.opencontainers.image.url": "https://hub.docker.com/_/mariadb",
+          "org.opencontainers.image.version": "10.11.10-jammy"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 841,
+        "digest": "sha256:9f5fa9501f6c365ecc17dbe5f81764cd28949b340b0f25177b61a0e4f68ff06d",
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "ppc64le",
+          "vnd.docker.reference.digest": "sha256:b6f261135a8edba472d4717eb80340458deea9f3c84ec6a5668e386c71d17168",
+          "vnd.docker.reference.type": "attestation-manifest"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 2481,
+        "digest": "sha256:e88a4797dbfccad9f6a2d78d507fdad108189e60fe45026a6f212e2fd2636078",
+        "platform": {
+          "architecture": "s390x",
+          "os": "linux"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "s390x",
+          "org.opencontainers.image.base.digest": "sha256:af903bc2047b8dd70bb96aaf5a35df3b722966b7c6659cb37001535f0d643d9c",
+          "org.opencontainers.image.base.name": "ubuntu:jammy",
+          "org.opencontainers.image.created": "2024-11-15T01:25:41Z",
+          "org.opencontainers.image.revision": "64252135052f269ed2bb57134ad73537e93b7ab6",
+          "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker.git#64252135052f269ed2bb57134ad73537e93b7ab6:10.11",
+          "org.opencontainers.image.url": "https://hub.docker.com/_/mariadb",
+          "org.opencontainers.image.version": "10.11.10-jammy"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "size": 841,
+        "digest": "sha256:d76d73ed42c7ce80d46f5ab7888a9830800e52dc54f600a13d2b42bd4eab31f7",
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        },
+        "annotations": {
+          "com.docker.official-images.bashbrew.arch": "s390x",
+          "vnd.docker.reference.digest": "sha256:e88a4797dbfccad9f6a2d78d507fdad108189e60fe45026a6f212e2fd2636078",
+          "vnd.docker.reference.type": "attestation-manifest"
+        }
+      }
+    ]
   }
 }

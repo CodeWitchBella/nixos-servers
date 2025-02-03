@@ -1,6 +1,6 @@
 [
+  ./docker-pin.nix
   ./mainsail.nix
-  ./mariadb.nix
   ./networking.nix
   ./nginx.nix
   ./postgresql.nix

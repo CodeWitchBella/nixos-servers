@@ -571,6 +571,26 @@
         "url": "file:///dev/null"
       }
     },
+    "quadlet-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737906635,
+        "narHash": "sha256-1Df4ZpHJ3POPp+pGMA1Mjbx5u7n/4mRHCHm2h1bosAY=",
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "rev": "f67d87a7378e5461e62003438fa00b4b09969035",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -582,6 +602,7 @@
         "home-manager": "home-manager_2",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs_3",
+        "quadlet-nix": "quadlet-nix",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "songbook": "songbook",
         "vpsadminos": "vpsadminos"

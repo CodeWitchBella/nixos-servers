@@ -16,7 +16,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  isbl.seafile.enable = false;
+  isbl.seafile.enable = true;
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }

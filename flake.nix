@@ -33,6 +33,9 @@
 
     impermanence.url = "github:nix-community/impermanence";
     deploy-rs.url = "github:serokell/deploy-rs";
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+    quadlet-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     inputs@{
@@ -78,6 +81,7 @@
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
+          inputs.quadlet-nix.nixosModules.quadlet
           { networking.hostName = "data"; }
         ];
       };
@@ -91,6 +95,7 @@
           inputs.authentik-nix.nixosModules.default
           inputs.vpsadminos.nixosConfigurations.container
           inputs.simple-nixos-mailserver.nixosModule
+          inputs.quadlet-nix.nixosModules.quadlet
           { networking.hostName = "vps"; }
         ];
       };
@@ -103,6 +108,7 @@
           disko.nixosModules.disko
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
+          inputs.quadlet-nix.nixosModules.quadlet
           { networking.hostName = "hetzner"; }
         ];
       };
