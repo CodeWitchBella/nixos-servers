@@ -442,6 +442,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-data-kernel": {
+      "locked": {
+        "lastModified": 1738410390,
+        "narHash": "sha256-xvTo0Aw0+veek7hvEVLzErmJyQkEcRk6PSR4zsRQFEc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3a228057f5b619feb3186e986dbe76278d707b6e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1735774519,
@@ -602,6 +618,7 @@
         "home-manager": "home-manager_2",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-data-kernel": "nixpkgs-data-kernel",
         "quadlet-nix": "quadlet-nix",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "songbook": "songbook",
