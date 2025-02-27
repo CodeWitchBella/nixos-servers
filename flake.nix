@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-data-kernel.url = "github:NixOS/nixpkgs?rev=e486d8d4";
+    nixpkgs-data-kernel.url = "github:NixOS/nixpkgs?rev=9357f4f23713673f310988025d9dc261c20e70c6";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,6 +77,7 @@
     {
       nixosConfigurations.data = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
         modules = (import ./modules/module-list.nix) ++ [
           ./systems/data.nix
           agenix.nixosModules.default

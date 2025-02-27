@@ -20,9 +20,9 @@
     #};
     certs."isbl.cz" = {
       domain = "*.isbl.cz";
-      extraDomainNames = [ "*.local.isbl.cz" ];
+      # extraDomainNames = [ "*.local.isbl.cz" ];
       dnsProvider = "cloudflare";
-      #dnsResolver = "1.1.1.1:53";
+      dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
       extraLegoFlags = [
@@ -202,5 +202,17 @@
       };
       virtualHosts."tris.isbl.cz" = hostAuth "http://${ip.tris-lan}";
       virtualHosts."tris.local.isbl.cz" = hostLocalPublic "http://${ip.tris-lan}";
+
+      virtualHosts."data.isbl.cz" = {
+        forceSSL = true;
+        useACMEHost = "isbl.cz";
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          root = "/ssd/download";
+          extraConfig = "autoindex on;";
+        };
+      };
     };
+
 }

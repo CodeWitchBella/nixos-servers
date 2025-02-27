@@ -80,10 +80,10 @@
   systemd.services.nginx = {
     after = [ "blocky.service" ];
   };
-  networking.hosts = {
-    "127.0.0.1" = [
-      "darl.ns.cloudflare.com."
-      "lorna.ns.cloudflare.com."
-    ];
-  };
+  # networking.hosts = {
+  #   "127.0.0.1" = [
+  #     "darl.ns.cloudflare.com."
+  #     "lorna.ns.cloudflare.com."
+  #   ];
+  # };
 }

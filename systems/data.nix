@@ -8,6 +8,7 @@
   pkgs,
   ...
 }:
+let kernelPkgs = import inputs.nixpkgs-data-kernel { system = "aarch64-linux"; }; in
 {
   imports = [
     ../fake-modules/data/data.nix
@@ -21,7 +22,7 @@
     efiInstallAsRemovable = true;
     device = "nodev";
   };
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11; # this does not boot :(
+  boot.kernelPackages = kernelPkgs.linuxKernel.packages.linux_6_10;
   boot.initrd = {
     supportedFilesystems = [ "btrfs" ];
     systemd.enable = true;
@@ -125,6 +126,11 @@
   # There is not enough RAM. Let's disable some things :-(
   #services.jellyfin.enable = true;
   #services.netdata.enable = true;
+
+  # services.jellyfin = {
+  #   enable = true;
+  #   openFirewall = true;
+  # };
 
   system.stateVersion = "23.11";
 }
