@@ -19,19 +19,19 @@
     #  #dnsPropagationCheck = false;
     #};
     defaults = {
-      dnsResolver = "1.1.1.1:53";
+      # dnsResolver = "1.1.1.1:53";
     };
     certs."isbl.cz" = {
-      domain = "*.isbl.cz";
-      # extraDomainNames = [ "*.local.isbl.cz" ];
+      domain = "isbl.cz";
+      extraDomainNames = [ "*.isbl.cz" "*.local.isbl.cz" ];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
       extraLegoFlags = [
-        "--dns-timeout"
-        "600"
+        "--dns.propagation-wait"
+        "120s"
       ];
-      #dnsPropagationCheck = false;
+      # dnsPropagationCheck = false;
     };
   };
   # https://nixos.org/manual/nixos/stable/options#opt-services.nginx.enable
