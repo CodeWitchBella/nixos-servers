@@ -108,8 +108,8 @@ let kernelPkgs = import inputs.nixpkgs-data-kernel { system = "aarch64-linux"; }
   services.fstrim.enable = true;
 
   networking.nameservers = [
-    "127.0.0.1"
     "1.1.1.1"
+    "127.0.0.1"
   ];
 
   environment.systemPackages = with pkgs; [

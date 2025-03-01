@@ -7,7 +7,7 @@
 {
   imports = [
     ./authentik-outpost.nix
-    ./blocky.nix
+    # ./blocky.nix
     ./disk-config.nix
     ./home-assistant.nix
     ./isponsorblocktv.nix

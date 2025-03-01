@@ -75,7 +75,7 @@
       "nginx.service"
       "frp.service"
     ]; # my nginx setup requires working dns
-    unitConfig.TimeoutStartSec = 60;
+    # unitConfig.TimeoutStartSec = 60;
   };
   systemd.services.nginx = {
     after = [ "blocky.service" ];

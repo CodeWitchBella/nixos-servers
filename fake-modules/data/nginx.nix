@@ -18,11 +18,13 @@
     #  extraLegoFlags = ["--dns-timeout" "600"];
     #  #dnsPropagationCheck = false;
     #};
+    defaults = {
+      dnsResolver = "1.1.1.1:53";
+    };
     certs."isbl.cz" = {
       domain = "*.isbl.cz";
       # extraDomainNames = [ "*.local.isbl.cz" ];
       dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
       extraLegoFlags = [
