@@ -63,7 +63,6 @@
             blik-wifi A ${ip.blik-wifi}
             voice     A ${ip.voice}
             homeassistant A ${ip.homeassistant}
-            _acme-challenge.ha CNAME _acme-challenge.utq6z4tvuommvsgqvdbqnwaiu70lseb9.ui.nabu.casa
             * CNAME data.isbl.cz.
           '';
         };
