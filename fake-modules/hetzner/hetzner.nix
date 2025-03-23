@@ -6,8 +6,8 @@
 }:
 {
   imports = [
-    ./infra/disk-config.nix
     ./infra/fail2ban.nix
+    ./infra/hardware-configuration.nix
     ./infra/impermanence.nix
     ./infra/networking.nix
     ./infra/nginx.nix
