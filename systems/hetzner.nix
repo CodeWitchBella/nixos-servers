@@ -17,6 +17,11 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   isbl.seafile.enable = true;
+  isbl.libsql = {
+    enable = true;
+    hostName = "db.isbl.cz";
+    jwtFile = ./hetzner/jwt.pub;
+  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }

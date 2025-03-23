@@ -1,5 +1,6 @@
 [
   ./docker-pin.nix
+  ./libsql.nix
   ./mainsail.nix
   ./networking.nix
   ./nginx.nix

@@ -28,5 +28,13 @@ in
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
+
+    certs."db.isbl.cz" = {
+      domain = "db.isbl.cz";
+      extraDomainNames = [ "*.db.isbl.cz" ];
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.dnskey.path;
+      group = "nginx";
+    };
   };
 }
