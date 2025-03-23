@@ -156,6 +156,8 @@
             agenix.packages."${system}".default
             pkgs.deploy-rs
             pkgs.jq
+            pkgs.step-cli
+            pkgs.jwt-cli
           ];
           commands = [
             {

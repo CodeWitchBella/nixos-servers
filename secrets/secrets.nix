@@ -33,4 +33,5 @@ in
   "restic-hetzner-password.age".publicKeys = users ++ [ hetzner ];
   "headscale.age".publicKeys = users ++ [ hetzner ];
   "seafile.age".publicKeys = users ++ [ hetzner ];
+  "libsql-jwt.key.age".publicKeys = users ++ [ hetzner ];
 }

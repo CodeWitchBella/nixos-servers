@@ -44,6 +44,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # age.secrets.libsql-jwt = {
+    #   file = ../secrets/libsql-jwt.key.age;
+    #   mode = "600";
+    #   user = user;
+    #   group = user;
+    # };
+
     users.users.${user} = {
       isSystemUser = true;
       group = user;
@@ -79,6 +86,7 @@ in
           "--admin-listen-addr 127.0.0.1:${toString cfg.localhostAdminPort}"
           "--auth-jwt-key-file ${cfg.jwtFile}"
           "--http-listen-addr 127.0.0.1:${toString cfg.localhostPort}"
+          "--enable-http-console"
         ];
       };
     };
@@ -104,6 +112,10 @@ in
           useACMEHost = cfg.acmehost;
           locations = {
             "/" = {
+              proxyPass = "http://127.0.0.1:${toString cfg.localhostPort}";
+            };
+
+            "/console" = {
               proxyPass = "http://127.0.0.1:${toString cfg.localhostPort}";
             };
           };
