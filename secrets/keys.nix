@@ -1,6 +1,6 @@
 {
   # cat ~/.ssh/id_ed25519.pub on IsblAsahi
-  asahi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIZdRoS3HXiUh77MLq2OczaysE79CK0NZGfHyH+3tBlv";
+  asahi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtfUvLmDM9M466QX1FeESQACkZKO7hggUPby74aK5ws";
 
   # cat ~/.ssh/id_ed25519.pub on IsblDesktop
   desktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFrYVxQiKKIzGqLIO+6w6qA1d+E9vR2bFLW0EuT4e6zA";

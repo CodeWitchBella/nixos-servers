@@ -15,6 +15,7 @@ in
   "outline.age".publicKeys = users ++ [ hetzner ];
   "outline-s3-key.age".publicKeys = users ++ [ hetzner ];
   "outline-secret.age".publicKeys = users ++ [ hetzner ];
+  "outline-secret-key.age".publicKeys = users ++ [ hetzner ]; # unused but let's store it just in case
   "authentik-env.age".publicKeys = users ++ [ vps ];
   "authentik-outpost-token.age".publicKeys = users ++ [ data ];
   "authentik-ldap-token.age".publicKeys = users ++ [ data ];
