@@ -129,7 +129,7 @@
         hostname = "hetzner.isbl.cz";
         profiles.system = {
           user = "root";
-          path = deployPkgsX86.deploy-rs.lib.activate.nixos self.nixosConfigurations.hetzner;
+          path = deployPkgsAarch.deploy-rs.lib.activate.nixos self.nixosConfigurations.hetzner;
         };
       };
       deploy.nodes.vps = {

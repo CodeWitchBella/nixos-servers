@@ -13,7 +13,6 @@
     ./infra/nginx.nix
     ./infra/restic.nix
     ./headscale.nix
-    ./minecraft.nix
     ./outline.nix
     ./vaultwarden.nix
   ];
