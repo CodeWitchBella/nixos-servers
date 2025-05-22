@@ -36,5 +36,13 @@ in
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
     };
+    
+    certs."brehoni.cz" = {
+      domain = "brehoni.cz";
+      extraDomainNames = [ "*.brehoni.cz" ];
+      dnsProvider = "cloudflare";
+      credentialsFile = config.age.secrets.dnskey.path;
+      group = "nginx";
+    };
   };
 }

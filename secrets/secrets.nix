@@ -27,7 +27,7 @@ in
     data
   ];
   "isponsorblocktv.json.age".publicKeys = users ++ [ data ];
-  "listmonk.age".publicKeys = users ++ [ vps ];
+  "listmonk.age".publicKeys = users ++ [ hetzner ];
   "planka.age".publicKeys = users ++ [ vps ];
   "ssh_host_ed25519_rescue_key.age".publicKeys = users ++ [ ];
   "restic-hetzner.age".publicKeys = users ++ [ hetzner ];

@@ -20,10 +20,17 @@ in
       description = lib.mdDoc "List of databases (and corresponding users) to create.";
     };
     databaseUrl = mkOption { };
+    databaseHost = mkOption { };
   };
 
   config = mkIf cfg.enable {
     isbl.postgresql.databaseUrl = builtins.listToAttrs (
+      builtins.map (db: {
+        name = db;
+        value = "postgresql://${db}@127.0.0.1/${db}?sslmode=disable";
+      }) cfg.databases
+    );
+    isbl.postgresql.databaseHost = builtins.listToAttrs (
       builtins.map (db: {
         name = db;
         value = "postgresql://${db}@127.0.0.1/${db}?sslmode=disable";

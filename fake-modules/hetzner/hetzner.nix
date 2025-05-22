@@ -28,6 +28,8 @@
     enable = true;
     databases = [ "test" ];
   };
+  
+  isbl.listmonk.enable = true;
 
   networking.firewall.allowedTCPPorts = [
     22 # ssh

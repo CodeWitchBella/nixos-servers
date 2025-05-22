@@ -19,7 +19,7 @@ let
             name =
               if mf.platform.architecture == "amd64" then
                 "x86_64-linux"
-              else if mf.platform.architecture == "arm64" && mf.platform.variant == "v8" then
+              else if mf.platform.architecture == "arm64" && (mf.platform.variant or "v8") == "v8" then
                 "aarch64-linux"
               else
                 null;
