@@ -30,14 +30,14 @@
     dkimSelector = "isbl";
 
     # Hashes generated with:
-    # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
+    # nix run nixpkgs#mkpasswd -- -sm bcrypt
     loginAccounts = {
       "me@isbl.cz" = {
         hashedPasswordFile = config.age.secrets.email-password.path;
         catchAll = [ "isbl.cz" ];
       };
       "oddil@brehoni.cz" = {
-        hashedPassword = "$2b$05$nJfL3luwkjMD4l7.9JxqEeUjzTr5Xkw0Bl80tnYS.bjsOK8PAkCuO";
+        hashedPassword = "$2b$05$o33us0eNo96G6.dkUYUKT.HFtMMae28oc5/9bt5eUdXaHb4asCzI.";
         sendOnly = true;
       };
       "authentik@isbl.cz" = {
