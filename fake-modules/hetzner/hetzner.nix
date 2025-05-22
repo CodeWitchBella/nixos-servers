@@ -29,6 +29,11 @@
     databases = [ "test" ];
   };
 
+  isbl.listmonk.enable = true;
+
+  networking.firewall.interfaces."podman1".allowedTCPPorts = [ 5432 ];
+  networking.firewall.interfaces."podman0".allowedTCPPorts = [ 5432 ];
+
   networking.firewall.allowedTCPPorts = [
     22 # ssh
     80 # http

@@ -35,7 +35,7 @@ in
       type = types.path;
       description = mdDoc ''
         .pub jwt file generated using
-        
+
         ```
         nix run nixpkgs#step-cli -- crypto keypair jwt.pub jwt.key --kty OKP --curve Ed25519 --no-password --insecure
         ```

@@ -8,7 +8,9 @@
   pkgs,
   ...
 }:
-let kernelPkgs = import inputs.nixpkgs-data-kernel { system = "aarch64-linux"; }; in
+let
+  kernelPkgs = import inputs.nixpkgs-data-kernel { system = "aarch64-linux"; };
+in
 {
   imports = [
     ../fake-modules/data/data.nix

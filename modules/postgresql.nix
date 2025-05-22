@@ -20,10 +20,17 @@ in
       description = lib.mdDoc "List of databases (and corresponding users) to create.";
     };
     databaseUrl = mkOption { };
+    databaseHost = mkOption { };
   };
 
   config = mkIf cfg.enable {
     isbl.postgresql.databaseUrl = builtins.listToAttrs (
+      builtins.map (db: {
+        name = db;
+        value = "postgresql://${db}@127.0.0.1/${db}?sslmode=disable";
+      }) cfg.databases
+    );
+    isbl.postgresql.databaseHost = builtins.listToAttrs (
       builtins.map (db: {
         name = db;
         value = "postgresql://${db}@127.0.0.1/${db}?sslmode=disable";
@@ -48,11 +55,12 @@ in
         #type database  DBuser  auth-method
         host  ${name}       ${name}     127.0.0.1/32   trust
         host  ${name}       ${name}     ::1/128        trust
+        host  ${name}       ${name}     10.0.0.0/8     trust
       '') cfg.databases;
       initdbArgs = [ "--data-checksums" ]; # we'll see if it causes problems...
       # settings.shared_preload_libraries = ["safeupdate"]; # This makes outline fail...
       # extraPlugins = ps: with ps; [pg_safeupdate];
-      enableTCPIP = false; # default, but let's be sure
+      enableTCPIP = true; # needed for connections from containers
 
       dataDir = "/persistent/postgresql/data-${cfg.package.psqlSchema}";
     };

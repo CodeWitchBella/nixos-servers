@@ -65,7 +65,7 @@ in
           };
 
           containers.memcached.containerConfig = {
-            image= "memcached:1.6.29";
+            image = "memcached:1.6.29";
             hostname = "seafile-memcached";
             entrypoint = "memcached -m 256";
             networks = [ networks.seafile.ref ];

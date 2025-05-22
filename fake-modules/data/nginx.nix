@@ -23,7 +23,10 @@
     };
     certs."isbl.cz" = {
       domain = "isbl.cz";
-      extraDomainNames = [ "*.isbl.cz" "*.local.isbl.cz" ];
+      extraDomainNames = [
+        "*.isbl.cz"
+        "*.local.isbl.cz"
+      ];
       dnsProvider = "cloudflare";
       credentialsFile = config.age.secrets.dnskey.path;
       group = "nginx";
