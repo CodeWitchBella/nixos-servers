@@ -34,6 +34,12 @@
   networking.firewall.interfaces."podman1".allowedTCPPorts = [ 5432 ];
   networking.firewall.interfaces."podman0".allowedTCPPorts = [ 5432 ];
 
+  isbl.minecraft = {
+    enable = true;
+    directory = "/persistent/minecraft/atm-10";
+    cfUrl = "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10/files/6550790";
+  };
+
   networking.firewall.allowedTCPPorts = [
     22 # ssh
     80 # http

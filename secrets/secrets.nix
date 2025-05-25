@@ -35,4 +35,5 @@ in
   "headscale.age".publicKeys = users ++ [ hetzner ];
   "seafile.age".publicKeys = users ++ [ hetzner ];
   "libsql-jwt.key.age".publicKeys = users ++ [ hetzner ];
+  "minecraft-curseforge.age".publicKeys = users ++ [ hetzner ];
 }

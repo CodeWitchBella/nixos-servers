@@ -206,5 +206,29 @@
         }
       }
     ]
+  },
+  "docker.io/itzg/minecraft-server:latest": {
+    "schemaVersion": 2,
+    "mediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+    "manifests": [
+      {
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "size": 5023,
+        "digest": "sha256:d59548cb259717ac7ed70b44cc5d9a0cfcb55e51d916feecf552de1a111dad29",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      },
+      {
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "size": 5023,
+        "digest": "sha256:7f7c94a4b11ab23225491abdd5c1f4b66fc6580b49fe83d82dac7cc7b3fbb71a",
+        "platform": {
+          "architecture": "arm64",
+          "os": "linux"
+        }
+      }
+    ]
   }
 }
