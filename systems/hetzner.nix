@@ -16,11 +16,11 @@
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   # isbl.seafile.enable = true;
-  # isbl.libsql = {
-  #   enable = true;
-  #   hostName = "db.isbl.cz";
-  #   jwtFile = ./hetzner/jwt.pub;
-  # };
+  isbl.libsql = {
+    enable = true;
+    hostName = "db.isbl.cz";
+    jwtFile = ./hetzner/jwt.pub;
+  };
 
   # isbl.kanidm.enable = false;
   # users.users.kanidm = {

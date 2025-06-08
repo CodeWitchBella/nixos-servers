@@ -9,6 +9,7 @@ let
   cfg = config.isbl.minecraft;
   image = "docker.io/itzg/minecraft-server:latest";
   port = 25565;
+  bluemapPort = 8100;
 in
 {
   options.isbl.minecraft = {
@@ -20,6 +21,15 @@ in
     cfUrl = mkOption {
       type = types.str;
       description = lib.mdDoc "Where to store the files";
+    };
+    bluemapDomain = mkOption {
+      type = types.nullOr types.str;
+      description = lib.mdDoc "Where to host bluemap at";
+      default = null;
+    };
+    bluemapDomainAcme = mkOption {
+      type = types.nullOr types.str;
+      default = null;
     };
   };
 
@@ -43,7 +53,10 @@ in
           containerConfig = {
             # https://setupmc.com/java-server/ 
             image = config.isbl.docker-pin.${image};
-            publishPorts = [ "${toString port}:${toString port}" ];
+            publishPorts = [
+              "${toString port}:${toString port}"
+              "${toString bluemapPort}:${toString bluemapPort}"
+            ];
             environments = {
               EULA="TRUE";
               TYPE="AUTO_CURSEFORGE";
@@ -67,6 +80,13 @@ in
               "${directory}:/data"
             ];
           };
+        };
+      };
+
+      isbl.nginx.proxyPass = mkIf (cfg.bluemapDomain != null) {
+        "${cfg.bluemapDomain}" = {
+          acmehost = cfg.bluemapDomainAcme;
+          port = bluemapPort;
         };
       };
 

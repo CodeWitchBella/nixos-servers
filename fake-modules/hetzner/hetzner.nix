@@ -38,6 +38,8 @@
     enable = true;
     directory = "/persistent/minecraft/atm-10";
     cfUrl = "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10/files/6550790";
+    bluemapDomain = "mc.isbl.cz";
+    bluemapDomainAcme = "isbl.cz";
   };
 
   networking.firewall.allowedTCPPorts = [
