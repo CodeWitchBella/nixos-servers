@@ -40,6 +40,7 @@ in
           pods = config.virtualisation.quadlet.pods;
         in
         {
+          autoEscape = true;
           networks = {
             listmonk.networkConfig = {
               driver = "bridge";
