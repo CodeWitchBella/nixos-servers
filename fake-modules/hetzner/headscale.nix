@@ -31,6 +31,10 @@ in
       database.sqlite.path = "${dir}/db.sqlite";
       dns.base_domain = "net.isbl.cz";
       dns.magic_dns = true;
+      dns.nameservers.global = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
     };
   };
   environment.persistence."/persistent".directories = [ dir ];

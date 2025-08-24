@@ -15,9 +15,7 @@
     git
   ];
 
-  systemd.extraConfig = ''
-    DefaultTimeoutStartSec=900s
-  '';
+  systemd.settings.Manager.DefaultTimeoutStartSec = "900s";
 
   time.timeZone = "UTC"; # authentik breaks in local timezone
   networking.firewall.allowedTCPPorts = [

@@ -44,6 +44,7 @@ in
         file = ../secrets/minecraft-curseforge.age;
       };
       virtualisation.quadlet = {
+        autoEscape = true;
         networks = {
           minecraft.networkConfig = {
             driver = "bridge";
