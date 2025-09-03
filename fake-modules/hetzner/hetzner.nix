@@ -37,7 +37,7 @@
   isbl.minecraft = {
     enable = true;
     directory = "/persistent/minecraft/atm-10";
-    cfUrl = "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10/files/6550790";
+    cfUrl = "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10/files/6921534";
     bluemapDomain = "mc.isbl.cz";
     bluemapDomainAcme = "isbl.cz";
   };
