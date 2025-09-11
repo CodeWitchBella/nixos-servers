@@ -58,7 +58,7 @@ in
               # networks = [ networks.listmonk.ref ];
               # environmentFiles = [ config.age.secrets.listmonk.path ];
               publishPorts = [ "127.0.0.1:${builtins.toString port}:${builtins.toString port}" ];
-              podmanArgs = [ "--add-host host.containers.internal:host-gateway" ];
+              podmanArgs = [ "--add-host" "host.containers.internal:host-gateway" ];
               environments = {
                 LISTMONK_app__address = "0.0.0.0:${builtins.toString port}";
                 LISTMONK_db__host = "host.containers.internal";
