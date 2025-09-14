@@ -20,7 +20,7 @@
   # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275
   services.dovecot2.sieve.extensions = [ "fileinto" ];
   mailserver = {
-    stateVersion = 3;
+    stateVersion = 1;
     enable = true;
     fqdn = "email.isbl.cz"; # domain for SMTP/IMAP
     sendingFqdn = "email.isbl.cz"; # rDNS
@@ -48,6 +48,9 @@
       "vault@isbl.cz" = {
         hashedPassword = "$2b$05$4NF7DTvf9U1WoM98rC2FxuXEStTalo6mAsLJaHHnrjUHCG/zIjvfq";
         sendOnly = true;
+      };
+      "print@isbl.cz" = {
+        hashedPassword = "$2b$05$veSxDWAzOsoH71fRIqLCaOCwN2IZafnJhqxoo1toO/BXwQoC9BYUy";
       };
     };
     certificateScheme = "acme";
