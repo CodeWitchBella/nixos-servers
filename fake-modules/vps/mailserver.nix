@@ -20,7 +20,7 @@
   # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275
   services.dovecot2.sieve.extensions = [ "fileinto" ];
   mailserver = {
-    stateVersion = 1;
+    stateVersion = 3;
     enable = true;
     fqdn = "email.isbl.cz"; # domain for SMTP/IMAP
     sendingFqdn = "email.isbl.cz"; # rDNS
