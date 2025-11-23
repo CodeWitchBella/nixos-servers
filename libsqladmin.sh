@@ -5,7 +5,7 @@ agenix -d libsql-jwt.key.age > libsql-jwt.key
 jwt=`nix run nixpkgs#step-cli \
     -- crypto jwt sign \
     --key libsql-jwt.key --iss me@isbl.cz \
-    --aud https://db.isbl.cz --sub rw \
+    --aud https://test.db.isbl.cz --sub rw \
     --exp $(date --date='next year' +"%s")`
 rm libsql-jwt.key
 cd ..
@@ -33,4 +33,5 @@ create() {
 }
 
 # delete test
-create test
+# create test
+echo $jwt
