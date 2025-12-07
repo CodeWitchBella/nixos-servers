@@ -34,45 +34,26 @@ in
         databases = [ "listmonk" ];
       };
 
-      virtualisation.quadlet =
-        let
-          networks = config.virtualisation.quadlet.networks;
-          pods = config.virtualisation.quadlet.pods;
-        in
-        {
-          autoEscape = true;
-          networks = {
-            listmonk.networkConfig = {
-              driver = "bridge";
-            };
-          };
-          containers.listmonk = {
-            containerConfig = {
-              image = config.isbl.docker-pin.${image};
-              volumes = [
-                "/persistent/listmonk/uploads:/uploads"
-              ];
-
-              # networks = [ "pasta:--map-gw" ];
-              # networks = [ "slirp4netns:allow_host_loopback=true" ];
-              # networks = [ networks.listmonk.ref ];
-              # environmentFiles = [ config.age.secrets.listmonk.path ];
-              publishPorts = [ "127.0.0.1:${builtins.toString port}:${builtins.toString port}" ];
-              podmanArgs = [ "--add-host" "host.containers.internal:host-gateway" ];
-              environments = {
-                LISTMONK_app__address = "0.0.0.0:${builtins.toString port}";
-                LISTMONK_db__host = "host.containers.internal";
-                LISTMONK_db__port = "5432";
-                LISTMONK_db__user = "listmonk";
-                # LISTMONK_db__password 	listmonk
-                LISTMONK_db__database = "listmonk";
-                LISTMONK_db__ssl_mode = "disable";
-              };
-              # globalArgs = [ "--install" ];
-            };
-          };
+      virtualisation.oci-containers.containers.listmonk = {
+        volumes = [
+          "/persistent/listmonk/uploads:/uploads"
+        ];
+        imageFile = config.isbl.podman-pin.listmonk.image;
+        ports = [ "127.0.0.1:${builtins.toString port}:${builtins.toString port}" ];
+        extraOptions = [
+          "--add-host" "host.containers.internal:host-gateway"
+        ];
+        environment = {
+          LISTMONK_app__address = "0.0.0.0:${builtins.toString port}";
+          LISTMONK_db__host = "host.containers.internal";
+          LISTMONK_db__port = "5432";
+          LISTMONK_db__user = "listmonk";
+          # LISTMONK_db__password 	listmonk
+          LISTMONK_db__database = "listmonk";
+          LISTMONK_db__ssl_mode = "disable";
         };
-
+      };
+  
       systemd.tmpfiles.settings."10-isbl-listmonk" =
         let
           d = {
