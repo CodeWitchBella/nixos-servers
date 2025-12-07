@@ -87,20 +87,6 @@
           { networking.hostName = "data"; }
         ];
       };
-      nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = (import ./modules/module-list.nix) ++ [
-          ./systems/vps.nix
-          agenix.nixosModules.default
-          home-manager.nixosModules.home-manager
-          inputs.authentik-nix.nixosModules.default
-          inputs.vpsadminos.nixosConfigurations.container
-          inputs.simple-nixos-mailserver.nixosModule
-          inputs.quadlet-nix.nixosModules.quadlet
-          { networking.hostName = "vps"; }
-        ];
-      };
       nixosConfigurations.hetzner = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = { inherit inputs; };
@@ -132,13 +118,6 @@
           path = deployPkgsAarch.deploy-rs.lib.activate.nixos self.nixosConfigurations.hetzner;
         };
       };
-      deploy.nodes.vps = {
-        hostname = "vps.isbl.cz";
-        profiles.system = {
-          user = "root";
-          path = deployPkgsX86.deploy-rs.lib.activate.nixos self.nixosConfigurations.vps;
-        };
-      };
     }
     // (flake-utils.lib.eachDefaultSystem (
       system:
@@ -165,16 +144,8 @@
               command = "${deploy} '.#data'";
             }
             {
-              name = "deploy:vps";
-              command = "${deploy} '.#vps'";
-            }
-            {
               name = "deploy:hetzner";
               command = "${deploy} '.#hetzner'";
-            }
-            {
-              name = "deploy-remotebuild:vps";
-              command = "${deploy} '.#vps' --remote-build";
             }
             {
               name = "deploy-remotebuild:data";
