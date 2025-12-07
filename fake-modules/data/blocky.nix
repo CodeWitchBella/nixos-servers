@@ -29,7 +29,7 @@
         ports.http = 4003;
         upstreams.init.strategy = "fast";
         upstreams.groups.default = [
-          #"1.1.1.1"
+          "1.1.1.1"
           #"1.0.0.1"
           "https://cloudflare-dns.com/dns-query"
           #"8.8.8.8"
@@ -42,6 +42,7 @@
         ];
         blocking.clientGroupsBlock.default = [ "ads" ];
         bootstrapDns = [
+          { upstream = "tcp+udp:1.1.1.1"; }
           { upstream = "https://1.1.1.1/dns-query"; }
         ];
         caching.cacheTimeNegative = -1;
