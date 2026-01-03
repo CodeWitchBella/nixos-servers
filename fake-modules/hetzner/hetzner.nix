@@ -14,6 +14,7 @@
     ./infra/restic.nix
     ./headscale.nix
     ./outline.nix
+    ./planka.nix
     ./vaultwarden.nix
   ];
 
