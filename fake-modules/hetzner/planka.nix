@@ -22,7 +22,7 @@ in
   };
 
   services.postgresql.ensureDatabases = [ "planka" ];
-  services.postgresql.enable = false;
+  services.postgresql.enable = true;
   services.postgresql.ensureUsers = [
     {
       name = "planka";
