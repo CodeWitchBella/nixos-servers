@@ -39,9 +39,9 @@ in
     containers.planka = {
       #user = "planka";
       volumes = [
-        "/var/lib/planka/user-avatars:/app/public/user-avatars"
-        "/var/lib/planka/project-background-images:/app/public/project-background-images"
-        "/var/lib/planka/attachments:/app/private/attachments"
+        "/persistent/planka/user-avatars:/app/public/user-avatars"
+        "/persistent/planka/project-background-images:/app/public/project-background-images"
+        "/persistent/planka/attachments:/app/private/attachments"
       ];
       environmentFiles = [ config.age.secrets.planka.path ];
       environment = {
@@ -71,4 +71,21 @@ in
   services.nginx.virtualHosts."planka.isbl.cz" = nginx // {
     useACMEHost = "isbl.cz";
   };
+
+
+  systemd.tmpfiles.settings."10-isbl-planka" =
+    let
+      dir = {
+        d = {
+          user = "root";
+          group = "root";
+          mode = "0777";
+        };
+      };
+    in
+    {
+        "/persistent/planka/user-avatars" = dir;
+        "/persistent/planka/project-background-images" = dir;
+        "/persistent/planka/attachments" = dir;
+    };
 }
