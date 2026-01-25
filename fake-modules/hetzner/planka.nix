@@ -21,20 +21,9 @@ in
     mode = "666";
   };
 
-  services.postgresql.ensureDatabases = [ "planka" ];
-  services.postgresql.enable = true;
-  services.postgresql.ensureUsers = [
-    {
-      name = "planka";
-      ensureDBOwnership = true;
-    }
-  ];
-  services.postgresql.authentication = pkgs.lib.mkOverride 10 ''
-    #type database  DBuser  auth-method
-    host  planka       postgres     127.0.0.1/32   trust
-    host  planka       postgres     ::1/128        trust
-  '';
-
+  isbl.postgresql.enable = true;
+  isbl.postgresql.databases = ["planka"];
+  
   virtualisation.oci-containers = {
     containers.planka = {
       #user = "planka";
@@ -45,7 +34,7 @@ in
       ];
       environmentFiles = [ config.age.secrets.planka.path ];
       environment = {
-        POSTGRESQL_URL = "postgres://planka@localhost/planka";
+        POSTGRESQL_URL = "postgres://planka@host.containers.internal/planka";
         BASE_URL = "https://planka.isbl.cz";
         TRUST_PROXY = "1";
         TZ = "UTC";
@@ -64,8 +53,11 @@ in
         OIDC_ENFORCED = "true";
       };
       image = "ghcr.io/plankanban/planka:latest";
-      #ports = ["127.0.0.1:4448:1337"];
-      extraOptions = [ "--network=host" ];
+      ports = ["127.0.0.1:4448:1337"];
+      extraOptions = [
+        "--add-host" "host.containers.internal:host-gateway"
+      ];
+      # extraOptions = [ "--network=host" ];
     };
   };
   services.nginx.virtualHosts."planka.isbl.cz" = nginx // {
@@ -84,8 +76,8 @@ in
       };
     in
     {
-        "/persistent/planka/user-avatars" = dir;
-        "/persistent/planka/project-background-images" = dir;
-        "/persistent/planka/attachments" = dir;
+      "/persistent/planka/user-avatars" = dir;
+      "/persistent/planka/project-background-images" = dir;
+      "/persistent/planka/attachments" = dir;
     };
 }
