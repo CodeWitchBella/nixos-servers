@@ -24,16 +24,16 @@ in
     certs."isbl.cz" = {
       domain = "isbl.cz";
       extraDomainNames = [ "*.isbl.cz" ];
-      dnsProvider = "cloudflare";
-      credentialsFile = config.age.secrets.dnskey.path;
+      dnsProvider = "bunny";
+      environmentFile = config.age.secrets.bunnykey.path;
       group = "nginx";
     };
 
     certs."db.isbl.cz" = {
       domain = "db.isbl.cz";
       extraDomainNames = [ "*.db.isbl.cz" ];
-      dnsProvider = "cloudflare";
-      credentialsFile = config.age.secrets.dnskey.path;
+      dnsProvider = "bunny";
+      environmentFile = config.age.secrets.bunnykey.path;
       group = "nginx";
     };
 

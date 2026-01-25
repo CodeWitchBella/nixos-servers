@@ -90,6 +90,9 @@ in
     age.secrets.dnskey = {
       file = ../secrets/dnskey.conf.age;
     };
+    age.secrets.bunnykey = {
+      file = ../secrets/bunnykey.conf.age;
+    };
     security.acme = {
       acceptTerms = true;
       defaults.email = "acme@isbl.cz";

@@ -13,6 +13,7 @@ in
 {
   "dnskey.conf.age".publicKeys = users ++ systems;
   "outline.age".publicKeys = users ++ [ hetzner ];
+  "bunnykey.conf.age".publicKeys = users ++ [ hetzner ];
   "outline-s3-key.age".publicKeys = users ++ [ hetzner ];
   "outline-secret.age".publicKeys = users ++ [ hetzner ];
   "outline-secret-key.age".publicKeys = users ++ [ hetzner ]; # unused but let's store it just in case
