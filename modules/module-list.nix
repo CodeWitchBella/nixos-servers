@@ -6,6 +6,7 @@
   ./mainsail.nix
   ./minecraft.nix
   ./nginx.nix
+  ./podman-pin.nix
   ./postgresql.nix
   ./seafile.nix
   ./tailscale.nix

@@ -38,7 +38,8 @@ in
         volumes = [
           "/persistent/listmonk/uploads:/uploads"
         ];
-        imageFile = config.isbl.podman-pin.listmonk.image;
+        image = config.isbl.podman-pin.listmonk.image;
+        imageFile = config.isbl.podman-pin.listmonk.imageFile;
         ports = [ "127.0.0.1:${builtins.toString port}:${builtins.toString port}" ];
         extraOptions = [
           "--add-host" "host.containers.internal:host-gateway"

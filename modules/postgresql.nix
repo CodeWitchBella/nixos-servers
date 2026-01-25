@@ -43,7 +43,7 @@ in
       databases = cfg.databases;
     };
     services.postgresql = {
-      enable = true;
+      enable = false;
       package = cfg.package;
       ensureDatabases = cfg.databases;
       ensureUsers = map (name: {

@@ -1,4 +1,4 @@
-{
+inputs@{
   config,
   lib,
   pkgs,
@@ -6,27 +6,32 @@
 }:
 let
   cfg = config.isbl.podman-pin;
-  json = builtins.fromJSON (builtins.readFile ../podman/images.json);
-  decoded = builtins.mapAttrs (
-    name: data: {
-      image = pkgs.dockerTools.pullImage {
-        name = data.repository;
-        finalImageTag = data.tag;
-        imageDigest = data.digest;
-        sha256 = data.sha256;
+  data = import ../podman/parser.nix inputs;
+  hashes = import ../podman/hashes.nix;
+  decoded = builtins.map (
+    item: {
+      name = item.name;
+      value = {
+        image = "${item.repository}:${item.tag}";
+        imageFile = pkgs.dockerTools.pullImage {
+          imageName = item.repository;
+          finalImageTag = item.tag;
+          imageDigest = item.digest;
+          sha256 = hashes.${item.name};
+        };
       };
     }
-  ) json;
+  ) data.list;
 in
 {
   options.isbl.podman-pin =
     with lib;
     mkOption {
       default = { };
-      type = types.attrsOf types.str;
+      type = types.attrsOf types.attrs;
     };
 
   config = {
-    isbl.podman-pin = builtins.mapAttrs (ref: mf: mf.${pkgs.system}) decoded;
+    isbl.podman-pin = builtins.listToAttrs decoded;
   };
 }
